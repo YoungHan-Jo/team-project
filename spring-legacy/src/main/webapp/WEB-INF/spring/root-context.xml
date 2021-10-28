@@ -8,8 +8,8 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/jspdb?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Seoul" />
-		<property name="username" value="jspid" />
-		<property name="password" value="jsppass" />
+		<property name="username" value="springproject" />
+		<property name="password" value="spring1234" />
 	</bean>
 
 	<!-- Connection pool -->
