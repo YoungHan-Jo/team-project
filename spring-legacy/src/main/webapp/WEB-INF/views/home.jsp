@@ -13,6 +13,5 @@
 <p> 수정 체크 1 by. choi young eun </p>
 <p> 수정 master test by. choi young eun </p>
 <p> 수정 test11  by. choi young eun </p>
-<p> 수정 test 22 p </p>
 </body>
 </html>
