@@ -11,33 +11,7 @@
 	Hello world!  
 </h1>
 
-
 <P>  The time on the server is ${serverTime}. </P>
-<p> 수정 체크 1 by. choi young eun </p>
-<p> 수정 master test by. choi young eun </p>
-<p> 수정 test11  by. choi young eun </p>
-<p> 수정 test22  by. choi young eun </p>
-<p> 수정본입니다. 받아주세여 </p>
-<p> test code : merge  by. choi young eun </p>
-<p> test 0 by. jo young han </p>
-<p> test11  by. test-branch1 </p>
-<p> test2222  by. test1 </p>
-
-
-<p> test 동시에 by.test10 </p>
-
-<p>test3333 by.test2 </p> 
-
-<p>로그인 기능 by.joyounghan </p>
-
-asdf
-asd
-fa
-sdf
-s
-
-
-asdf
 
 <p> 조영한 </p> 
 <P>김준우</P>
