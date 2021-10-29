@@ -35,8 +35,6 @@
 	</servlet-mapping>
 
 	<!-- 스프링 한글설정 필터추가 -->
-	<!-- 스프링은 객체 생성이 자동으로 먼저 되기때문에 미리 필터로 먼저 해줘야함 -->
-	<!-- request.setCharacterEncoding("utf-8"); 를 필터로 실행 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter

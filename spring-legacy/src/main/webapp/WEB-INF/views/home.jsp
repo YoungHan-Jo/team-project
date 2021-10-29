@@ -11,40 +11,30 @@
 	Hello world!  
 </h1>
 
-
 <P>  The time on the server is ${serverTime}. </P>
-<p> 수정 체크 1 by. choi young eun </p>
-<p> 수정 master test by. choi young eun </p>
-<p> 수정 test11  by. choi young eun </p>
-<p> 수정 test22  by. choi young eun </p>
-<p> 수정본입니다. 받아주세여 </p>
-<p> test code : merge  by. choi young eun </p>
-<p> test 0 by. jo young han </p>
-<p> test11  by. test-branch1 </p>
-<p> test2222  by. test1 </p>
 
+<P>  다른 사람이 같은 파일 같은 공간(?)에 새로운코드를 입력했다 </P>
 
-<p> test 동시에 by.test10 </p>
+<P>  개인 branch에 master 병합했을때 충돌 테스트 </P>
+1
+2
+3
+4
+5
+6
 
-<p>test3333 by.test2 </p> 
-
-<p>로그인 기능 by.joyounghan </p>
-
-asdf
-asd
-fa
-sdf
-s
-
-
-asdf
 
 <p> 조영한 </p> 
 <P>김준우</P>
 
-
+박인제
 황선호ㄹㄹ
 
+
+서성혁
+
+
+111111
 
 </body>
 </html>
