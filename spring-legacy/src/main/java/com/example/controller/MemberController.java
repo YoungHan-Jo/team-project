@@ -44,7 +44,8 @@ public class MemberController {
 	}
 
 	@PostMapping("/loginAndSignUp")
-	public ResponseEntity<String> signUp(MemberVO memberVO, MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
+	public ResponseEntity<String> signUp(MemberVO memberVO, MultipartFile file, HttpSession session)
+			throws IllegalStateException, IOException {
 
 		ProfileImg profileImg = uploadProfile(file, memberVO.getId(), "profileImg");
 
@@ -78,7 +79,6 @@ public class MemberController {
 
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // signUp
-
 
 	// 프로필 업로드 메소드
 	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg)
@@ -128,7 +128,6 @@ public class MemberController {
 		return profileImg;
 	} // uploadProfile
 
-	
 	// 프로필 삭제 메소드 (회원수정 및 탈퇴에 사용)
 	private void deleteProfile(ProfileImg profileImg, String isProfileImg) {
 
@@ -161,7 +160,6 @@ public class MemberController {
 
 	} // deleteProfile
 
-
 	// 년/월/일 형식의 폴더명 리턴하는 메소드
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -169,5 +167,4 @@ public class MemberController {
 		return str;
 	} // getFolder
 
-	
 }
