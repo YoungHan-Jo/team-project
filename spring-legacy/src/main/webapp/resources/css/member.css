@@ -1,0 +1,213 @@
+/* Member Menu CSS */
+
+#view .box {
+    width: 100%;
+    margin: auto;
+    max-width: 500px;
+    min-height: 850px;
+    position: relative;
+    background: url(../img/login-bg.jpg) no-repeat center;
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19)
+}
+
+#view .snip {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    padding: 20px 70px 50px 70px;
+    background: rgb(63, 114, 175, .9)
+}
+
+#view .snip .login-frm,
+#view .snip .sign-up-frm,
+#view .snip .modify-frm {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    transition: all .4s linear
+}
+
+#view .snip .login,
+#view .snip .sign-up,
+#view .snip .modify,
+#view .form-space .group .check {
+    display: none
+}
+
+#view .snip .tab,
+#view .form-space .group .label,
+#view .form-space .group .button {
+    text-transform: uppercase
+}
+
+#view .snip .tab {
+    font-size: 22px;
+    padding-bottom: 5px;
+    margin: 0 15px 10px 70px;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+}
+
+#view .snip .login:checked+.tab,
+#view .snip .sign-up:checked+.tab,
+#view .snip .modify:checked+.tab {
+    color: #fff;
+    border-color: #1161ee
+}
+
+#view .form-space {
+    min-height: 345px;
+    position: relative;
+    perspective: 1000px;
+    transform-style: preserve-3d
+}
+
+#view .form-space .group {
+    margin-bottom: 15px
+}
+
+#view .form-space .group .label,
+#view .form-space .group .input,
+#view .form-space .group .button {
+    width: 100%;
+    color: #fff;
+    display: block
+}
+
+#view .form-space .group .input,
+#view .form-space .group .button {
+    border: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .1)
+}
+
+#view .form-space .group .label {
+    color: rgba(255, 255, 255, .8);
+    font-size: 15px;
+    margin: auto auto 3px 8px;
+}
+
+#view .form-space .group .button {
+    background: #1161ee
+}
+
+#view .form-space .group label .icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+    position: relative;
+    display: inline-block;
+    background: rgba(255, 255, 255, .1)
+}
+
+#view .form-space .group label .icon:before,
+#view .form-space .group label .icon:after {
+    content: '';
+    width: 10px;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    transition: all .2s ease-in-out 0s
+}
+
+#view .form-space .group label .icon:before {
+    left: 3px;
+    width: 5px;
+    bottom: 6px;
+    transform: scale(0) rotate(0)
+}
+
+#view .form-space .group label .icon:after {
+    top: 6px;
+    right: 0;
+    transform: scale(0) rotate(0)
+}
+
+#view .form-space .group .check:checked+label {
+    color: #fff
+}
+
+#view .form-space .group .check:checked+label .icon {
+    background: #1161ee
+}
+
+#view .form-space .group .check:checked+label .icon:before {
+    transform: scale(1) rotate(45deg)
+}
+
+#view .form-space .group .check:checked+label .icon:after {
+    transform: scale(1) rotate(-45deg)
+}
+
+#view .snip .login:checked+.tab+.sign-up+.tab+.form-space .login-frm {
+    transform: rotate(0)
+}
+
+#view .snip .sign-up:checked+.tab+.form-space .sign-up-frm {
+    transform: rotate(0)
+}
+
+#view .snip .modify:checked+.tab+.form-space .modify-frm {
+    transform: rotate(0)
+}
+
+#view,
+:after,
+:before {
+    box-sizing: border-box
+}
+
+#view .clearfix:after,
+#view .clearfix:before {
+    content: '';
+    display: table
+}
+
+#view .clearfix:after {
+    clear: both;
+    display: block
+}
+
+#view a {
+    color: inherit;
+    text-decoration: none
+}
+
+#view .hr {
+    height: 2px;
+    margin: 60px 0 50px 0;
+    background: rgba(255, 255, 255, .1)
+}
+
+#view .foot {
+    text-align: center
+}
+
+#view .card {
+    width: 500px;
+    left: 100px
+}
+
+#view #login-frm .form-check {
+    display: inline-block;
+    margin-left: -15px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+#view #sign-up-frm .form-check,
+#view #modify-frm .form-check {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 8px;
+    color: #fff;
+}
+
+#view ::placeholder {
+    color: rgba(255, 255, 255, .6)
+}
