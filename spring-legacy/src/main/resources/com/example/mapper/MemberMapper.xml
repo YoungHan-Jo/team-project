@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MemberMapper">
+
+	<select id="getMemberAndProfileImg" resultMap="memberAndProfileImg">
+		<![CDATA[
+			SELECT m.id, m.passwd, m.name, m.birthday, m.gender,
+			       m.email, m.recv_email, m.reg_date,
+			       p.uuid, p.uploadpath, p.filename, p.member_id
+			FROM member m LEFT OUTER JOIN profile_img p
+			ON m.id = p.member_id
+			WHERE m.id = #{id}
+		]]>
+	</select>
+
+	<resultMap type="memberVO" id="memberAndProfileImg">
+		<id column="id" property="id" />
+		<result column="passwd" property="passwd" />
+		<result column="name" property="name" />
+		<result column="birthday" property="birthday" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<result column="recv_email" property="recvEmail" />
+		<result column="reg_date" property="regDate" />
+		<association property="ProfileImg" javaType="profileImg">
+			<id column="uuid" property="uuid" />
+			<result column="uploadpath" property="uploadpath" />
+			<result column="filename" property="filename" />
+			<result column="member_id" property="memberId" />
+		</association>
+	</resultMap>
+
+</mapper>
