@@ -41,6 +41,6 @@ public interface MemberMapper {
 	@Update("UPDATE member SET passwd = #{passwd} WHERE id = #{id} ")
 	void updateOnlyPasswd(MemberVO memberVO);
 
-	MemberVO getMemberAndProfilepic(String id);
+	MemberVO getMemberAndProfileImg(String id);
 
 }
