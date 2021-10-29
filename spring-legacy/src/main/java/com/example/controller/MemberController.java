@@ -14,7 +14,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+<<<<<<< Updated upstream
 import org.springframework.web.bind.annotation.GetMapping;
+=======
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,8 +50,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/loginAndSignUp")
-	public ResponseEntity<String> signUp(MemberVO memberVO, MultipartFile file, HttpSession session)
-			throws IllegalStateException, IOException {
+	public ResponseEntity<String> signUp(MemberVO memberVO, MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
 
 		ProfileImg profileImg = uploadProfile(file, memberVO.getId(), "profileImg");
 
@@ -61,10 +66,20 @@ public class MemberController {
 		memberVO.setRegDate(new Date());
 
 		// 비밀번호 암호화
+=======
+			session.setAttribute("profileImgVO", profileImg);
+		}
+
+		// 회원가입날짜 설정
+		memberVO.setRegDate(new Date());
+
+		// 비밀번호를 jbcrypt 라이브러리 사용해서 암호화하여 저장하기
+>>>>>>> Stashed changes
 		String passwd = memberVO.getPasswd();
 		String pwHash = BCrypt.hashpw(passwd, BCrypt.gensalt()); // 60글자로 암호화된 문자열 리턴함
 		memberVO.setPasswd(pwHash); // 암호화된 비밀번호 문자열로 수정하기
 
+<<<<<<< Updated upstream
 		// 생년월일에서 하이픈(-) 제거
 		String birthday = memberVO.getBirthday();
 		birthday = birthday.replace("-", ""); // 하이픈 문자열을 빈문자열로 변경
@@ -79,6 +94,7 @@ public class MemberController {
 
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // signUp
+
 
 	// 프로필 업로드 메소드
 	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg)
@@ -141,7 +157,7 @@ public class MemberController {
 
 		if (isProfileImg != null) {
 			basePath = "C:/team/upload/profile/" + profileImg.getMemberId();
-			uploadpath = basePath + "/";
+
 		}
 
 		String filename = profileImg.getUuid() + "_" + profileImg.getFilename();
@@ -160,11 +176,12 @@ public class MemberController {
 
 	} // deleteProfile
 
-	// 년/월/일 형식의 폴더명 리턴 메소드
+
+	// 년/월/일 형식의 폴더명 리턴하는 메소드
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		String str = sdf.format(new Date());
 		return str;
-	}
+	} // getFolder
 
 }
