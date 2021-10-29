@@ -12,9 +12,12 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<P>  개인 branch에 master 병합했을때 충돌 테스트 </P>
+
 
 <p> 조영한 </p> 
 <P>김준우</P>
+
 
 
 </body>
