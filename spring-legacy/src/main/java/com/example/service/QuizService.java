@@ -29,5 +29,9 @@ public class QuizService {
 		return quizMapper.getPackagesByCri(cri);
 	}
 	
+	public int getNextPackageNum() {
+		return quizMapper.getNextPackageNum();
+	}
+	
 
 }

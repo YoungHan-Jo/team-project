@@ -9,7 +9,7 @@
 
 		<nav id="navbar" class="navbar order-last order-lg-0">
 			<ul>
-				<li><a class="nav-link scrollto" href="quiz/list">QUIZ</a></li>
+				<li><a class="nav-link scrollto" href="/quiz/list">QUIZ</a></li>
 				<li><a class="nav-link scrollto" href="#!">BOARD</a></li>
 			</ul>
 			<i class="bi bi-list mobile-nav-toggle"></i>

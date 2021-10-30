@@ -12,6 +12,7 @@ public interface QuizMapper {
 	
 	List<PackageVO> getPackagesByCri(Criteria cri);
 	
+	int getNextPackageNum();
 	
 	
 	//=================== insert ======================
