@@ -26,7 +26,7 @@ public class QuizController {
 	@GetMapping("/list")
 	public String list(Criteria cri, Model model) {
 		
-		System.out.println("/list() 호출됨 ... ");
+		System.out.println("list() 호출됨 ... ");
 		
 		List<PackageVO> packageList = quizService.getPackagesByCri(cri);
 		
@@ -42,6 +42,8 @@ public class QuizController {
 	
 	@GetMapping("/write")
 	public String writeForm() {
+		
+		System.out.println("writeForm() 호출됨 ... ");
 		
 		return "quiz/quizWrite";
 	}

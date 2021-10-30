@@ -20,7 +20,7 @@
 			</if>
 		</where>
 		<![CDATA[
-			ORDER BY num DESC;
+			ORDER BY num DESC
 			LIMIT #{startRow} , #{amount}
 		]]>
 	</select>

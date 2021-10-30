@@ -21,6 +21,11 @@ public class QuizService {
 	}
 	
 	public List<PackageVO> getPackagesByCri(Criteria cri){
+		
+		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
+		
+		cri.setStartRow(startRow);
+		
 		return quizMapper.getPackagesByCri(cri);
 	}
 	
