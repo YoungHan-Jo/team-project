@@ -33,5 +33,11 @@ public class QuizService {
 		return quizMapper.getNextPackageNum();
 	}
 	
+	public void addPackageAndQuizList(PackageVO packageVO) {
+		quizMapper.addPackage(packageVO);
+		quizMapper.addQuizList(packageVO.getQuizList());
+		
+	}
+	
 
 }

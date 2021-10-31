@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.QuizMapper">
 
+	<!-- =================== select ====================== -->
 	<select id="getPackagesByCri" resultType="PackageVO">
 		<![CDATA[
 			SELECT *
@@ -31,6 +32,26 @@
 			FROM package
 		]]>
 	</select>
+
+	<!-- =================== insert ====================== -->
+	<insert id="addPackage">
+		<![CDATA[
+			INSERT INTO package (num, title, member_id, reg_date)
+			VALUES (#{num}, #{title}, #{memberId}, #{regDate})
+		]]>
+	</insert>
+
+	<insert id="addQuizList">
+		<![CDATA[
+			INSERT INTO quiz (package_num, question_num, question, num_one, num_two, num_three, num_four, answer)
+			VALUES 
+		]]>
+		<foreach collection="list" item="quiz" separator=",">
+			(#{quiz.packageNum}, #{quiz.questionNum}, #{quiz.question},
+			#{quiz.numOne},
+			#{quiz.numTwo}, #{quiz.numThree}, #{quiz.numFour}, #{quiz.answer})
+		</foreach>
+	</insert>
 
 
 </mapper>

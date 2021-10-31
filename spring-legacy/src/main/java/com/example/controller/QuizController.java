@@ -2,8 +2,11 @@ package com.example.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +58,7 @@ public class QuizController {
 
 	@PostMapping("/write")
 	public void write(PackageVO packageVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
-			String[] numFours, String[] answers) {
+			String[] numFours, String[] answers, HttpSession session) {
 		System.out.println("packageVO : " + packageVO);
 		System.out.println(Arrays.toString(questions));
 		System.out.println(Arrays.toString(numOnes));
@@ -64,29 +67,38 @@ public class QuizController {
 		System.out.println(Arrays.toString(numFours));
 		System.out.println(Arrays.toString(answers));
 		System.out.println(questions.length);
-		
+
 		int packageNum = quizService.getNextPackageNum();
 		packageVO.setNum(packageNum);
-		
+
 		List<QuizVO> quizList = new ArrayList<QuizVO>();
-		
-		for(int i = 0; i < questions.length ; ++i ) {
+
+		for (int i = 0; i < questions.length; ++i) {
 			QuizVO quizVO = new QuizVO();
-			quizVO.setNum(i+1);
+			quizVO.setPackageNum(packageNum);
+			quizVO.setQuestionNum(i + 1);
 			quizVO.setQuestion(questions[i]);
 			quizVO.setNumOne(numOnes[i]);
 			quizVO.setNumTwo(numTwos[i]);
 			quizVO.setNumThree(numThrees[i]);
 			quizVO.setNumFour(numFours[i]);
 			quizVO.setAnswer(answers[i]);
-			quizVO.setPackageNum(packageNum);
-			
+
 			quizList.add(quizVO);
 		}
+
+		String id = (String) session.getAttribute("id");
+		packageVO.setMemberId(id);
 		
+		packageVO.setRegDate(new Date());
+
+		packageVO.setQuizList(quizList);
+
 		System.out.println(packageVO);
+		System.out.println(packageVO.getQuizList());
 		
-		System.out.println(quizList);
+		quizService.addPackageAndQuizList(packageVO);
+		
 
 	}
 
