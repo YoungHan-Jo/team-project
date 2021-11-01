@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3307/jspdb?useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Seoul" />
+		<property name="username" value="jspid" />
+		<property name="password" value="jsppass" />
+	</bean>
+	
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
+	</bean>
+	
+	
+	<!-- 트랜잭션 관리자의 id 속성값은 지정된 이름인 "transactionManager"로 해야함 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- @Transactional 애노테이션 기능 활성화 -->
+	<tx:annotation-driven/>
+	
+	
+	<!-- 기준패키지에 있는 매퍼 인터페이스는 스캔에 의해서 DAO와 같은 구현된 클래스로 자동 변환되고
+	     스프링이 관리하는 객체(빈)으로 준비됨. 의존관계 주입이 가능함. -->
+	<mybatis-spring:scan base-package="com.example.mapper"/>
+	
+	
+	<!-- @Component 계열 클래스를 스캔해서 스프링 빈으로 등록하고 의존관계 주입시킴 -->
+	<context:component-scan base-package="com.example.service" />
+	
+	<context:component-scan base-package="com.example.aop" />
+	<!-- @Aspect 류의 AOP 애노테이션 기능 활성화 -->
+	<aop:aspectj-autoproxy />
+	
+	<context:component-scan base-package="com.example.task" />
+	<!-- Quartz의 @Scheduled 애노테이션 기능 활성화 -->
+	<task:annotation-driven />
+		
+</beans>
+
+
+
+
+
+
+
+

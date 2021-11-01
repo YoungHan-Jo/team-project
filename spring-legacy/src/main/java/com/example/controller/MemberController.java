@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.MemberVO;
@@ -356,4 +357,178 @@ public class MemberController {
 	} // deleteProfile
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping("/account")
+	public ResponseEntity<String> login(String id, String passwd,
+			@RequestParam( required = false, defaultValue = "false") boolean rememberMe,
+			HttpSession session, HttpServletResponse response) {
+		
+		MemberVO memberVO = memberService.getMemberById(id);
+		
+		boolean PW = false;
+		String message = "";
+		if (memberVO != null) {
+			PW = BCrypt.checkpw(passwd, memberVO.getPasswd());
+			
+			if(PW == false) {
+				message = "아이디 또는 비밀번호가 일치하지 않습니다.";
+			}
+		}
+		
+		if(memberVO == null || PW == false) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content - Type ", "text/html; charset = UTF-8");
+			
+			String str = JScript.back(message);
+			
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		}
+		
+		
+		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
+	}
+	
+	
+	
+	
 }

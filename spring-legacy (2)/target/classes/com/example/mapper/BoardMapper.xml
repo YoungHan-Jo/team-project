@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.BoardMapper">
+	
+	<delete id="deleteBoardByNum">
+	<![CDATA[
+		DELETE FROM board WHERE num = #{num}
+	]]>
+	</delete>
+	
+	
+	<!-- select 문장일때는 resultType 속성으로 가져올 자료형을 지정해야함 -->
+	<select id="getCountAll" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) AS cnt 
+		FROM board
+	]]>
+	</select>
+	
+	
+	<select id="getNextnum" resultType="int">
+	<![CDATA[
+		SELECT IFNULL(MAX(num), 0) + 1 AS nextnum 
+		FROM board
+	]]>
+	</select>
+	
+	
+	<insert id="addBoard">
+	<![CDATA[
+		INSERT INTO board (num, mid, subject, content, readcount, reg_date, ipaddr, re_ref, re_lev, re_seq) 
+		VALUES (#{num}, #{mid}, #{subject}, #{content}, #{readcount}, #{regDate}, #{ipaddr}, #{reRef}, #{reLev}, #{reSeq}) 
+	]]>
+	</insert>
+	
+	
+	<!-- select 문장일때는 resultType 속성으로 가져올 자료형을 지정해야함 -->
+	<select id="getBoardsAll" resultType="boardVO">
+	<![CDATA[
+		SELECT * 
+		FROM board 
+		ORDER BY re_ref DESC, re_seq ASC 
+	]]>
+	</select>
+	
+	
+	<select id="getBoard" resultType="boardVO">
+	<![CDATA[
+		SELECT *
+		FROM board 
+		WHERE num = #{num} 
+	]]>
+	</select>
+	
+	
+	<update id="updateReadcount">
+	<![CDATA[
+		UPDATE board 
+		SET readcount = readcount + 1 
+		WHERE num = #{num} 
+	]]>
+	</update>
+	
+	
+	<update id="updateBoard">
+	<![CDATA[
+		UPDATE board 
+		SET subject = #{subject}, content = #{content}, ipaddr = #{ipaddr} 
+		WHERE num = #{num} 
+	]]>
+	</update>
+	
+	
+	<update id="updateReSeqPlusOne">
+		<![CDATA[
+			UPDATE board 
+			SET re_seq = re_seq + 1 
+			WHERE re_ref = #{reRef} 
+			AND re_seq > #{reSeq} 
+		]]>
+	</update>
+	
+	
+	
+	<select id="getCountBySearch" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) AS cnt 
+			FROM board 
+		]]>
+		<where>
+			<if test="type == 'subject'.toString()">
+				subject LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'content'.toString()">
+				content LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'mid'.toString()">
+				mid LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="getBoardsWithPaging" resultType="boardVO">
+		<![CDATA[
+			SELECT * 
+			FROM board 
+		]]>
+		<where>
+			<if test="type == 'subject'.toString()">
+				subject LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'content'.toString()">
+				content LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'mid'.toString()">
+				mid LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+		<![CDATA[
+			ORDER BY re_ref DESC, re_seq ASC 
+			LIMIT #{startRow}, #{amount} 
+		]]>
+	</select>
+	
+	
+	
+	<select id="getBoardAndAttaches" resultMap="boardAndAttaches">
+		<![CDATA[
+			SELECT b.num, b.mid, b.subject, b.content, b.readcount, b.reg_date,
+			       b.ipaddr, b.re_ref, b.re_lev, b.re_seq,
+			       a.uuid, a.uploadpath, a.filename, a.filetype, a.bno
+			FROM board b LEFT OUTER JOIN attach a
+			ON b.num = a.bno
+			WHERE b.num = #{num}
+		]]>
+	</select>
+	
+	<resultMap type="boardVO" id="boardAndAttaches">
+		<id column="num" property="num" />
+		<result column="mid" property="mid" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="readcount" property="readcount" />
+		<result column="reg_date" property="regDate" />
+		<result column="ipaddr" property="ipaddr" />
+		<result column="re_ref" property="reRef" />
+		<result column="re_lev" property="reLev" />
+		<result column="re_seq" property="reSeq" />
+		<collection property="attachList" javaType="list" ofType="attachVO">
+			<id column="uuid" property="uuid" />
+			<result column="uploadpath" property="uploadpath" />
+			<result column="filename" property="filename" />
+			<result column="filetype" property="filetype" />
+			<result column="bno" property="bno" />
+		</collection>
+	</resultMap>
+	
+	
+</mapper>
+
+
+
+
+
