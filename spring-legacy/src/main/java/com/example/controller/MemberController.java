@@ -498,7 +498,7 @@ public class MemberController {
 	
 	
 	
-	@PostMapping("/account")
+	@PostMapping("/login")
 	public ResponseEntity<String> login(String id, String passwd,
 			@RequestParam( required = false, defaultValue = "false") boolean rememberMe,
 			HttpSession session, HttpServletResponse response) {
@@ -513,17 +513,34 @@ public class MemberController {
 			if(PW == false) {
 				message = "아이디 또는 비밀번호가 일치하지 않습니다.";
 			}
+		} else {
+			message = "아이디 또는 비밀번호가 일치하지 않습니다.";
 		}
 		
+		
+		// 로그인 실패
 		if(memberVO == null || PW == false) {
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content - Type ", "text/html; charset = UTF-8");
+			headers.add("Content-Type", "text/html; charset=UTF-8");
 			
 			String str = JScript.back(message);
 			
 			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 		}
 		
+		// 로그인 성공
+		session.setAttribute("id", id);
+		
+		if(rememberMe == true) {
+			Cookie cookie = new Cookie("loginId", id);
+			
+			cookie.setMaxAge(60 *60 * 24);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", "/");
 		
 		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
 	}
