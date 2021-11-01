@@ -11,10 +11,10 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/spring-tx/5.2.18.RELEASE/spring-tx-5.2.18.RELEASE.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/mybatis/mybatis/3.5.7/mybatis-3.5.7.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/mybatis/mybatis-spring/2.0.6/mybatis-spring-2.0.6.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/mysql/mysql-connector-java/8.0.26/mysql-connector-java-8.0.26.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/zaxxer/HikariCP/5.0.0/HikariCP-5.0.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/1.18.22/lombok-1.18.22.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/coobird/thumbnailator/0.4.14/thumbnailator-0.4.14.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar" enabled="true" runInBatchMode="false"/>
@@ -23,7 +23,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/com/mchange/mchange-commons-java/0.2.15/mchange-commons-java-0.2.15.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/zaxxer/HikariCP-java7/2.4.13/HikariCP-java7-2.4.13.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/quartz-scheduler/quartz-jobs/2.3.2/quartz-jobs-2.3.2.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/gson/gson/2.8.7/gson-2.8.7.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.13.0/jackson-databind-2.13.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.13.0/jackson-annotations-2.13.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.13.0/jackson-core-2.13.0.jar" enabled="true" runInBatchMode="false"/>
@@ -40,4 +40,5 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="false" runInBatchMode="false"/>
 </factorypath>
