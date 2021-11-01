@@ -61,14 +61,8 @@ public class QuizController {
 	@PostMapping("/write")
 	public void write(BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
 			String[] numFours, String[] answers, HttpSession session) {
-		System.out.println("bunchVO : " + bunchVO);
-		System.out.println(Arrays.toString(questions));
-		System.out.println(Arrays.toString(numOnes));
-		System.out.println(Arrays.toString(numTwos));
-		System.out.println(Arrays.toString(numThrees));
-		System.out.println(Arrays.toString(numFours));
-		System.out.println(Arrays.toString(answers));
-		System.out.println(questions.length);
+		
+		System.out.println("write() 호출됨... ");
 
 		int bunchNum = quizService.getNextBunchNum();
 		bunchVO.setNum(bunchNum);

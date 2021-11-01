@@ -32,6 +32,29 @@
 			FROM bunch
 		]]>
 	</select>
+	
+	<select id="getBunchAndQuizList" resultMap="bunchAndQuizList">
+		<![CDATA[
+			SELECT b.num, b.title, b.member_id, b.reg_date, q.bunch_num, q.question_num, 
+				   q.question, q.num_one, q.num_two, q.num_three, q.num_four, q.answer
+			FROM bunch b
+			LEFT OUTER JOIN quiz q
+			ON b.num = q.bunch_num
+			WHERE b.num = #{bunchNum}
+		]]>
+	</select>
+	
+	<resultMap type="bunchVO" id="bunchAndQuizList">
+		<id column="num" property="num"/>
+		<id column="title" property="title"/>
+		<id column="member_id" property="memberId"/>
+		<id column="reg_date" property="regDate"/>
+		<collection property="quizList" javaType="list" ofType="quizVO">
+			
+		</collection>
+	
+	</resultMap>
+	
 
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">
