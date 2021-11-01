@@ -1,15 +1,18 @@
 package com.example.controller;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +24,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.MemberVO;
-import com.example.domain.ProfileImg;
 import com.example.service.MemberService;
-import com.example.service.ProfileImgService;
+import com.example.service.ProfileService;
 import com.example.util.JScript;
-
-import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequestMapping("/member/*")
@@ -38,28 +37,24 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	@Autowired
-	private ProfileImgService profileImgService;
+	private ProfileService profileImgService;
 
-	@GetMapping("/loginAndSignUp")
-	public String signUpForm() {
-		System.out.println("signUp 호출됨...");
+	// 년/월/일 형식의 폴더명 리턴하는 메소드
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String str = sdf.format(new Date());
+		return str;
+	} // getFolder
 
-		return "member/loginAndSignUp";
+	@GetMapping("/account")
+	public String account() {
+		System.out.println("account 호출됨...");
+
+		return "member/account";
 	}
 
-	@PostMapping("/loginAndSignUp")
-	public ResponseEntity<String> signUp(MemberVO memberVO, MultipartFile file, HttpSession session)
-			throws IllegalStateException, IOException {
-
-		ProfileImg profileImg = uploadProfile(file, memberVO.getId(), "profileImg");
-
-		// 업로드 또는 변경할 이미지 파일이 있는경우
-		if (profileImg != null) {
-
-			profileImgService.insertProfileImg(profileImg);
-
-			session.setAttribute("profileImg", profileImg);
-		}
+	@PostMapping("/signUp")
+	public ResponseEntity<String> signUp(MemberVO memberVO) {
 
 		// 회원가입 날짜 설정
 		memberVO.setRegDate(new Date());
@@ -79,10 +74,11 @@ public class MemberController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "text/html; charset=UTF-8");
 
-		String str = JScript.href("회원가입 성공!", "/member/loginAndSignUp");
+		String str = JScript.href("회원가입 성공!", "/member/account");
 
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // signUp
+
 
 	// 프로필 업로드 메소드
 	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg)
@@ -370,5 +366,6 @@ public class MemberController {
 		String str = sdf.format(new Date());
 		return str;
 	} // getFolder
+
 
 }
