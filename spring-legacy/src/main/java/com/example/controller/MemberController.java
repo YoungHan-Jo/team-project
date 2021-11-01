@@ -531,10 +531,12 @@ public class MemberController {
 		// 로그인 성공
 		session.setAttribute("id", id);
 		
+		
+		// 로그인 상태유지 체크
 		if(rememberMe == true) {
 			Cookie cookie = new Cookie("loginId", id);
 			
-			cookie.setMaxAge(60 *60 * 24);
+			cookie.setMaxAge(60 *60 * 24 );
 			cookie.setPath("/");
 			response.addCookie(cookie);
 		}
