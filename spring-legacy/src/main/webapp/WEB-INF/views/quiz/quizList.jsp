@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +21,18 @@
 				<br>
 				<button class="btn-quizWrite" onclick="location.href='write'">퀴즈
 					만들기</button>
-				<br>
 
+				<div id="packageList-form">
+					<h3>퀴즈 리스트 (${ pageMaker.totalCount })</h3>
+					<c:forEach var="bunch" items="${ bunchList }">
+						<div style="border : 1px solid black;">
+							<h4>${ bunch.num }. ${ bunch.title }</h4>
+							<span>${ bunch.memberId }</span><br> 
+							<span>${ bunch.regDate }</span>
+						</div>
+						<br> <br>
+					</c:forEach>
+				</div>
 			</div>
 
 
@@ -32,6 +44,16 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer -->
+
+	<!-- Tob Button -->
+	<div id="preloader"></div>
+	<a href="#"
+		class="back-to-top d-flex align-items-center justify-content-center"><i
+		class="bi bi-arrow-up-short"></i></a>
+
+	<!-- JavaScript -->
+	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
+
 	<script>
 		
 	</script>

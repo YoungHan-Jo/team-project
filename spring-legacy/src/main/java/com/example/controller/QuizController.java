@@ -39,10 +39,12 @@ public class QuizController {
 		List<PackageVO> packageList = quizService.getPackagesByCri(cri);
 
 		int totalCount = packageList.size();
+		
+		System.out.println(packageList);
 
 		PageDTO pageDTO = new PageDTO(cri, totalCount);
 
-		model.addAttribute("packageList", packageList);
+		model.addAttribute("bunchList", packageList);
 		model.addAttribute("pageMaker", pageDTO);
 
 		return "quiz/quizList";
