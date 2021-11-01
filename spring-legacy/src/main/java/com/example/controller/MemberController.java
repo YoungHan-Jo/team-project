@@ -1,8 +1,6 @@
 package com.example.controller;
 
-<<<<<<< HEAD
-import org.springframework.beans.factory.annotation.Autowired;
-=======
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
->>>>>>> master
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,9 +28,6 @@ import com.example.util.JScript;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
-import com.example.service.MemberService;
-import com.example.service.ProfileImgService;
-
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
@@ -43,8 +37,6 @@ public class MemberController {
 	@Autowired
 	private ProfileImgService profileImgService;
 
-<<<<<<< HEAD
-=======
 	@GetMapping("/loginAndSignUp")
 	public String signUpForm() {
 		System.out.println("signUp 호출됨...");
@@ -176,5 +168,4 @@ public class MemberController {
 		return str;
 	} // getFolder
 
->>>>>>> master
 }

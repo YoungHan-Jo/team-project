@@ -11,6 +11,7 @@ import com.example.domain.BoardVO;
 
 public interface BoardMapper {
 	
+	
 	@Insert("INSERT INTO board (num, board_type, , member_id, subject, content, view_count, reg_date, ipaddr, re_ref, re_lev, re_seq)"
 			+ "VALUES (#{num}, #{boardType}, #{memberId}, #{subject}, #{content}, #{vieCount}, #{regDate}, #{ipaddr}, #{reRef}, #{reLev}, #{reSeq})")
 	int addBoard(BoardVO boardVO);

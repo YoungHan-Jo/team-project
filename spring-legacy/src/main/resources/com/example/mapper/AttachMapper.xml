@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.AttachMapper">
+
+	<insert id="addAttaches">
+		<![CDATA[
+			INSERT INTO attach (uuid, uploadpath, filename, filetype, boardNum) 
+			VALUES 
+		]]>
+		<foreach collection="list" item="attach" separator=",">
+			(#{attach.uuid}, #{attach.uploadpath}, #{attach.filename}, #{attach.filetype},
+			#{attach.boardNum})
+		</foreach>
+	</insert>
+
+
+	<select id="getAttachesByUuids" resultType="attachVO">
+		<![CDATA[
+			SELECT * 
+			FROM attach
+			WHERE uuid IN 
+		]]>
+		<foreach collection="list" item="uuid" open="(" separator="," close=")">
+			#{uuid}
+		</foreach>
+	</select>
+
+
+	<delete id="deleteAttachesByUuids">
+		<![CDATA[
+			DELETE 
+			FROM attach
+			WHERE uuid IN 
+		]]>
+		<foreach collection="list" item="uuid" open="(" separator="," close=")">
+			#{uuid}
+		</foreach>
+	</delete>
+
+
+	<select id="getAttachesByboardNum" resultType="attachVO">
+		<![CDATA[
+			SELECT * 
+			FROM attach 
+			WHERE boardNum = #{boardNum} 
+			ORDER BY filetype, filename 
+		]]>
+	</select>
+
+
+	<select id="getAttachImage" resultType="attachVO">
+		<![CDATA[
+			SELECT * 
+			FROM attach
+			WHERE filetype = 'I'
+			LIMIT #{startRow}, #{amount}
+		]]>
+	</select>
+
+
+</mapper>
+
