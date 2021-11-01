@@ -5,14 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +22,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.MemberVO;
+import com.example.domain.ProfileImg;
 import com.example.service.MemberService;
 import com.example.service.ProfileService;
 import com.example.util.JScript;
+
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequestMapping("/member/*")
@@ -311,7 +313,7 @@ public class MemberController {
 		// 특정 쿠키 삭제하기(브라우저가 삭제하도록 유효기간 0초로 설정해서 보내기)
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("loginId")) {  //
+				if (cookie.getName().equals("loginId")) {  //""안에 들어갈 아이디 잘 보기!
 					cookie.setMaxAge(0); // 쿠키 유효기간 0초 설정(삭제 의도)
 					cookie.setPath("/");
 					response.addCookie(cookie); // 응답객체에 추가하기
@@ -359,13 +361,6 @@ public class MemberController {
 		}
 
 	} // deleteProfile
-
-	// 년/월/일 형식의 폴더명 리턴하는 메소드
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		String str = sdf.format(new Date());
-		return str;
-	} // getFolder
 
 
 }
