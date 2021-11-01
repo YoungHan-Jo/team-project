@@ -34,7 +34,6 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
-	
 
 	@Autowired
 	private MemberService memberService;
