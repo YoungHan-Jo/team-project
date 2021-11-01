@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class QuizVO {
 
-	private int packageNum; // PK 복합키
+	private int bunchNum; // PK 복합키
 	private int questionNum; // PK 복합키
 	private String question; // 질문
 	private String numOne;
