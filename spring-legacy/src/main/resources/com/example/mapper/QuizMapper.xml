@@ -43,16 +43,21 @@
 			WHERE b.num = #{bunchNum}
 		]]>
 	</select>
-	
 	<resultMap type="bunchVO" id="bunchAndQuizList">
 		<id column="num" property="num"/>
-		<id column="title" property="title"/>
-		<id column="member_id" property="memberId"/>
-		<id column="reg_date" property="regDate"/>
+		<result column="title" property="title"/>
+		<result column="member_id" property="memberId"/>
+		<result column="reg_date" property="regDate"/>
 		<collection property="quizList" javaType="list" ofType="quizVO">
-			
+			<id column="bunch_num" property="bunchNum"/>
+			<id column="question_num" property="questionNum"/>
+			<result column="question" property="question"/>
+			<result column="num_one" property="numOne"/>
+			<result column="num_two" property="numTwo"/>
+			<result column="num_three" property="numThree"/>
+			<result column="num_four" property="numFour"/>
+			<result column="answer" property="answer"/>
 		</collection>
-	
 	</resultMap>
 	
 
