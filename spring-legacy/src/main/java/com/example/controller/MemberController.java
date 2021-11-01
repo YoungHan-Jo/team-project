@@ -1,6 +1,5 @@
 package com.example.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -81,7 +80,6 @@ public class MemberController {
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // signUp
 
-
 	// 프로필 업로드 메소드
 	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg)
 			throws IllegalStateException, IOException {
@@ -130,173 +128,169 @@ public class MemberController {
 		return profileImg;
 	} // uploadProfile
 
-	
 	// ================================================================
 	// ================================================================
-	
-	
-	@GetMapping("/passwd") 
-	public String passwd(HttpSession session, Model model ) {
+
+	@GetMapping("/passwd")
+	public String passwd(HttpSession session, Model model) {
 		System.out.println("비밀번호 수정 페이지 호출됨...");
 		String id = (String) session.getAttribute("id");
 		model.addAttribute("id", id);
 		return "/member/passwd";
 	} // passwd 비밀번호 변경 페이지 호출
-	
-	
+
 	@PostMapping("/passwd")
-	public ResponseEntity<String> passwdPro(String id, String passwd, String npasswd, MemberVO memberVO) { // npasswd는 새로운 비밀번호
+	public ResponseEntity<String> passwdPro(String id, String passwd, String npasswd, MemberVO memberVO) { // npasswd는
+																											// 새로운 비밀번호
 		MemberVO memberVO1 = memberService.getMemberById(id);
-		String   message   = "";
-		
+		String message = "";
+
 		boolean isPasswdSame = BCrypt.checkpw(passwd, memberVO1.getPasswd());
-		
+
 		if (isPasswdSame == false) { // 비밀번호 일치하지 않음
-			message = "비밀번호가 일치하지 않습니다." ;
+			message = "비밀번호가 일치하지 않습니다.";
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Type", "text/html; charset=UTF-8");
-			
+
 			String str = JScript.back(message);
 			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 		}
-		
+
 		String pwHash = BCrypt.hashpw(npasswd, BCrypt.gensalt()); // 60글자로 암호화된 문자열 리턴함
-		
+
 		memberVO1.setPasswd(pwHash);
-		
+
 		memberService.updateOnlyPasswd(memberVO1);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "text/html; charset=UTF-8");
-		
+
 		String str = JScript.href("비밀번호변경 성공!", "/member/passwd");
-		
+
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // passwdPro // 비밀번호를 수정, 업데이트 ( 내 기존 비번 확인 후에 진행)
-	
-	
-	@GetMapping("/modify")  // GET - "/member/modify"
+
+	@GetMapping("/modify") // GET - "/member/modify"
 	public String modifyForm(HttpSession session, Model model) throws Exception {
 		String id = (String) session.getAttribute("id");
-		
+
 		// 회원 정보 조회
 		MemberVO memberVO = memberService.getMemberById(id);
-		
+
 		// 회원 프로필 사진 조회
 		ProfileImg profileImg = profileImgService.getProfileImg(id);
 		System.out.println("프로필 나오는지 test 중입니다... " + profileImg);
-		
+
 		// 뷰에서 사용할 데이터를 Model 객체에 저장 -> requestScope로 옮겨줌
 		model.addAttribute("member", memberVO);
 		model.addAttribute("profileImg", profileImg);
 
 		// 날짜 설정은 jsp 페이지에서 jstl 형식으로 해주기!!!!
-		
+
 		return "member/modifyMember";
 	} // modifyForm 회원수정 페이지로!
-	
+
 	// =============================================================================
-	
+
 	@PostMapping("/modify")
-	public ResponseEntity<String> modifyPro(MemberVO memberVO, MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
-		
+	public ResponseEntity<String> modifyPro(MemberVO memberVO, MultipartFile file, HttpSession session)
+			throws IllegalStateException, IOException {
+
 		System.out.println("POST modify... file : " + file.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
-		
+
 		// ======================= 프로필 설정하기 ========================
 		// 첨부파일 업로드(썸네일 생성) 후 profilepicVO 리턴
 		ProfileImg profileImg = uploadProfile(file, memberVO.getId(), "profileImg"); // 예외처리하기
-		System.out.println("POST modify... profilepicVO : " + profileImg); // 
-	
+		System.out.println("POST modify... profilepicVO : " + profileImg); //
+
 		// 업로드 또는 변경할 이미지 파일이 있는 경우
 		if (profileImg != null) {
 			// 현재 해당 id의 회원정보 프로필 사진 조회
 			ProfileImg profilepic = profileImgService.getProfileImg(memberVO.getId());
-			
+
 			if (profilepic != null) { // 프로필 사진이 있으면
-				
+
 				// 프로필 사진 테이블에서 정보 업데이트하기
 				profileImgService.updateProfileImg(profileImg);
-				
+
 			} else {
 				// 프로필 사진 테이블에서 정보 삽입하기
 				profileImgService.insertProfileImg(profileImg);
 			}
-			
+
 			session.setAttribute("profileImg", profileImg); // VO도 같이 가져오기
 		}
-		
-	// ============================ 여기까지가 프로필 관련 내용 =========================
-	// ---------------------------- 회원 정보 관련 -------------------------
-	// 회원정보 수정날짜로 수정하기
-	memberVO.setRegDate(new Date()); 
-	
-	// 생년월일 문자열에서 하이픈(-) 기호 제거하기
-	String birthday = memberVO.getBirthday();
-	birthday = birthday.replace("-", ""); // 하이픈 문자열을 빈문자열로 대체
-	memberVO.setBirthday(birthday);
 
-	System.out.println(memberVO); // 서버 콘솔 출력
-	
-	// DB 테이블에서 id에 해당하는 데이터 행 가져오기
-	MemberVO dbMemberVO = memberService.getMemberById(memberVO.getId());
-	
-	boolean isPasswdSame = BCrypt.checkpw(memberVO.getPasswd(), dbMemberVO.getPasswd());
-	if ( isPasswdSame == false ) {
+		// ============================ 여기까지가 프로필 관련 내용 =========================
+		// ---------------------------- 회원 정보 관련 -------------------------
+		// 회원정보 수정날짜로 수정하기
+		memberVO.setRegDate(new Date());
+
+		// 생년월일 문자열에서 하이픈(-) 기호 제거하기
+		String birthday = memberVO.getBirthday();
+		birthday = birthday.replace("-", ""); // 하이픈 문자열을 빈문자열로 대체
+		memberVO.setBirthday(birthday);
+
+		System.out.println(memberVO); // 서버 콘솔 출력
+
+		// DB 테이블에서 id에 해당하는 데이터 행 가져오기
+		MemberVO dbMemberVO = memberService.getMemberById(memberVO.getId());
+
+		boolean isPasswdSame = BCrypt.checkpw(memberVO.getPasswd(), dbMemberVO.getPasswd());
+		if (isPasswdSame == false) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "text/html; charset=UTF-8");
+
+			String str = JScript.back("비밀번호 틀림");
+
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		}
+		// 비밀번호 일치할 때
+		memberService.updateById(memberVO);
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "text/html; charset=UTF-8");
-		
-		String str = JScript.back("비밀번호 틀림");
-		
+
+		String str = JScript.href("회원정보 수정성공", "/");
+
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
-	} 
-	// 비밀번호 일치할 때
-	memberService.updateById(memberVO);
-	
-	HttpHeaders headers = new HttpHeaders();
-	headers.add("Content-Type", "text/html; charset=UTF-8");
-	
-	String str = JScript.href("회원정보 수정성공", "/");
-	
-	return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	}// 수정하는 페이지 : Pro 역할, 처리하는 곳.
-	
-	
+
 	@GetMapping("/remove")
 	public String removeForm() {
 		System.out.println("removeForm() 호출됨...");
 		return "member/removeMember";
 	} // removeForm
-	
-	
+
 	@PostMapping("/remove")
-	public ResponseEntity<String> removePro(String passwd, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<String> removePro(String passwd, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("remove() 호출됨...");
-		
+
 		// 세션에서 로그인 아이디 가져오기
 		String id = (String) session.getAttribute("id");
-		
+
 		// DB에서 아이디로 자신의 정보를 VO로 가져오기
 		MemberVO memberVO = memberService.getMemberById(id);
-		
-		
+
 		// 비밀번호 비교하기
 		boolean isPasswdSame = BCrypt.checkpw(passwd, memberVO.getPasswd());
-		
+
 		// 비밀번호가 일치하지 않을 때
 		if (isPasswdSame == false) { // !isPasswdSame 과 같음
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Type", "text/html; charset=UTF-8");
-			
+
 			String str = JScript.back("비밀번호 틀림");
 			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 		}
-		
+
 		// 비밀번호가 일치할 때
-		memberService.deleteById(id); // DB 레코드 삭제 
-		
-		// 해당 아이디 회원 프로필 사진 조회 
+		memberService.deleteById(id); // DB 레코드 삭제
+
+		// 해당 아이디 회원 프로필 사진 조회
 		ProfileImg isProfileImg = profileImgService.getProfileImg(id);
-		
+
 		// 프로필 사진 존재하면 삭제하기
 		if (isProfileImg != null) {
 			// 프로필 사진 정보 삭제
@@ -304,9 +298,9 @@ public class MemberController {
 			// 프로필 사진 삭제
 			deleteProfile(isProfileImg, "profileImg");
 		}
-		
+
 		session.invalidate(); // 세션 비우기
-		
+
 		// 쿠키값 가져오기
 		Cookie[] cookies = request.getCookies();
 
@@ -322,13 +316,12 @@ public class MemberController {
 		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "text/html; charset=UTF-8");
-		
+
 		String str = JScript.href("회원탈퇴 하였습니다.", "/");
-		
+
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
-		
+
 	} // remove -- 실제 삭제처리
-	
 
 	// 프로필 삭제 메소드 (회원수정 및 탈퇴에 사용)
 	private void deleteProfile(ProfileImg profileImg, String isProfileImg) {
