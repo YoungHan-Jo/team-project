@@ -7,6 +7,7 @@
 			<a href="/index">LOGO</a>
 		</h1>
 
+        <!-- navbar -->
 		<nav id="navbar" class="navbar order-last order-lg-0">
 			<ul>
 				<li><a class="nav-link scrollto" href="/quiz/list">QUIZ</a></li>
@@ -15,7 +16,7 @@
 			</ul>
 			<i class="bi bi-list mobile-nav-toggle"></i>
 		</nav>
-		<!-- .navbar -->
+		<!-- End navbar -->
 
 		<a href="/member/account" class="appointment-btn scrollto"><span class="d-none d-md-inline">LOGIN</span></a>
 
