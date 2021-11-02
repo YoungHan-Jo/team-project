@@ -500,7 +500,7 @@ public class MemberController {
 	
 	
 	
-	// 로그인 주석이다아ㅏㅇㅇㄴㅇㅁㄴㅇㄻㄴㅇㄹ 머지요청이안됑이이 머지잉?
+	// 로그인 주석이다아ㅏㅇㅇㄴㅇㅁㄴㅇㄻㄴㅇㄹ 머지요청이안됑이이 머지잉?1
 	@PostMapping("/login")
 	public ResponseEntity<String> login(String id, String passwd,
 			@RequestParam(required = false, defaultValue = "false") boolean rememberMe, HttpSession session,
