@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.MemberVO;
@@ -307,7 +308,7 @@ public class MemberController {
 		// 특정 쿠키 삭제하기(브라우저가 삭제하도록 유효기간 0초로 설정해서 보내기)
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("loginId")) {  //""안에 들어갈 아이디 잘 보기!
+				if (cookie.getName().equals("loginId")) { // ""안에 들어갈 아이디 잘 보기!
 					cookie.setMaxAge(0); // 쿠키 유효기간 0초 설정(삭제 의도)
 					cookie.setPath("/");
 					response.addCookie(cookie); // 응답객체에 추가하기
@@ -355,5 +356,196 @@ public class MemberController {
 
 	} // deleteProfile
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 로그인 주석이다아ㅏㅇㅇㄴㅇㅁㄴㅇㄻㄴㅇㄹ 머지요청이안됑이이 머지잉?
+	@PostMapping("/login")
+	public ResponseEntity<String> login(String id, String passwd,
+			@RequestParam(required = false, defaultValue = "false") boolean rememberMe, HttpSession session,
+			HttpServletResponse response) {
+
+		MemberVO memberVO = memberService.getMemberById(id);
+
+		boolean PW = false;
+		String message = "";
+		if (memberVO != null) {
+			PW = BCrypt.checkpw(passwd, memberVO.getPasswd());
+
+			if (PW == false) {
+				message = "아이디 또는 비밀번호가 일치하지 않습니다.";
+			}
+		} else {
+			message = "아이디 또는 비밀번호가 일치하지 않습니다.";
+		}
+
+		// 로그인 실패
+		if (memberVO == null || PW == false) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "text/html; charset=UTF-8");
+
+			String str = JScript.back(message);
+
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		}
+
+		// 로그인 성공
+		session.setAttribute("id", id);
+
+		// 로그인 상태유지 체크
+		if (rememberMe == true) {
+			Cookie cookie = new Cookie("loginId", id);
+
+			cookie.setMaxAge(60 * 60 * 24);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", "/");
+
+		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
+	}
 
 }
