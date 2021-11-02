@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Criteria;
-import com.example.domain.PackageVO;
+import com.example.domain.BunchVO;
 import com.example.domain.PageDTO;
 import com.example.domain.QuizVO;
 import com.example.service.QuizService;
@@ -36,15 +36,15 @@ public class QuizController {
 
 		System.out.println("list() 호출됨 ... ");
 
-		List<PackageVO> packageList = quizService.getPackagesByCri(cri);
+		List<BunchVO> bunchList = quizService.getBunchesByCri(cri);
 
-		int totalCount = packageList.size();
+		int totalCount = bunchList.size();
 		
-		System.out.println(packageList);
+		System.out.println(bunchList);
 
 		PageDTO pageDTO = new PageDTO(cri, totalCount);
 
-		model.addAttribute("bunchList", packageList);
+		model.addAttribute("bunchList", bunchList);
 		model.addAttribute("pageMaker", pageDTO);
 
 		return "quiz/quizList";
@@ -59,9 +59,9 @@ public class QuizController {
 	}
 
 	@PostMapping("/write")
-	public void write(PackageVO packageVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
+	public void write(BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
 			String[] numFours, String[] answers, HttpSession session) {
-		System.out.println("packageVO : " + packageVO);
+		System.out.println("bunchVO : " + bunchVO);
 		System.out.println(Arrays.toString(questions));
 		System.out.println(Arrays.toString(numOnes));
 		System.out.println(Arrays.toString(numTwos));
@@ -70,14 +70,14 @@ public class QuizController {
 		System.out.println(Arrays.toString(answers));
 		System.out.println(questions.length);
 
-		int packageNum = quizService.getNextPackageNum();
-		packageVO.setNum(packageNum);
+		int bunchNum = quizService.getNextBunchNum();
+		bunchVO.setNum(bunchNum);
 
 		List<QuizVO> quizList = new ArrayList<QuizVO>();
 
 		for (int i = 0; i < questions.length; ++i) {
 			QuizVO quizVO = new QuizVO();
-			quizVO.setPackageNum(packageNum);
+			quizVO.setBunchNum(bunchNum);
 			quizVO.setQuestionNum(i + 1);
 			quizVO.setQuestion(questions[i]);
 			quizVO.setNumOne(numOnes[i]);
@@ -90,16 +90,16 @@ public class QuizController {
 		}
 
 		String id = (String) session.getAttribute("id");
-		packageVO.setMemberId(id);
+		bunchVO.setMemberId(id);
 		
-		packageVO.setRegDate(new Date());
+		bunchVO.setRegDate(new Date());
 
-		packageVO.setQuizList(quizList);
+		bunchVO.setQuizList(quizList);
 
-		System.out.println(packageVO);
-		System.out.println(packageVO.getQuizList());
+		System.out.println(bunchVO);
+		System.out.println(bunchVO.getQuizList());
 		
-		quizService.addPackageAndQuizList(packageVO);
+		quizService.addBunchAndQuizList(bunchVO);
 		
 
 	}
