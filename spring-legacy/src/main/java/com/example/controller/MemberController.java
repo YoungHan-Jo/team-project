@@ -46,6 +46,11 @@ public class MemberController {
 		String str = sdf.format(new Date());
 		return str;
 	} // getFolder
+	
+	@GetMapping("/info")
+	public void info() {
+		System.out.println("information 호출됨...");
+	}
 
 	@GetMapping("/account")
 	public String account() {
