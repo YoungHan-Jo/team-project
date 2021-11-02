@@ -49,8 +49,21 @@ public class MemberController {
 	} // getFolder
 
 	@GetMapping("/info")
-	public void info() {
+	public void info(HttpSession session, Model model) {
 		System.out.println("information 호출됨...");
+		String id = (String) session.getAttribute("id");
+
+		// 회원 정보 조회
+		MemberVO memberVO = memberService.getMemberById(id);
+
+		// 회원 프로필 사진 조회
+		ProfileImg profileImg = profileImgService.getProfileImg(id);
+		System.out.println("프로필 나오는지 test 중입니다... " + profileImg);
+
+		// 뷰에서 사용할 데이터를 Model 객체에 저장 -> requestScope로 옮겨줌
+		model.addAttribute("member", memberVO);
+		model.addAttribute("profileImg", profileImg);
+
 	}
 
 	@GetMapping("/account")
@@ -86,9 +99,81 @@ public class MemberController {
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // signUp
 
+	@PostMapping("/login")
+	public ResponseEntity<String> login(String id, String passwd, @RequestParam(required = false, defaultValue = "false") boolean rememberMe,
+			HttpSession session, HttpServletResponse response) {
+
+		MemberVO memberVO = memberService.getMemberById(id);
+
+		boolean PW = false;
+		String message = "";
+		if (memberVO != null) {
+			PW = BCrypt.checkpw(passwd, memberVO.getPasswd());
+
+			if (PW == false) {
+				message = "아이디 또는 비밀번호가 일치하지 않습니다.";
+			}
+		} else {
+			message = "아이디 또는 비밀번호가 일치하지 않습니다.";
+		}
+
+		// 로그인 실패
+		if (memberVO == null || PW == false) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "text/html; charset=UTF-8");
+
+			String str = JScript.back(message);
+
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		}
+
+		// 로그인 성공
+		session.setAttribute("id", id);
+
+		// 로그인 상태유지 체크
+		if (rememberMe == true) {
+			Cookie cookie = new Cookie("loginId", id);
+
+			cookie.setMaxAge(60 * 60 * 24);
+			cookie.setPath("/");
+			response.addCookie(cookie);
+		}
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", "/");
+
+		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		session.invalidate();
+
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("loginId")) {
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
+			}
+		}
+
+		return "redirect:/member/account";
+	} // logout
+
+	// 년/월/일 형식의 폴더명 리턴하는 메소드
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String str = sdf.format(new Date());
+		return str;
+	} // getFolder
+
 	// 프로필 업로드 메소드
-	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg)
-			throws IllegalStateException, IOException {
+	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg) throws IllegalStateException, IOException {
 
 		ProfileImg profileImg = new ProfileImg();
 
@@ -199,8 +284,7 @@ public class MemberController {
 	// =============================================================================
 
 	@PostMapping("/modify")
-	public ResponseEntity<String> modifyPro(MemberVO memberVO, MultipartFile file, HttpSession session)
-			throws IllegalStateException, IOException {
+	public ResponseEntity<String> modifyPro(MemberVO memberVO, MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
 
 		System.out.println("POST modify... file : " + file.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
 
@@ -269,8 +353,7 @@ public class MemberController {
 	} // removeForm
 
 	@PostMapping("/remove")
-	public ResponseEntity<String> removePro(String passwd, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResponseEntity<String> removePro(String passwd, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("remove() 호출됨...");
 
 		// 세션에서 로그인 아이디 가져오기
@@ -360,188 +443,5 @@ public class MemberController {
 		}
 
 	} // deleteProfile
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 로그인 주석이다아ㅏㅇㅇㄴㅇㅁㄴㅇㄻㄴㅇㄹ 머지요청이안됑이이 머지잉?
-	@PostMapping("/login")
-	public ResponseEntity<String> login(String id, String passwd,
-			@RequestParam(required = false, defaultValue = "false") boolean rememberMe, HttpSession session,
-			HttpServletResponse response) {
-
-		MemberVO memberVO = memberService.getMemberById(id);
-
-		boolean PW = false;
-		String message = "";
-		if (memberVO != null) {
-			PW = BCrypt.checkpw(passwd, memberVO.getPasswd());
-
-			if (PW == false) {
-				message = "아이디 또는 비밀번호가 일치하지 않습니다.";
-			}
-		} else {
-			message = "아이디 또는 비밀번호가 일치하지 않습니다.";
-		}
-
-		// 로그인 실패
-		if (memberVO == null || PW == false) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Type", "text/html; charset=UTF-8");
-
-			String str = JScript.back(message);
-
-			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
-		}
-
-		// 로그인 성공
-		session.setAttribute("id", id);
-
-		// 로그인 상태유지 체크
-		if (rememberMe == true) {
-			Cookie cookie = new Cookie("loginId", id);
-
-			cookie.setMaxAge(60 * 60 * 24);
-			cookie.setPath("/");
-			response.addCookie(cookie);
-		}
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", "/");
-
-		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
-	}
+  
 }
