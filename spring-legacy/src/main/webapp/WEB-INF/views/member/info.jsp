@@ -1,5 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!-- 문자열 →  Date 객체 변환  -->
+<fmt:parseDate value="${member.birthday}" pattern="yyyymmdd" var="parseBirthday"/>
+
+<!-- Date 객체 → 문자열 변환  -->
+<fmt:formatDate value="${pageScope.parseBirthday}" pattern="yyyy-mm-dd" var="strBirthday" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +15,7 @@
 
 <style>
 
-#nav {
+#myBox {
 	position: absolute;
 	margin-top: 100px;
 	font-size: 70%;
@@ -19,14 +27,14 @@
     vertical-align: baseline;
 }
 
-#wrap {
+#myBox #wrap {
 	display: block;
 	width: 900px;
 	margin: 0 auto;
 	padding-top: 35px;
 }
 
-#menu {
+#myBox #menu {
 	padding: 13px 16px;
 	width: 150px;
 	margin: 0 auto;
@@ -40,7 +48,7 @@
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-#menu ul {
+#myBox #menu ul {
 	position: absolute;
 	top: 100%;
 	left: -4px;
@@ -52,7 +60,7 @@
 	list-style: none;
 }
 
-#menu ul li a {
+#myBox #menu ul li a {
 	font-size: 0.85em;
 	text-decoration: none;
 	display: block;
@@ -60,7 +68,7 @@
 	padding: 7px 15px;
 }
 
-#menu ul li a:hover {
+#myBox #menu ul li a:hover {
 	color: #6fa0e9;
 	background: #DBE2EF;
 }
@@ -79,7 +87,7 @@
 	<main id="main" style="background-color: #DBE2EF;">
 
         <!-- Menu Box -->
-		<div id="nav">
+		<div id="myBox">
 			<div id="wrap">
 				<div id="menu">
 					<a>내 정보</a>
@@ -87,8 +95,6 @@
                         <li><a href="/member/modify">정보 수정</a></li>
                         <li><a href="/member/passwd">비밀번호 변경</a></li>
                         <li><a href="/member/remove">회원 탈퇴</a></li>
-                        <li class="mx-2 my-1" style="border: 1px solid #8e9196;"></li>
-                        <li><a href="#">로그 아웃</a></li>
                     </ul>
 				</div>
 			</div>
@@ -98,12 +104,20 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row d-flex justify-content-center align-items-center" style="margin: 77px auto;">
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 45px auto;">
 					<div class="col col-lg-6 mb-4 mb-lg-0">
 						<div class="card text-center text-white shadow" style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
 							<div class="row p-3">
 								<div class="col-md-4" style="margin-top: 100px;">
-									<img src="/resources/img/unknown.png" class="img-fluid" style="width: 200px; border-radius: 100px;" />
+									<c:choose>
+	                                    <c:when test="${ not empty profileImg }">
+	                                        <c:set var="fileCallPath" value="${ profileImg.uploadpath }/${profileImg.memberId}/s_${ profileImg.uuid }_${ profileImg.filename }" />
+	                                        <img src="/display?fileName=${fileCallPath}" class="img-fluid" style="width: 180px; height: 180px; border-radius: 100px;" />
+	                                    </c:when>
+	                                    <c:otherwise>
+	                                        <img src="/resources/img/unknown.png" class="img-fluid" style="width: 180px; height: 180px; border-radius: 100px;" />
+	                                    </c:otherwise>  
+	                                </c:choose>
 								</div>
 								<div class="col-md-8">
 									<div class="card-body p-4">
@@ -112,33 +126,35 @@
 										<div class="row pt-1">
 											<div class="col-6 mb-3">
 												<h6 style="font-weight: bold; color: #BBE1FA;">아이디</h6>
-												<p>exam</p>
+												<p>${member.id}</p>
 											</div>
 											<div class="col-6 mb-3">
 												<h6 style="font-weight: bold; color: #BBE1FA;">이름</h6>
-												<p>홍길동</p>
+												<p>${member.name}</p>
 											</div>
 											<div class="col-6 mb-3">
 												<h6 style="font-weight: bold; color: #BBE1FA;">생년월일</h6>
-												<p>0000-00-00</p>
+												<p>${strBirthday}</p>
 											</div>
 											<div class="col-6 mb-3">
 												<h6 style="font-weight: bold; color: #BBE1FA;">성별</h6>
-												<p>남자</p>
+												<p>${ member.gender eq 'M' ? '남자' : '여자' }</p>
+												
 											</div>
 											<div class="col-6 mb-3">
 												<h6 style="font-weight: bold; color: #BBE1FA;">이메일</h6>
-												<p>exam@naver.com</p>
+												<p>${member.email}</p>
 											</div>
 											<div class="col-6 mb-3">
 												<h6 style="font-weight: bold; color: #BBE1FA;">가입일</h6>
-												<p>0000-00-00</p>
+												<p>${member.regDate}</p>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+							<button type="submit" onclick="location.href='/member/logout'" class="btn btn-dark btn-sm mt-2">로그아웃</button>
 					</div>
 				</div>
 			</div>
