@@ -41,6 +41,13 @@ public class MemberController {
 	@Autowired
 	private ProfileService profileImgService;
 
+	// 년/월/일 형식의 폴더명 리턴하는 메소드
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String str = sdf.format(new Date());
+		return str;
+	} // getFolder
+
 	@GetMapping("/info")
 	public void info(HttpSession session, Model model) {
 		System.out.println("information 호출됨...");
@@ -436,5 +443,5 @@ public class MemberController {
 		}
 
 	} // deleteProfile
-
+  
 }
