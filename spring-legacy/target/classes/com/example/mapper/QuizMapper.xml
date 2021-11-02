@@ -5,10 +5,10 @@
 <mapper namespace="com.example.mapper.QuizMapper">
 
 	<!-- =================== select ====================== -->
-	<select id="getPackagesByCri" resultType="PackageVO">
+	<select id="getBunchesByCri" resultType="BunchVO">
 		<![CDATA[
 			SELECT *
-			FROM package
+			FROM bunch
 		]]>
 		<where>
 			<!-- type는 criteria의 gettype로 꺼낸 값, ${} 사용안함 -->
@@ -26,29 +26,28 @@
 		]]>
 	</select>
 
-	<select id="getNextPackageNum" resultType="int">
+	<select id="getNextBunchNum" resultType="int">
 		<![CDATA[
 			SELECT IFNULL(MAX(num),0) + 1 AS nextnum 
-			FROM package
+			FROM bunch
 		]]>
 	</select>
 
 	<!-- =================== insert ====================== -->
-	<insert id="addPackage">
+	<insert id="addBunch">
 		<![CDATA[
-			INSERT INTO package (num, title, member_id, reg_date)
+			INSERT INTO bunch (num, title, member_id, reg_date)
 			VALUES (#{num}, #{title}, #{memberId}, #{regDate})
 		]]>
 	</insert>
 
 	<insert id="addQuizList">
 		<![CDATA[
-			INSERT INTO quiz (package_num, question_num, question, num_one, num_two, num_three, num_four, answer)
+			INSERT INTO quiz (bunch_num, question_num, question, num_one, num_two, num_three, num_four, answer)
 			VALUES 
 		]]>
 		<foreach collection="list" item="quiz" separator=",">
-			(#{quiz.packageNum}, #{quiz.questionNum}, #{quiz.question},
-			#{quiz.numOne},
+			(#{quiz.bunchNum}, #{quiz.questionNum}, #{quiz.question}, #{quiz.numOne},
 			#{quiz.numTwo}, #{quiz.numThree}, #{quiz.numFour}, #{quiz.answer})
 		</foreach>
 	</insert>

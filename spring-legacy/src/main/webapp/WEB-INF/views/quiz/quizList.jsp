@@ -45,7 +45,7 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer -->
 
-	<!-- Tob Button -->
+	<!-- Top Button -->
 	<div id="preloader"></div>
 	<a href="#"
 		class="back-to-top d-flex align-items-center justify-content-center"><i

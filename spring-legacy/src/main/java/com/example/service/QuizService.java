@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Criteria;
-import com.example.domain.PackageVO;
+import com.example.domain.BunchVO;
 import com.example.mapper.QuizMapper;
 
 @Service
@@ -20,22 +20,22 @@ public class QuizService {
 		this.quizMapper = quizMapper;
 	}
 	
-	public List<PackageVO> getPackagesByCri(Criteria cri){
+	public List<BunchVO> getBunchesByCri(Criteria cri){
 		
 		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
 		
 		cri.setStartRow(startRow);
 		
-		return quizMapper.getPackagesByCri(cri);
+		return quizMapper.getBunchesByCri(cri);
 	}
 	
-	public int getNextPackageNum() {
-		return quizMapper.getNextPackageNum();
+	public int getNextBunchNum() {
+		return quizMapper.getNextBunchNum();
 	}
 	
-	public void addPackageAndQuizList(PackageVO packageVO) {
-		quizMapper.addPackage(packageVO);
-		quizMapper.addQuizList(packageVO.getQuizList());
+	public void addBunchAndQuizList(BunchVO bunchVO) {
+		quizMapper.addBunch(bunchVO);
+		quizMapper.addQuizList(bunchVO.getQuizList());
 		
 	}
 	
