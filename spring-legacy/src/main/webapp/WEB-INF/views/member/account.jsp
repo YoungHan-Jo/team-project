@@ -5,7 +5,7 @@
 <head>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
 
-<!-- Member Menu CSS Files -->
+<!-- Member Account CSS Files -->
 <link href="/resources/css/member.css" rel="stylesheet">
 </head>
 
@@ -37,15 +37,15 @@
 											<form action="/member/login" method="POST" id="login-frm" name="login-frm" class="login-frm">
 												<div class="group">
 													<label for="id" class="label">아이디</label>
-													<input id="id" name="id" type="text" class="input" required>
+													<input class="input" id="id" name="id" type="text" required>
 												</div>
 												<div class="group">
 													<label for="passwd" class="label">비밀번호</label>
-													<input id="passwd" name="passwd" type="password" class="input" required>
+													<input class="input" id="passwd" name="passwd" type="password" required>
 												</div>
 												<div class="form-check">
 													<input id="check" type="checkbox" class="check">
-													<label for="check"><span class="icon"></span> 로그인 상태 유지</label>
+													<label class="input" for="check"><span class="icon"></span> 로그인 상태 유지</label>
 												</div>
 												<hr class="dropdown-divider">
 												<div class="group">
@@ -56,19 +56,19 @@
 											<form action="/member/signUp" method="POST" id="sign-up-frm" name="sign-up-frm" class="sign-up-frm">
 												<div class="group">
 													<label for="id" class="label">아이디</label>
-													<input id="id" name="id" type="text" class="input" required>
+													<input class="input" id="id" name="id" type="text" required>
 												</div>
 												<div class="group">
 													<label for="passwd" class="label">비밀번호</label>
-													<input id="passwd" name="passwd" type="password" class="input" required>
+													<input class="input" id="passwd" name="passwd" type="password" required>
 												</div>
 												<div class="group">
 													<label for="name" class="label">이름</label>
-													<input id="name" name="name" type="text" class="input">
+													<input class="input" id="name" name="name" type="text">
 												</div>
 												<div class="group">
 													<label for="birthday" class="label">생년월일</label>
-													<input id="birthday" name="birthday" type="date" class="input">
+													<input class="input" id="birthday" name="birthday" type="date">
 												</div>
 												<div class="group">
 													<label for="gender" class="label">성별</label>
@@ -83,7 +83,7 @@
 												</div>
 												<div class="group">
 													<label for="email" class="label">이메일</label>
-													<input id="email" name="email" type="email" class="input">
+													<input class="input" id="email" name="email" type="email">
 												</div>
 												<div class="group">
 													<label for="recvEmail" class="label">이메일 수신 여부</label>
@@ -121,7 +121,7 @@
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer -->
 
-	<!-- Tob Button -->
+	<!-- Top Button -->
 	<div id="preloader"></div>
 	<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
 	<i class="bi bi-arrow-up-short"></i></a>
