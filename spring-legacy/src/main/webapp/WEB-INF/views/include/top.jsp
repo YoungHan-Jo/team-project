@@ -11,6 +11,7 @@
 			<ul>
 				<li><a class="nav-link scrollto" href="#!">QUIZ</a></li>
 				<li><a class="nav-link scrollto" href="#!">BOARD</a></li>
+				<li><a class="nav-link scrollto" href="/ajax/logmsmain">관리자테스트</a></li>
 			</ul>
 			<i class="bi bi-list mobile-nav-toggle"></i>
 		</nav>
