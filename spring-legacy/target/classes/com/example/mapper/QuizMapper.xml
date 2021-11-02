@@ -60,6 +60,15 @@
 		</collection>
 	</resultMap>
 	
+	<select id="getAnswerListByBunchNum" resultType="String">
+		<![CDATA[
+			SELECT answer
+			FROM quiz
+			WHERE bunch_num = #{bunchNum}
+			ORDER BY bunch_num, question_num
+		]]>
+	</select>
+	
 
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">

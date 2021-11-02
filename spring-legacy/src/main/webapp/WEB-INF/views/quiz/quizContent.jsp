@@ -22,7 +22,7 @@
 				
 				<div>
 					<h2>${ bunch.title }</h2>
-					<form action="/quiz/submit" method="POST">
+					<form action="/quiz/submit?bunchNum=${ bunch.num }" method="POST">
 					<button>제출하기</button>
 						<c:forEach var="quiz" items="${ quizList }">
 							<div style="border : 1px soild black">

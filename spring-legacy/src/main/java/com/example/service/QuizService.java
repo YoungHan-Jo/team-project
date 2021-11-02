@@ -44,5 +44,10 @@ public class QuizService {
 		return quizMapper.getBunchAndQuizList(bunchNum);
 	}
 	
+	public List<String> getAnswerListByBunchNum(int bunchNum){
+		return quizMapper.getAnswerListByBunchNum(bunchNum);
+	}
+	
+	
 
 }

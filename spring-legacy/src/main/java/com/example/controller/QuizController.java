@@ -111,7 +111,7 @@ public class QuizController {
 	}
 	
 	@PostMapping("submit")
-	public String submit(HttpServletRequest request) {
+	public String submit(int bunchNum, HttpServletRequest request) {
 		
 		List<String> clientReplyList = new ArrayList<String>();
 		Enumeration<String> names = request.getParameterNames();
@@ -127,6 +127,36 @@ public class QuizController {
 		} //while
 		
 		System.out.println(clientReplyList);
+		System.out.println(bunchNum);
+		
+		List<String> answerList = quizService.getAnswerListByBunchNum(bunchNum);
+		
+		System.out.println(answerList);
+		System.out.println(answerList.get(0));
+		System.out.println(answerList.get(1));
+		
+		int questionCount = answerList.size();
+		int correct = 0;
+		List<String> isRight = new ArrayList<String>();
+		
+		for(int i = 0; i < questionCount; ++i) {
+			if(clientReplyList.get(i).equals(answerList.get(i))) {
+				isRight.add("Y");
+				correct++;
+			}else {
+				isRight.add("N");
+			}
+		}
+
+		System.out.println("정답 개수 : " + correct + "/" + questionCount );
+		System.out.println(isRight);
+		
+		double point = Math.round((double)correct / questionCount * 1000) / 10.0;
+		
+		System.out.println(point);
+		
+		
+		
 		
 		return "redirect:/quiz/result";
 	} // submit
