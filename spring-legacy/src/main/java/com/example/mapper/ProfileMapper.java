@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.example.domain.ProfileImg;
 
-public interface ProfileImgMapper {
+public interface ProfileMapper {
 
 	@Select("SELECT * FROM profile_img WHERE member_id = #{id}")
 	ProfileImg getProfileImg(String id);
