@@ -17,20 +17,14 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h1>퀴즈 리스트</h1>
+				<h1>퀴즈 결과</h1>
 				<br>
-				<button class="btn-quizWrite" onclick="location.href='/quiz/write'">퀴즈 만들기</button>
-				<div id="bunchList-form">
-					<h3>퀴즈 리스트 (${ pageMaker.totalCount })</h3>
-					<c:forEach var="bunch" items="${ bunchList }">
-						<div style="border : 1px solid black;" onclick="location.href='/quiz/content?bunchNum=${ bunch.num }'">
-							<h4>${ bunch.num }. ${ bunch.title }</h4>
-							<span>${ bunch.memberId }</span><br> 
-							<span>${ bunch.regDate }</span>
-						</div>
-						<br> <br>
-					</c:forEach>
+				<div>
+					
+					
 				</div>
+				
+				
 			</div>
 
 

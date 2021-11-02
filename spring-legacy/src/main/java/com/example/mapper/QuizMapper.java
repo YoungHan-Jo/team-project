@@ -15,7 +15,7 @@ public interface QuizMapper {
 	
 	int getNextBunchNum();
 	
-	List<QuizVO> getBunchAndQuizList(int bunchNum);
+	BunchVO getBunchAndQuizList(int bunchNum);
 	
 	
 	//=================== insert ======================

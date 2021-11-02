@@ -20,16 +20,21 @@
 				<h1>퀴즈 풀기</h1>
 				<br>
 				
-				<div id="packageList-form">
-					<h3>퀴즈 리스트 (${ pageMaker.totalCount })</h3>
-					<c:forEach var="bunch" items="${ bunchList }">
-						<div style="border : 1px solid black;">
-							<h4>${ bunch.num }. ${ bunch.title }</h4>
-							<span>${ bunch.memberId }</span><br> 
-							<span>${ bunch.regDate }</span>
-						</div>
-						<br> <br>
-					</c:forEach>
+				<div>
+					<h2>${ bunch.title }</h2>
+					<form action="/quiz/submit" method="POST">
+					<button>제출하기</button>
+						<c:forEach var="quiz" items="${ quizList }">
+							<div style="border : 1px soild black">
+							<h4>${ quiz.questionNum }. ${ quiz.question }</h4>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="1">1번 ${ quiz.numOne }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="2">2번 ${ quiz.numTwo }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="3">3번 ${ quiz.numThree }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="4">4번 ${ quiz.numFour }</p>
+							</div>
+							<br>
+						</c:forEach>
+					</form>
 				</div>
 			</div>
 

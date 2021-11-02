@@ -1,11 +1,11 @@
 package com.example.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,9 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.domain.Criteria;
 import com.example.domain.BunchVO;
+import com.example.domain.Criteria;
 import com.example.domain.PageDTO;
 import com.example.domain.QuizVO;
 import com.example.service.QuizService;
@@ -39,7 +40,7 @@ public class QuizController {
 		List<BunchVO> bunchList = quizService.getBunchesByCri(cri);
 
 		int totalCount = bunchList.size();
-		
+
 		System.out.println(bunchList);
 
 		PageDTO pageDTO = new PageDTO(cri, totalCount);
@@ -59,9 +60,9 @@ public class QuizController {
 	}
 
 	@PostMapping("/write")
-	public void write(BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
-			String[] numFours, String[] answers, HttpSession session) {
-		
+	public String write(BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
+			String[] numFours, String[] answers, HttpSession session, RedirectAttributes rttr) {
+
 		System.out.println("write() 호출됨... ");
 
 		int bunchNum = quizService.getNextBunchNum();
@@ -85,17 +86,56 @@ public class QuizController {
 
 		String id = (String) session.getAttribute("id");
 		bunchVO.setMemberId(id);
-		
 		bunchVO.setRegDate(new Date());
-
 		bunchVO.setQuizList(quizList);
 
-		System.out.println(bunchVO);
-		System.out.println(bunchVO.getQuizList());
-		
 		quizService.addBunchAndQuizList(bunchVO);
 		
+		rttr.addAttribute("bunchNum", bunchVO.getNum());
+		
+		return "redirect:/quiz/content";
 
+	} // write
+
+	@GetMapping("content")
+	public String content(int bunchNum, Model model) {
+
+		BunchVO bunchVO = quizService.getBunchAndQuizList(bunchNum);
+
+		System.out.println("bunchVO : " + bunchVO);
+		model.addAttribute("bunch", bunchVO);
+		model.addAttribute("quizList", bunchVO.getQuizList());
+		
+		return "quiz/quizContent";
+
+	}
+	
+	@PostMapping("submit")
+	public String submit(HttpServletRequest request) {
+		
+		List<String> clientReplyList = new ArrayList<String>();
+		Enumeration<String> names = request.getParameterNames();
+		
+		while(names.hasMoreElements()) {	
+			String name = names.nextElement();
+			String value = request.getParameter(name);
+			
+			if(name.startsWith("reply")) {
+				clientReplyList.add(value);
+			}	
+			
+		} //while
+		
+		System.out.println(clientReplyList);
+		
+		
+		return "redirect:/quiz/result";
+	} // submit
+	
+	@GetMapping("result")
+	public String result() {
+		
+		return "quiz/quizResult";
 	}
 
 }
