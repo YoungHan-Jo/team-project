@@ -128,7 +128,6 @@ public class QuizController {
 		
 		System.out.println(clientReplyList);
 		
-		
 		return "redirect:/quiz/result";
 	} // submit
 	
