@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Criteria;
+import com.example.domain.QuizVO;
 import com.example.domain.BunchVO;
 import com.example.mapper.QuizMapper;
 
@@ -37,6 +38,10 @@ public class QuizService {
 		quizMapper.addBunch(bunchVO);
 		quizMapper.addQuizList(bunchVO.getQuizList());
 		
+	}
+	
+	public BunchVO getBunchAndQuizList(int bunchNum){
+		return quizMapper.getBunchAndQuizList(bunchNum);
 	}
 	
 
