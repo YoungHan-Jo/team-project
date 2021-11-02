@@ -165,12 +165,6 @@ public class MemberController {
 		return "redirect:/member/account";
 	} // logout
 
-	// 년/월/일 형식의 폴더명 리턴하는 메소드
-	private String getFolder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		String str = sdf.format(new Date());
-		return str;
-	} // getFolder
 
 	// 프로필 업로드 메소드
 	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg) throws IllegalStateException, IOException {
