@@ -8,12 +8,13 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.example.domain.BoardVO;
+import com.example.domain.Criteria;
 
 public interface BoardMapper {
 	
 	
-	@Insert("INSERT INTO board (num, board_type, , member_id, subject, content, view_count, reg_date, ipaddr, re_ref, re_lev, re_seq)"
-			+ "VALUES (#{num}, #{boardType}, #{memberId}, #{subject}, #{content}, #{vieCount}, #{regDate}, #{ipaddr}, #{reRef}, #{reLev}, #{reSeq})")
+	@Insert("INSERT INTO board (num, board_type, member_id, subject, content, view_count, reg_date, re_ref, re_lev, re_seq)"
+			+ "VALUES (#{num}, #{boardType}, #{memberId}, #{subject}, #{content}, #{viewCount}, #{regDate}, #{reRef}, #{reLev}, #{reSeq})")
 	int addBoard(BoardVO boardVO);
 	
 	@Select("SELECT COUNT(*) AS cnt FROM board")
@@ -28,10 +29,16 @@ public interface BoardMapper {
 	@Select("SELECT IFNULL(MAX(num), 0) + 1 AS nextnum FROM board")
 	int getNextnum();
 	
+	int getCountBySearch(Criteria cri);
+	
+	List<BoardVO> getBoardsWithPaging(Criteria cri);
+	
+	BoardVO getBoardAndAttaches(int num);
+	
 	@Update("UPDATE board SET subject = #{subject}, content = #{content} WHERE num = #{num} ")
 	void updateBoard(BoardVO boardVO);
 	
-	@Update("UPDATE board SET viewcount = viewcount + 1 WHERE num = #{num}")
+	@Update("UPDATE board SET view_count = view_count + 1 WHERE num = #{num}")
 	void updateViewcount(int num);
 	
 	@Delete("DELETE FROM board WHERE num = #{num}")
