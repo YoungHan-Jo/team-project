@@ -20,12 +20,14 @@ import com.example.domain.Criteria;
 import com.example.domain.PageDTO;
 import com.example.domain.QuizVO;
 import com.example.service.QuizService;
-import com.mysql.cj.util.StringUtils;
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/quiz/*")
 public class QuizController {
 
+	private Gson gson = new Gson();
+	
 	private QuizService quizService;
 
 	public QuizController(QuizService quizService) {
@@ -166,6 +168,13 @@ public class QuizController {
 		
 		System.out.println(point);
 		
+		String jsonCorrectList = gson.toJson(correctList);
+		
+		System.out.println(jsonCorrectList);
+		
+		String jsonIncorrectList = gson.toJson(incorrectList);
+		
+		System.out.println(jsonIncorrectList);
 		
 		
 		
