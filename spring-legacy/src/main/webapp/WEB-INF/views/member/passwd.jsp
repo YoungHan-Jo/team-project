@@ -99,7 +99,7 @@
 				<div class="row d-flex justify-content-center align-items-center" style="margin: 108px auto;">
 					<div class="col col-lg-6 mb-4 mb-lg-0">
 
-						<form action="/member/passwd" method="POST">
+						<form action="/member/passwd" method="POST" id="frm">
 							<div class="card text-center text-white shadow" style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
 							    <div class="row p-3">
 							        <div class="col-md-12">
@@ -155,15 +155,29 @@
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
 	
     <script>
-	    $('input#npasswd2').on('focusout', function () {
-	        var npasswd = $('input#npasswd').val();
-	        var npasswd2 = $(this).val();
-	        
-	        if (npasswd != npasswd2) {
-	        	alert('비밀번호가 일치하지 않습니다.');
-	            $('input#npasswd').focus();
-	        }
-	    });
+    
+    $('input#npasswd2').on('focusout', function () {
+    	
+        const npasswd = $('input#npasswd').val();
+        const npasswd2 = $(this).val();
+        
+        if (npasswd != npasswd2) {
+            alert('비밀번호가 일치하지 않습니다.');
+            $('input#npasswd').focus();
+        }
+    });
+    
+
+    $('form#frm').on('submit',function(event){
+    	
+        var result = confirm("비밀번호를 변경하시겠습니까");
+        
+        if(result == false){
+        	event.preventDefault();
+        }
+
+    });
+	    
     </script>
 
 </body>
