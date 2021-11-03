@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Criteria;
 import com.example.domain.QuizVO;
+import com.example.domain.SolveHistoryVO;
 import com.example.domain.BunchVO;
 import com.example.mapper.QuizMapper;
 
@@ -34,6 +35,10 @@ public class QuizService {
 		return quizMapper.getNextBunchNum();
 	}
 	
+	public int getNextSolveHistoryNum() {
+		return quizMapper.getNextSolveHistoryNum();
+	}
+	
 	public void addBunchAndQuizList(BunchVO bunchVO) {
 		quizMapper.addBunch(bunchVO);
 		quizMapper.addQuizList(bunchVO.getQuizList());
@@ -46,6 +51,14 @@ public class QuizService {
 	
 	public List<String> getAnswerListByBunchNum(int bunchNum){
 		return quizMapper.getAnswerListByBunchNum(bunchNum);
+	}
+	
+	public void insertSolveHistory(SolveHistoryVO solveHistoryVO) {
+		quizMapper.insertSolveHistory(solveHistoryVO);
+	}
+	
+	public SolveHistoryVO getSolveHistoryByNum(int num) {
+		return quizMapper.getSolveHistoryByNum(num);
 	}
 	
 	

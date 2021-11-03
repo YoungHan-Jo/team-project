@@ -20,7 +20,7 @@
 				<h1>퀴즈 결과</h1>
 				<br>
 				<div>
-					
+					<p>점수 : ${ solveHistory.point } 점</p>
 					
 				</div>
 			</div>

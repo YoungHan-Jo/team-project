@@ -33,6 +33,13 @@
 		]]>
 	</select>
 	
+	<select id="getNextSolveHistoryNum" resultType="int">
+		<![CDATA[
+			SELECT IFNULL(MAX(num),0) + 1 AS nextnum 
+			FROM solve_history
+		]]>
+	</select>
+	
 	<select id="getBunchAndQuizList" resultMap="bunchAndQuizList">
 		<![CDATA[
 			SELECT b.num, b.title, b.member_id, b.reg_date, q.bunch_num, q.question_num, 
@@ -69,6 +76,14 @@
 		]]>
 	</select>
 	
+	<select id="getSolveHistoryByNum" resultType="solveHistoryVO">
+		<![CDATA[
+			SELECT *
+			FROM solve_history
+			WHERE num = #{num}
+		]]>
+	</select>
+	
 
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">
@@ -87,6 +102,13 @@
 			(#{quiz.bunchNum}, #{quiz.questionNum}, #{quiz.question}, #{quiz.numOne},
 			#{quiz.numTwo}, #{quiz.numThree}, #{quiz.numFour}, #{quiz.answer})
 		</foreach>
+	</insert>
+	
+	<insert id="insertSolveHistory">
+		<![CDATA[
+			INSERT INTO solve_history (num, member_id, bunch_num, solve_date, point, answer_list, correct_list, incorrect_list)
+			VALUES (#{num}, #{memberId}, #{bunchNum}, #{solveDate}, #{point}, #{answerList}, #{correctList}, #{incorrectList})
+		]]>
 	</insert>
 
 

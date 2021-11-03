@@ -30,7 +30,7 @@ import com.google.gson.Gson;
 public class QuizController {
 
 	private Gson gson = new Gson();
-	
+
 	private QuizService quizService;
 
 	public QuizController(QuizService quizService) {
@@ -96,9 +96,9 @@ public class QuizController {
 		bunchVO.setQuizList(quizList);
 
 		quizService.addBunchAndQuizList(bunchVO);
-		
+
 		rttr.addAttribute("bunchNum", bunchVO.getNum());
-		
+
 		return "redirect:/quiz/content";
 
 	} // write
@@ -111,76 +111,97 @@ public class QuizController {
 		System.out.println("bunchVO : " + bunchVO);
 		model.addAttribute("bunch", bunchVO);
 		model.addAttribute("quizList", bunchVO.getQuizList());
-		
+
 		return "quiz/quizContent";
 
 	}
-	
+
 	@PostMapping("submit")
-	public String submit(int bunchNum, HttpServletRequest request, HttpSession session) {
-		
+	public String submit(int bunchNum, HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
+
 		// 사용자가 제출한 정답 리스트
 		List<String> clientAnswerList = new ArrayList<String>();
-		
+
 		Enumeration<String> names = request.getParameterNames();
-		
-		while(names.hasMoreElements()) {	
+
+		while (names.hasMoreElements()) {
 			String name = names.nextElement();
 			String value = request.getParameter(name);
-			
-			if(name.startsWith("reply")) {
+
+			if (name.startsWith("reply")) {
 				clientAnswerList.add(value);
-			}	
-			
-		} //while
-		
+			}
+
+		} // while
+
 		System.out.println(clientAnswerList);
 		System.out.println(bunchNum);
-		
+
 		// 실제 정답 리스트
 		List<String> realAnswerList = quizService.getAnswerListByBunchNum(bunchNum);
-		
+
 		int questionCount = realAnswerList.size(); // 총 문제 수
 		int correct = 0; // 정답 맞춘 개수
-		
+
 		// 맞힌 문제 리스트
 		List<Integer> correctList = new ArrayList<Integer>();
-		
+
 		// 틀린 문제 리스트
-		List<Integer> incorrectList = new ArrayList<Integer>(); 
-		
-		for(int i = 0; i < questionCount; ++i) {
-			if(clientAnswerList.get(i).equals(realAnswerList.get(i))) {
-				correctList.add(i+1);
+		List<Integer> incorrectList = new ArrayList<Integer>();
+
+		for (int i = 0; i < questionCount; ++i) {
+			if (clientAnswerList.get(i).equals(realAnswerList.get(i))) {
+				correctList.add(i + 1);
 				correct++;
-			}else {
-				incorrectList.add(i+1);
+			} else {
+				incorrectList.add(i + 1);
 			}
 		}
 
-		System.out.println("정답 개수 : " + correct + "/" + questionCount );
+		System.out.println("정답 개수 : " + correct + "/" + questionCount);
 		System.out.println("정답 : " + correctList);
 		System.out.println("오답 : " + incorrectList);
-		
+
 		// 점수
-		double point = Math.round((double)correct / questionCount * 1000) / 10.0;
+		double point = Math.round((double) correct / questionCount * 1000) / 10.0;
 		System.out.println(point);
-		
+
 		// List -> strJson 직렬화
 		String ClientAnswerList = gson.toJson(clientAnswerList);
 		String jsonCorrectList = gson.toJson(correctList);
 		String jsonIncorrectList = gson.toJson(incorrectList);
+
+		String id = (String) session.getAttribute("id");
+
+		int solveHistoryNum = quizService.getNextSolveHistoryNum();
 		
 		SolveHistoryVO solveHistoryVO = new SolveHistoryVO();
+		solveHistoryVO.setNum(solveHistoryNum);
+		solveHistoryVO.setMemberId(id);
+		solveHistoryVO.setBunchNum(bunchNum);
+		solveHistoryVO.setSolveDate(new Date());
+		solveHistoryVO.setPoint(point);
+		solveHistoryVO.setAnswerList(ClientAnswerList);
+		solveHistoryVO.setCorrectList(jsonCorrectList);
+		solveHistoryVO.setIncorrectList(jsonIncorrectList);
 		
+		quizService.insertSolveHistory(solveHistoryVO);
 		
-		
+		rttr.addAttribute("solveHistoryNum", solveHistoryNum);
+
 		return "redirect:/quiz/result";
 	} // submit
-	
+
 	@GetMapping("result")
-	public String result() {
+	public String result(int solveHistoryNum, Model model) {
 		
+		SolveHistoryVO solveHistoryVO = quizService.getSolveHistoryByNum(solveHistoryNum);
+		
+		List<Integer> correctList = JsonUtils.strJsonToList(solveHistoryVO.getCorrectList());
+		List<Integer> incorrectList = JsonUtils.strJsonToList(solveHistoryVO.getIncorrectList());
+		
+		model.addAttribute("solveHistory", solveHistoryVO);
+
 		return "quiz/quizResult";
 	}
 
