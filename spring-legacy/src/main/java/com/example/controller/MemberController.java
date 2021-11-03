@@ -48,24 +48,6 @@ public class MemberController {
 		return str;
 	} // getFolder
 
-	@GetMapping("/info")
-	public void info(HttpSession session, Model model) {
-		System.out.println("information 호출됨...");
-		String id = (String) session.getAttribute("id");
-
-		// 회원 정보 조회
-		MemberVO memberVO = memberService.getMemberById(id);
-
-		// 회원 프로필 사진 조회
-		ProfileImg profileImg = profileImgService.getProfileImg(id);
-		System.out.println("프로필 나오는지 test 중입니다... " + profileImg);
-
-		// 뷰에서 사용할 데이터를 Model 객체에 저장 -> requestScope로 옮겨줌
-		model.addAttribute("member", memberVO);
-		model.addAttribute("profileImg", profileImg);
-
-	}
-
 	@GetMapping("/account")
 	public String account() {
 		System.out.println("account 호출됨...");
@@ -165,6 +147,23 @@ public class MemberController {
 		return "redirect:/member/account";
 	} // logout
 
+	@GetMapping("/info")
+	public void info(HttpSession session, Model model) {
+		System.out.println("information 호출됨...");
+		String id = (String) session.getAttribute("id");
+
+		// 회원 정보 조회
+		MemberVO memberVO = memberService.getMemberById(id);
+
+		// 회원 프로필 사진 조회
+		ProfileImg profileImg = profileImgService.getProfileImg(id);
+		System.out.println("프로필 나오는지 test 중입니다... " + profileImg);
+
+		// 뷰에서 사용할 데이터를 Model 객체에 저장 -> requestScope로 옮겨줌
+		model.addAttribute("member", memberVO);
+		model.addAttribute("profileImg", profileImg);
+
+	}
 
 	// 프로필 업로드 메소드
 	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg) throws IllegalStateException, IOException {
@@ -213,9 +212,6 @@ public class MemberController {
 		return profileImg;
 	} // uploadProfile
 
-	// ================================================================
-	// ================================================================
-
 	@GetMapping("/passwd")
 	public String passwd(HttpSession session, Model model) {
 		System.out.println("비밀번호 수정 페이지 호출됨...");
@@ -225,8 +221,8 @@ public class MemberController {
 	} // passwd 비밀번호 변경 페이지 호출
 
 	@PostMapping("/passwd")
-	public ResponseEntity<String> passwdPro(String id, String passwd, String npasswd, MemberVO memberVO) { // npasswd는
-																											// 새로운 비밀번호
+	public ResponseEntity<String> passwdPro(String id, String passwd, String npasswd, MemberVO memberVO) {
+		
 		MemberVO memberVO1 = memberService.getMemberById(id);
 		String message = "";
 
@@ -275,10 +271,8 @@ public class MemberController {
 		return "member/modifyMember";
 	} // modifyForm 회원수정 페이지로!
 
-	// =============================================================================
-
 	@PostMapping("/modify")
-	public ResponseEntity<String> modifyPro(MemberVO memberVO, MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
+	public ResponseEntity<String> modifyPro(MemberVO memberVO, @RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
 
 		System.out.println("POST modify... file : " + file.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
 
@@ -305,7 +299,6 @@ public class MemberController {
 			session.setAttribute("profileImg", profileImg); // VO도 같이 가져오기
 		}
 
-		// ============================ 여기까지가 프로필 관련 내용 =========================
 		// ---------------------------- 회원 정보 관련 -------------------------
 		// 회원정보 수정날짜로 수정하기
 		memberVO.setRegDate(new Date());

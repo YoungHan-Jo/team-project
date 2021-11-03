@@ -57,7 +57,7 @@
 											<form action="/member/signUp" method="POST" id="sign-up-frm" name="sign-up-frm" class="sign-up-frm">
 												<div class="group">
 													<label for="id" class="label">아이디</label>
-													<input class="input" id="id" name="id" type="text" required>
+													<input class="input" id="signUpId" name="id" type="text" required>
 												</div>
 												<div class="group">
 													<label for="passwd" class="label">비밀번호</label>
@@ -129,6 +129,39 @@
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
+	
+    <script>
+        $('input#signUpId').on({
+        	
+            focusout : function() {
+                var id = $(this).val();
+                $.ajax({
+                    url : '/api/members/' + id,
+                    method : 'GET',
+                    success : function(data) {
+                        console.log(data);
+                        console.log(typeof data);
+
+                        if (data.count == 0) {
+                            alert('중복된 아이디입니다.');
+                            $('input#signUpId').focus().val('');
+                        } else { // obj.count == 0
+                            alert('사용 가능한 아이디입니다.');
+                            $('input#signUpId').attr('readonly', true);
+                        }
+                    }
+                });
+            },
+            
+            keyup : function(event) {
+                if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
+                    var id = $(this).val();
+                    $(this).val(id.replace(/[^a-z0-9]/gi, ''));
+                }
+            }
+            
+        });
+    </script>
 
 </body>
 
