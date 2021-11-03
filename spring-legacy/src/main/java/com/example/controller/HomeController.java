@@ -29,7 +29,7 @@ public class HomeController {
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getImageFile(String fileName) throws IOException {
-		File file = new File("D:/upload", fileName);
+		File file = new File("C:/team/upload", fileName);
 
 		HttpHeaders headers = new HttpHeaders();
 		String contentType = Files.probeContentType(file.toPath());
@@ -44,7 +44,7 @@ public class HomeController {
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(String fileName) throws UnsupportedEncodingException {
-		File file = new File("D:/upload", fileName);
+		File file = new File("C:/team/upload", fileName);
 
 		Resource resource = new FileSystemResource(file);
 
