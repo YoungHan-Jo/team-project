@@ -7,26 +7,21 @@ import com.example.domain.BunchVO;
 import com.example.domain.QuizVO;
 
 public interface QuizMapper {
-	
-	
-	//=================== select ======================
-	
+
+	// =================== select ======================
+
 	List<BunchVO> getBunchesByCri(Criteria cri);
-	
+
 	int getNextBunchNum();
-	
+
 	BunchVO getBunchAndQuizList(int bunchNum);
-	
+
 	List<String> getAnswerListByBunchNum(int bunchNum);
-	
-	
-	//=================== insert ======================
-	
+
+	// =================== insert ======================
+
 	void addBunch(BunchVO bunchVO);
-	
+
 	void addQuizList(List<QuizVO> quizList);
-	
-	
-	
 
 }

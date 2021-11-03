@@ -20,6 +20,7 @@ import com.example.domain.Criteria;
 import com.example.domain.PageDTO;
 import com.example.domain.QuizVO;
 import com.example.service.QuizService;
+import com.mysql.cj.util.StringUtils;
 
 @Controller
 @RequestMapping("/quiz/*")
@@ -113,7 +114,9 @@ public class QuizController {
 	@PostMapping("submit")
 	public String submit(int bunchNum, HttpServletRequest request) {
 		
+		// 사용자가 제출한 정답 리스트
 		List<String> clientReplyList = new ArrayList<String>();
+		
 		Enumeration<String> names = request.getParameterNames();
 		
 		while(names.hasMoreElements()) {	
@@ -129,31 +132,41 @@ public class QuizController {
 		System.out.println(clientReplyList);
 		System.out.println(bunchNum);
 		
+		// 실제 정답 리스트
 		List<String> answerList = quizService.getAnswerListByBunchNum(bunchNum);
 		
 		System.out.println(answerList);
 		System.out.println(answerList.get(0));
-		System.out.println(answerList.get(1));
 		
-		int questionCount = answerList.size();
-		int correct = 0;
-		List<String> isRight = new ArrayList<String>();
+		int questionCount = answerList.size(); // 총 문제 수
+		int correct = 0; // 정답 맞춘 개수
+		
+		// 맞은 문제 리스트
+		List<Integer> correctList = new ArrayList<Integer>();
+		
+		// 틀린 문제 리스트
+		List<Integer> incorrectList = new ArrayList<Integer>(); 
 		
 		for(int i = 0; i < questionCount; ++i) {
 			if(clientReplyList.get(i).equals(answerList.get(i))) {
-				isRight.add("Y");
+				correctList.add(i+1);
 				correct++;
 			}else {
-				isRight.add("N");
+				incorrectList.add(i+1);
 			}
 		}
 
 		System.out.println("정답 개수 : " + correct + "/" + questionCount );
-		System.out.println(isRight);
+		System.out.println("정답 : " + correctList);
+		System.out.println("오답 : " + incorrectList);
 		
+		
+		// 점수
 		double point = Math.round((double)correct / questionCount * 1000) / 10.0;
 		
 		System.out.println(point);
+		
+		
 		
 		
 		
