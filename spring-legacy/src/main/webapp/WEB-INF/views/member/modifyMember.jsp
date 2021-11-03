@@ -174,7 +174,7 @@
 					                               <h6 style="font-weight: bold; color: #BBE1FA;">비밀번호 확인</h6>
 							                    </div>
 							                    <div class="col-7 mt-3 input-group-sm">
-                                                    <input type="password" class="form-control" id="passwd" required>
+                                                    <input type="password" class="form-control" id="passwd" name= "passwd" required>
 							                    </div>
 							                </div>
 							            </div>

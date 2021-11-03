@@ -250,7 +250,64 @@ public class MemberController {
 
 		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 	} // passwdPro // 비밀번호를 수정, 업데이트 ( 내 기존 비번 확인 후에 진행)
+	
+	// ====================================================================================================
+	// ====================================================================================================
 
+	
+	// 프로필 업로드 메소드
+		private ProfileImg uploadProfile(MultipartFile multipartFile, String id, String isProfileImg) throws IllegalStateException, IOException {
+
+			ProfileImg profileImg = null;
+
+			// 업로드 할 파일이 없으면 메소드 종료
+			if (multipartFile == null) {
+				return profileImg;
+			}
+			
+			profileImg = new ProfileImg();
+
+			String uploadFolder = "C:/team/upload"; // 업로드 기준경로
+
+			File uploadPath = new File(uploadFolder, getFolder());
+
+			// 프로필 사진일 경우(경로 변경)
+			if (isProfileImg != null) {
+				uploadFolder = "C:/team/upload/profile/" + id;
+				uploadPath = new File(uploadFolder);
+			}
+
+			if (!uploadPath.exists()) {
+				uploadPath.mkdirs();
+			}
+
+			if (!multipartFile.isEmpty()) {
+				String originalFilename = multipartFile.getOriginalFilename();
+				UUID uuid = UUID.randomUUID();
+				String uploadFilename = uuid.toString() + "_" + originalFilename;
+
+				File proFile = new File(uploadPath, uploadFilename); // 생성할 파일이름 정보
+
+				multipartFile.transferTo(proFile);
+				System.out.println("프로필 사진 파일 업로드 성공!");
+
+				// 현재 업로드한 파일이 이미지 파일이면 썸네일 이미지를 추가로 생성하기
+				File outFile = new File(uploadPath, "s_" + uploadFilename);
+
+				Thumbnailator.createThumbnail(proFile, outFile, 200, 200); // 썸네일 이미지 파일 생성하기
+
+				profileImg.setUuid(uuid.toString());
+				profileImg.setUploadpath((isProfileImg != null) ? "profile" : getFolder());
+				profileImg.setFilename(originalFilename);
+				profileImg.setMemberId(id);
+			}
+
+			return profileImg;
+		} // uploadProfile
+
+	// ====================================================================================================
+	// ====================================================================================================
+	
 	@GetMapping("/modify") // GET - "/member/modify"
 	public String modifyForm(HttpSession session, Model model) throws Exception {
 		String id = (String) session.getAttribute("id");
@@ -265,7 +322,7 @@ public class MemberController {
 		// 뷰에서 사용할 데이터를 Model 객체에 저장 -> requestScope로 옮겨줌
 		model.addAttribute("member", memberVO);
 		model.addAttribute("profileImg", profileImg);
-
+		
 		// 날짜 설정은 jsp 페이지에서 jstl 형식으로 해주기!!!!
 
 		return "member/modifyMember";
@@ -276,9 +333,12 @@ public class MemberController {
 
 		System.out.println("POST modify... file : " + file.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
 
+
+		System.out.println("POST modify... file : " + multipartFile.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
+		
 		// ======================= 프로필 설정하기 ========================
 		// 첨부파일 업로드(썸네일 생성) 후 profilepicVO 리턴
-		ProfileImg profileImg = uploadProfile(file, memberVO.getId(), "profileImg"); // 예외처리하기
+		ProfileImg profileImg = uploadProfile(multipartFile, memberVO.getId(), "profileImg"); // 예외처리하기
 		System.out.println("POST modify... profilepicVO : " + profileImg); //
 
 		// 업로드 또는 변경할 이미지 파일이 있는 경우
@@ -299,7 +359,9 @@ public class MemberController {
 			session.setAttribute("profileImg", profileImg); // VO도 같이 가져오기
 		}
 
+		// ---------------------------- 여기까지가 프로필 관련 내용 ----------------------------
 		// ---------------------------- 회원 정보 관련 -------------------------
+		
 		// 회원정보 수정날짜로 수정하기
 		memberVO.setRegDate(new Date());
 
@@ -309,9 +371,11 @@ public class MemberController {
 		memberVO.setBirthday(birthday);
 
 		System.out.println(memberVO); // 서버 콘솔 출력
+		
+		String id = (String) session.getAttribute("id");
 
 		// DB 테이블에서 id에 해당하는 데이터 행 가져오기
-		MemberVO dbMemberVO = memberService.getMemberById(memberVO.getId());
+		MemberVO dbMemberVO = memberService.getMemberById(id);
 
 		boolean isPasswdSame = BCrypt.checkpw(memberVO.getPasswd(), dbMemberVO.getPasswd());
 		if (isPasswdSame == false) {
