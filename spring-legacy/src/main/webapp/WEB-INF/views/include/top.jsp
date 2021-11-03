@@ -12,7 +12,7 @@
 		<nav id="navbar" class="navbar order-last order-lg-0">
 			<ul>
 				<li><a class="nav-link scrollto" href="/quiz/list">QUIZ</a></li>
-				<li><a class="nav-link scrollto" href="#!">BOARD</a></li>
+				<li><a class="nav-link scrollto" href="/board/list">BOARD</a></li>
 				<li><a class="nav-link scrollto" href="/ajax/logmsmain">관리자테스트</a></li>
 			</ul>
 			<i class="bi bi-list mobile-nav-toggle"></i>
