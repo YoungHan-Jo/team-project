@@ -165,52 +165,7 @@ public class MemberController {
 
 	}
 
-	// 프로필 업로드 메소드
-	private ProfileImg uploadProfile(MultipartFile file, String id, String isProfileImg) throws IllegalStateException, IOException {
-
-		ProfileImg profileImg = new ProfileImg();
-
-		// 업로드 할 파일이 없으면 메소드 종료
-		if (file == null) {
-			return profileImg;
-		}
-
-		String uploadFolder = "C:/team/upload"; // 업로드 기준경로
-
-		File uploadPath = new File(uploadFolder, getFolder());
-
-		// 프로필 사진일 경우(경로 변경)
-		if (isProfileImg != null) {
-			uploadFolder = "C:/team/upload/profile/" + id;
-			uploadPath = new File(uploadFolder);
-		}
-
-		if (!uploadPath.exists()) {
-			uploadPath.mkdirs();
-		}
-
-		if (!file.isEmpty()) {
-			String originalFilename = file.getOriginalFilename();
-			UUID uuid = UUID.randomUUID();
-			String uploadFilename = uuid.toString() + "_" + originalFilename;
-
-			File proFile = new File(uploadPath, uploadFilename); // 생성할 파일이름 정보
-
-			file.transferTo(proFile);
-
-			// 현재 업로드한 파일이 이미지 파일이면 썸네일 이미지를 추가로 생성하기
-			File outFile = new File(uploadPath, "s_" + uploadFilename);
-
-			Thumbnailator.createThumbnail(proFile, outFile, 200, 200); // 썸네일 이미지 파일 생성하기
-
-			profileImg.setUuid(uuid.toString());
-			profileImg.setUploadpath((isProfileImg != null) ? "profileImg" : getFolder());
-			profileImg.setFilename(originalFilename);
-			profileImg.setMemberId(id);
-		}
-
-		return profileImg;
-	} // uploadProfile
+	
 
 	@GetMapping("/passwd")
 	public String passwd(HttpSession session, Model model) {
@@ -329,10 +284,7 @@ public class MemberController {
 	} // modifyForm 회원수정 페이지로!
 
 	@PostMapping("/modify")
-	public ResponseEntity<String> modifyPro(MemberVO memberVO, @RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) throws IllegalStateException, IOException {
-
-		System.out.println("POST modify... file : " + file.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
-
+	public ResponseEntity<String> modifyPro(MemberVO memberVO, MultipartFile multipartFile, HttpSession session) throws IllegalStateException, IOException {
 
 		System.out.println("POST modify... file : " + multipartFile.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
 		
