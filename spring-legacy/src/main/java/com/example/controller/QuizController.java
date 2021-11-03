@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -19,7 +20,9 @@ import com.example.domain.BunchVO;
 import com.example.domain.Criteria;
 import com.example.domain.PageDTO;
 import com.example.domain.QuizVO;
+import com.example.domain.SolveHistoryVO;
 import com.example.service.QuizService;
+import com.example.util.JsonUtils;
 import com.google.gson.Gson;
 
 @Controller
@@ -114,10 +117,10 @@ public class QuizController {
 	}
 	
 	@PostMapping("submit")
-	public String submit(int bunchNum, HttpServletRequest request) {
+	public String submit(int bunchNum, HttpServletRequest request, HttpSession session) {
 		
 		// 사용자가 제출한 정답 리스트
-		List<String> clientReplyList = new ArrayList<String>();
+		List<String> clientAnswerList = new ArrayList<String>();
 		
 		Enumeration<String> names = request.getParameterNames();
 		
@@ -126,31 +129,28 @@ public class QuizController {
 			String value = request.getParameter(name);
 			
 			if(name.startsWith("reply")) {
-				clientReplyList.add(value);
+				clientAnswerList.add(value);
 			}	
 			
 		} //while
 		
-		System.out.println(clientReplyList);
+		System.out.println(clientAnswerList);
 		System.out.println(bunchNum);
 		
 		// 실제 정답 리스트
-		List<String> answerList = quizService.getAnswerListByBunchNum(bunchNum);
+		List<String> realAnswerList = quizService.getAnswerListByBunchNum(bunchNum);
 		
-		System.out.println(answerList);
-		System.out.println(answerList.get(0));
-		
-		int questionCount = answerList.size(); // 총 문제 수
+		int questionCount = realAnswerList.size(); // 총 문제 수
 		int correct = 0; // 정답 맞춘 개수
 		
-		// 맞은 문제 리스트
+		// 맞힌 문제 리스트
 		List<Integer> correctList = new ArrayList<Integer>();
 		
 		// 틀린 문제 리스트
 		List<Integer> incorrectList = new ArrayList<Integer>(); 
 		
 		for(int i = 0; i < questionCount; ++i) {
-			if(clientReplyList.get(i).equals(answerList.get(i))) {
+			if(clientAnswerList.get(i).equals(realAnswerList.get(i))) {
 				correctList.add(i+1);
 				correct++;
 			}else {
@@ -162,21 +162,16 @@ public class QuizController {
 		System.out.println("정답 : " + correctList);
 		System.out.println("오답 : " + incorrectList);
 		
-		
 		// 점수
 		double point = Math.round((double)correct / questionCount * 1000) / 10.0;
-		
 		System.out.println(point);
 		
+		// List -> strJson 직렬화
+		String ClientAnswerList = gson.toJson(clientAnswerList);
 		String jsonCorrectList = gson.toJson(correctList);
-		
-		System.out.println(jsonCorrectList);
-		
 		String jsonIncorrectList = gson.toJson(incorrectList);
 		
-		System.out.println(jsonIncorrectList);
-		
-		
+		SolveHistoryVO solveHistoryVO = new SolveHistoryVO();
 		
 		
 		
