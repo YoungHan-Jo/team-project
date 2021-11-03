@@ -72,6 +72,12 @@
     background: #DBE2EF;
 }
 
+.form-check {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 8px;
+}
+
 </style>
 </head>
 
@@ -111,7 +117,7 @@
 							        <div class="col-md-4" style="margin-top: 100px;">
 								        <c:choose>
 	                                        <c:when test="${ not empty profileImg }">
-	                                            <c:set var="fileCallPath" value="${ profileImg.uploadpath }/${profileImg.memberId}/s_${ profileImg.uuid }_${ profileImg.filename }" />
+	                                            <c:set var="fileCallPath" value="${ profileImg.uploadpath }/${profileImg.memberId}/${ profileImg.uuid }_${ profileImg.filename }" />
 	                                            <img src="/display?fileName=${fileCallPath}" class="img-fluid" style="width: 180px; height: 180px; border-radius: 100px;" />
 	                                        </c:when>
 	                                        <c:otherwise>
