@@ -77,7 +77,7 @@ public class BoardRestController {
 	@DeleteMapping(value = "/boards/{num}",produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<BoardVO> remove(@PathVariable("num") int num){
 		
-		
+		// boards/num 기준으로 삭제 한마디로 게시글의 번호 num에 맞는 수를 입력하여 버튼을 클릭하면 삭제가 됨
 		BoardVO dbboardVO = boardService.deleteBoard(num);
 		
 		

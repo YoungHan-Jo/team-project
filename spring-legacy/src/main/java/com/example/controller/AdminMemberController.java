@@ -46,4 +46,9 @@ public class AdminMemberController {
 		System.out.println("logmsDeleteBoard ? 호출됨");
 	}
 	
+	
+	@GetMapping("logmsInsertQuiz")
+	public void logmsInsertQuiz() {
+		System.out.println("logmsInsertQuiz ? 호출됨");
+	}
 }

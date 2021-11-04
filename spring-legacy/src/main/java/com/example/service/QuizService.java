@@ -45,4 +45,8 @@ public class QuizService {
 	}
 	
 
+	public List<QuizVO> getQuiz(){
+		return quizMapper.getQuiz();
+	}
+	
 }

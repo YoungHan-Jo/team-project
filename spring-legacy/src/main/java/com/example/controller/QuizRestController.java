@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.domain.BoardVO;
 import com.example.domain.BunchVO;
+import com.example.domain.Criteria;
 import com.example.domain.MemberVO;
 import com.example.domain.QuizVO;
 import com.example.service.MemberService;
@@ -42,16 +44,26 @@ public class QuizRestController {
 	@Autowired
 	private QuizService quizService;
 	
-	@GetMapping(value = "/quizs/{bunchNum}", produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<BunchVO> getAll(@PathVariable("bunchNum") int bunchNum) {
+	@GetMapping(value = "/quizs", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<List<QuizVO>> getAll() {
 		
-		BunchVO bunchVO = quizService.getBunchAndQuizList(bunchNum);
+		List<QuizVO> quizList = quizService.getQuiz();
 		
-		
-		return new ResponseEntity<BunchVO>(bunchVO, HttpStatus.OK);
+		return new ResponseEntity<List<QuizVO>>(quizList,HttpStatus.OK);
 	}
 	
 	
+	@PostMapping(value = "/quizs", consumes = "application/json", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Map<String, Object>> create(@RequestBody BunchVO bunchVO){
+		
+		quizService.addBunchAndQuizList(bunchVO);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", "success");
+		map.put("bunch", bunchVO);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
 	
 	
 	

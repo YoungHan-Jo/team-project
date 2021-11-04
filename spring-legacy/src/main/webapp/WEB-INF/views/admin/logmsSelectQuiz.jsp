@@ -7,7 +7,7 @@
 <body>
 
 	<h1>퀴즈관리자</h1>
-   	<button type="button" id="btn">퀴즈목록보기</button>
+   	<button type="button" id="btn6">퀴즈목록보기</button>
 	<button onclick="history.go(-1);">되돌아가기</button>
 	<br><br>
 	<table border="1">
@@ -23,12 +23,15 @@
 
 <script src="/resources/js/jquery-3.6.0.js"></script>
 <script>
+
+
+
 	function showData(array) {
 		var str = '';
 		
 		if (array != null && array.length > 0) {
 			
-			for (var member of array) {
+			for (var quiz of array) {
 				str += `
 					<tr>
 						<td>\${quiz.bunchNum}</td>
@@ -48,11 +51,11 @@
 
 
 	
-	$('button#btn').on('click', function () {
+	$('button#btn6').on('click', function () {
 		
 		// ajax 함수 호출 - 비동기 자바스크립트 통신
 		$.ajax({
-			url: '/api/quizs/' + bunchNum,
+			url: '/api/quizs',
 			method: 'GET',
 			success: function (data) {
 				console.log(data);
