@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -19,13 +20,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.domain.BoardVO;
+import com.example.domain.Criteria;
 import com.example.domain.MemberVO;
+import com.example.domain.PageDTO;
 import com.example.domain.ProfileImg;
+import com.example.service.BoardService;
 import com.example.service.MemberService;
 import com.example.service.ProfileService;
 import com.example.util.JScript;
@@ -40,6 +46,11 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private ProfileService profileImgService;
+	
+	@Autowired
+	private BoardService boardService;
+	
+	
 
 	// 년/월/일 형식의 폴더명 리턴하는 메소드
 	private String getFolder() {
@@ -446,5 +457,39 @@ public class MemberController {
 		}
 
 	} // deleteProfile
+	
+	
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	// ----------- 여기서부터는 내가 쓴 글 관련 -----------------------------
+	
+	@GetMapping("/myboardList")
+	public String myboardlistpage(Criteria cri, Model model, HttpSession session) {
+		System.out.println("myboardlistpage 화면 호출됨...");
+		
+		String id = (String) session.getAttribute("id");
+		
+		// board 테이블에서 (검색어가 있으면)검색, 페이징 적용한 글 리스트 가져오기 
+		List<BoardVO> boardList = boardService.getBoardsbyMemberIdwithPaging(cri, id);
+		
+		// 검색유형, 검색어가 있으면 적용하여 글개수 가져오기
+		int totalCount = boardService.getCountSearchingbyMemberId(cri, id);
+		
+		// 페이지블록 정보 객체준비. 필요한 정보를 생성자로 전달.
+		PageDTO pageDTO = new PageDTO(cri, totalCount);
+		
+		
+		// 뷰에서 사용할 데이터를 Model 객체에 저장 →  스프링(dispathcer servlet)이 requestScope로 옯겨줌.
+		model.addAttribute("myboardList", boardList);
+		model.addAttribute("pageMaker",pageDTO);
+		
+		return "member/myboardList";
+	} // list
+	
+	
+	
+	
   
 }
