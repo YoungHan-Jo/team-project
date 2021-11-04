@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +60,10 @@ public class QuizService {
 	
 	public SolveHistoryVO getSolveHistoryByNum(int num) {
 		return quizMapper.getSolveHistoryByNum(num);
+	}
+	
+	public List<QuizVO> getQuizListByResult(Map<String, Object> map){
+		return quizMapper.getQuizListByResult(map);
 	}
 	
 	

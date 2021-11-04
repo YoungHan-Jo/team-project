@@ -1,10 +1,11 @@
 package com.example.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -163,7 +164,7 @@ public class QuizController {
 		System.out.println("오답 : " + incorrectList);
 
 		// 점수
-		double point = Math.round((double) correct / questionCount * 1000) / 10.0;
+		int point = (int) Math.round((double) correct / questionCount * 100);
 		System.out.println(point);
 
 		// List -> strJson 직렬화
@@ -174,7 +175,7 @@ public class QuizController {
 		String id = (String) session.getAttribute("id");
 
 		int solveHistoryNum = quizService.getNextSolveHistoryNum();
-		
+
 		SolveHistoryVO solveHistoryVO = new SolveHistoryVO();
 		solveHistoryVO.setNum(solveHistoryNum);
 		solveHistoryVO.setMemberId(id);
@@ -184,9 +185,9 @@ public class QuizController {
 		solveHistoryVO.setAnswerList(ClientAnswerList);
 		solveHistoryVO.setCorrectList(jsonCorrectList);
 		solveHistoryVO.setIncorrectList(jsonIncorrectList);
-		
+
 		quizService.insertSolveHistory(solveHistoryVO);
-		
+
 		rttr.addAttribute("solveHistoryNum", solveHistoryNum);
 
 		return "redirect:/quiz/result";
@@ -194,13 +195,36 @@ public class QuizController {
 
 	@GetMapping("result")
 	public String result(int solveHistoryNum, Model model) {
-		
+
 		SolveHistoryVO solveHistoryVO = quizService.getSolveHistoryByNum(solveHistoryNum);
 		
+		List<Integer> answerList = JsonUtils.strJsonToList(solveHistoryVO.getAnswerList()); 
 		List<Integer> correctList = JsonUtils.strJsonToList(solveHistoryVO.getCorrectList());
 		List<Integer> incorrectList = JsonUtils.strJsonToList(solveHistoryVO.getIncorrectList());
+
+		Map<String, Object> mapCorrect = new HashMap<String, Object>();
+		mapCorrect.put("bunchNum", solveHistoryVO.getBunchNum());
+		mapCorrect.put("questionlist", correctList);
 		
+		Map<String, Object> mapIncorrect = new HashMap<String, Object>();
+		mapIncorrect.put("bunchNum", solveHistoryVO.getBunchNum());
+		mapIncorrect.put("questionlist", incorrectList);
+
+		List<QuizVO> correctQuizList = quizService.getQuizListByResult(mapCorrect);
+		List<QuizVO> incorrectQuizList = quizService.getQuizListByResult(mapIncorrect);
+		
+		System.out.println("내 대답");
+		System.out.println(answerList);
+		
+		System.out.println("====맞힌문제 리스트==");
+		System.out.println(correctQuizList);
+		System.out.println("====틀린문제 리스트==");
+		System.out.println(incorrectQuizList);
+
 		model.addAttribute("solveHistory", solveHistoryVO);
+		model.addAttribute("correctList",correctQuizList);
+		model.addAttribute("incorrectList",incorrectQuizList);
+		
 
 		return "quiz/quizResult";
 	}

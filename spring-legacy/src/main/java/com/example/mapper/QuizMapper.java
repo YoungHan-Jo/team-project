@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.domain.Criteria;
 import com.example.domain.BunchVO;
@@ -22,6 +23,8 @@ public interface QuizMapper {
 	List<String> getAnswerListByBunchNum(int bunchNum);
 	
 	SolveHistoryVO getSolveHistoryByNum(int num);
+	
+	List<QuizVO> getQuizListByResult(Map<String, Object> map);
 
 	// =================== insert ======================
 

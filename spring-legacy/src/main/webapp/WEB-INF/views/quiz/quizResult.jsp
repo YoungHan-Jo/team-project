@@ -17,14 +17,48 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h1>퀴즈 결과</h1>
+				<h1>채점 결과</h1>
 				<br>
+				<button onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
 				<div>
-					<p>점수 : ${ solveHistory.point } 점</p>
-					
+					<h3>점수 : ${ solveHistory.point } 점</h3>
 				</div>
+				<br><br>
+				<div style="border-top : 5px solid black; height : 30px"></div>
+				<h3>틀린 문제</h3>
+				<div class="incorrect-form" >
+					<c:forEach var="quiz" items="${ incorrectList }">
+					<div class="quiz-form" style="border-top : 1px solid black">
+						<h4>${ quiz.questionNum }번 문제</h4>
+						<p>${ quiz.question }</p>
+						<span>1. ${ quiz.numOne }</span><br> 
+						<span>2. ${ quiz.numTwo }</span><br> 
+						<span>3. ${ quiz.numThree }</span><br>
+						<span>4. ${ quiz.numFour }</span><br><br>
+						<span>정답 : ${ quiz.answer }</span>
+						<br><br><br>
+					</div>
+					</c:forEach>
+				</div>
+				<div style="border-top : 5px solid black; height : 30px"></div>
+				<h3>맞은 문제</h3>
+				<div class="incorrect-form" >
+					<c:forEach var="quiz" items="${ correctList }">
+					<div class="quiz-form" style="border-top : 1px solid black">
+						<h4>${ quiz.questionNum }번 문제</h4>
+						<p>${ quiz.question }</p>
+						<span>1. ${ quiz.numOne }</span><br> 
+						<span>2. ${ quiz.numTwo }</span><br> 
+						<span>3. ${ quiz.numThree }</span><br>
+						<span>4. ${ quiz.numFour }</span><br><br>
+						<span>정답 : ${ quiz.answer }</span>
+						<br><br><br>
+					</div>
+					</c:forEach>
+				</div>
+				
+				
 			</div>
-
 
 		</section>
 		<!-- End Why Us Section -->
