@@ -14,11 +14,13 @@
 	<main id="main">
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
-			<div class="container">
+			
 				<h3>게시판</h3>
 				<br>
-				<form role="form" method="post" action="/board/write">
-					<table>
+				<h5>일반 게시판 (글개수: ${ pageMaker.totalCount })</h5>
+
+				<table id="board">
+					<thead>
 						<tr>
 							<th>번호</th>
 							<th>제목</th>
@@ -26,23 +28,111 @@
 							<th>작성일</th>
 							<th>조회수</th>
 						</tr>
+					</thead>
 
-						<c:forEach items="${boardList}" var="list">
-							<tr>
-								<td><c:out value="${list.num}" /></td>
-								<td><a href="/board/view?num=${ list.num }"><c:out
-											value="${list.subject}" /></a></td>
-								<td><c:out value="${list.memberId}" /></td>
-								<td><fmt:formatDate value="${list.regDate}"
-										pattern="yyyy/MM/dd" /></td>
-								<td><c:out value="${list.viewCount}" /></td>
-							</tr>
-						</c:forEach>
-					</table>
+					<tbody>
+
+						<c:choose>
+							<c:when test="${ pageMaker.totalCount gt 0 }">
+
+								<c:forEach var="board" items="${ boardList }">
+
+									<tr onclick="location.href='/board/view?num=${ board.num }&pageNum=${ pageMaker.cri.pageNum }'">
+										<td>${ board.num }</td>
+										<td><c:if test="${ board.reLev gt 0 }">
+												<%-- 답글 --%>
+												<span style="width: ${ board.reLev * 15 }px"></span>
+											</c:if> ${ board.subject }</td>
+										<td>${ board.memberId }</td>
+										<td><fmt:formatDate value="${ board.regDate }"
+												pattern="yyyy.MM.dd" /></td>
+										<td>${ board.viewCount }</td>
+									</tr>
+
+								</c:forEach>
+
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="5">게시판 글이 없습니다.</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+
+					</tbody>
+				</table>
+
+				<br>
+				<ul class="pagination center">
+					<%-- 이전 --%>
+					<c:if test="${ pageMaker.prev eq true }">
+						<li>
+						<a href="/board/list?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#board">
+						</a></li>
+					</c:if>
+
+					<%-- 페이지블록 내 최대 5개 페이지씩 출력 --%>
+					<c:forEach var="i" begin="${ pageMaker.startPage }"
+						end="${ pageMaker.endPage }" step="1">
+						<li
+							class="waves-effect ${ (pageMaker.cri.pageNum eq i) ? 'active' : '' }"><a
+							href="/board/list?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#board">${ i }</a></li>
+					</c:forEach>
+
+					<%-- 다음 --%>
+					<c:if test="${ pageMaker.next eq true }">
+						<li><a
+							href="/board/list?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#board">
+							</a></li>
+					</c:if>
+				</ul>
+
+				<div class="divider" style="margin: 30px 0;"></div>
+
+				<form action="#!" method="GET" id="frm">
+					<div class="row">
+						<div>
+							<div class="input-field">
+								<select
+									name="type">
+									<option value="" disabled selected>=선택=</option>
+									<option value="subject"
+										${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
+									<option value="content"
+										${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
+									<option value="memberId"
+										${ (pageMaker.cri.type eq 'memberId')     ? 'selected' : '' }>작성자</option>
+								</select> <label>검색 조건</label>
+							</div>
+						</div>
+
+						<div>
+							
+							<div class="input-field">
+								<i>search</i> <input type="text"
+									id="autocomplete-input" class="autocomplete" name="keyword"
+									value="${ pageMaker.cri.keyword }">
+									<label for="autocomplete-input">검색어</label>
+							</div>
+							
+						</div>
+
+						<div>
+							<button type="button" id="btnSearch">
+								검색
+							</button>
+						</div>
+					</div>
 				</form>
-			</div>
-
-			<button type="button" onclick="location.href='/board/write'">글쓰기</button>
+				
+				<c:if test="${ not empty sessionScope.id }">
+					<div class="row">
+						<a href="/board/write?pageNum=${ pageMaker.cri.pageNum }"> 
+						새글쓰기
+						</a>
+					</div>
+				</c:if>
+				
 		</section>
 		<!-- End Why Us Section -->
 
