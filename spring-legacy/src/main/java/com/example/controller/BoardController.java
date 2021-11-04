@@ -46,8 +46,11 @@ public class BoardController {
 	@GetMapping("/view")
 	public String content(int num, String pageNum, Model model) {
 		System.out.println("content 호출됨...");
+		// 조회수 1증가
 		boardService.updateReadcount(num);
 
+		
+		// join 쿼리문으로 게시판글과 첨부파일 리스트 정보 가져오기
 		BoardVO boardVO = boardService.getBoardAndAttaches(num);
 		System.out.println(boardVO);
 
@@ -57,7 +60,7 @@ public class BoardController {
 		model.addAttribute("pageNum", pageNum);
 
 		return "board/boardView";
-	} // view
+	} // view (/content)
 
 	// 글쓰기
 	@GetMapping("/write")
