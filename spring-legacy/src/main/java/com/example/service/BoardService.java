@@ -56,6 +56,7 @@ public class BoardService {
 		boardMapper.addBoard(boardVO);
 	}
 
+	// 여기부분 수정했어요 혹시나 확인부탁드려요 잘못되었을 수도 있어요
 	public BoardVO deleteBoard(int num) {
 		return boardMapper.deleteBoardByNum(num);
 	} 

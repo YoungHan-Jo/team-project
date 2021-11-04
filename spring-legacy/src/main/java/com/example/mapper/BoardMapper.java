@@ -40,7 +40,7 @@ public interface BoardMapper {
 	
 	@Update("UPDATE board SET view_count = view_count + 1 WHERE num = #{num}")
 	void updateViewcount(int num);
-	
+	// 여기부분 수정했어요 확인부탁드려요
 	@Delete("DELETE FROM board WHERE num = #{num}")
 	BoardVO deleteBoardByNum(int num);
 	
