@@ -19,18 +19,19 @@
 			<div class="container">
 				<h1>퀴즈 풀기</h1>
 				<br>
+				<button onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
 				
 				<div>
 					<h2>${ bunch.title }</h2>
-					<form action="/quiz/submit" method="POST">
+					<form action="/quiz/submit?bunchNum=${ bunch.num }" method="POST">
 					<button>제출하기</button>
 						<c:forEach var="quiz" items="${ quizList }">
 							<div style="border : 1px soild black">
 							<h4>${ quiz.questionNum }. ${ quiz.question }</h4>
-							<p><input type="radio" name="reply${ quiz.questionNum }" value="1">1번 ${ quiz.numOne }</p>
-							<p><input type="radio" name="reply${ quiz.questionNum }" value="2">2번 ${ quiz.numTwo }</p>
-							<p><input type="radio" name="reply${ quiz.questionNum }" value="3">3번 ${ quiz.numThree }</p>
-							<p><input type="radio" name="reply${ quiz.questionNum }" value="4">4번 ${ quiz.numFour }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="1" required>1번 ${ quiz.numOne }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="2" required>2번 ${ quiz.numTwo }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="3" required>3번 ${ quiz.numThree }</p>
+							<p><input type="radio" name="reply${ quiz.questionNum }" value="4" required>4번 ${ quiz.numFour }</p>
 							</div>
 							<br>
 						</c:forEach>
