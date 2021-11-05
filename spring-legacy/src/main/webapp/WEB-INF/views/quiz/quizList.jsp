@@ -28,6 +28,8 @@
 							<span>${ bunch.memberId }</span><br> 
 							<span>${ bunch.regDate }</span>
 							<button onclick="location.href='/quiz/content?bunchNum=${ bunch.num }'">문제 풀기</button>
+							<button onclick="location.href='/quiz/modify?bunchNum=${ bunch.num }'">수정</button>
+							<button id="btn-delete" onclick="location.href='/quiz/delete?bunchNum=${ bunch.num }'">삭제</button>
 						</div>
 						<br> <br>
 					</c:forEach>

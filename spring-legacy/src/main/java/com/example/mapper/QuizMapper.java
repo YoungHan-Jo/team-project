@@ -33,5 +33,12 @@ public interface QuizMapper {
 	void addQuizList(List<QuizVO> quizList);
 	
 	void insertSolveHistory(SolveHistoryVO solveHistoryVO);
+	
+	// =================== delete ======================
+	
+	void deleteQuizList(int bunchNum);
+	
+	void deleteBunch(int num);
+	
 
 }
