@@ -12,41 +12,53 @@
 
 <form id="frm" enctype="multipart/form-data">
 <table border="1">
+	
 	<tr>
-		<th>작성자 아이디</th>
-		<td>
-			<input type="text" name="mid" id="id">
-		</td>
-	</tr>
-	<tr>
-		<th>글제목</th>
-		<td>
-			<input type="text" name="subject" id="subject">
-		</td>
-	</tr>
-	<tr>
-		<th>글내용</th>
+		<th>공지사항입력</th>
 		<td>
 			<textarea rows="13" cols="40" name="content" id="content"></textarea>
 		</td>
 	</tr>
+	
+</table>
+<br>
+<button type="button" id="btnWrite">글쓰기</button>
+</form>
 
+<script src="/resources/js/jquery-3.6.0.js"></script>
 
+<script>
 
-		<br>
-		<div>
-			<button type="submit">새글등록</button>
-			&nbsp;&nbsp;
-			<button type="reset">초기화</button>
-			&nbsp;&nbsp;
-			<button type="button" onclick="location.href = '/board/list'">글목록</button>
-		</div>
-	</form>
+	
+	// 글쓰기 버튼 클릭했을 때
+	$('#btnWrite').on('click', function () {
+		
+		var form = $('form#frm')[0]; 
+		
+		
+		var formData = new FormData(form); 
+		console.log(formData);
+		console.log(typeof formData);
+		
+		
+		$.ajax({
+			url: '/api/boards',
+			method: 'POST',
+			data: formData,
+			success: function (data) {
+				console.log(data);
+				
+				
+				alert('새로운 글쓰기 성공!');
+				
+				$('form#frm')[0].reset(); 
 
-
-
-
-
+			} // success
+		});
+		
+	});
+	
+</script>
 
 </body>
 </html>

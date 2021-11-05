@@ -39,10 +39,11 @@
 						<td>\${bunch.memberId}</td>
 						<td>\${bunch.regDate}</td>
 						<td>
-							<a href="/quiz/modify?bunchNum=${bunch.num}">수정</a>
+							
+							<button onclick="location.href='/quiz/modify?bunchNum=\${ bunch.num }'">수정</button>
 						<td>
 						<td>
-							<a href="/quiz/delete?bunchNum=${bunch.num}">삭제</a>
+							<a href="/quiz/delete?bunchNum=\${bunch.num}">삭제</a>
 						<td>
 					</tr>
 				`;

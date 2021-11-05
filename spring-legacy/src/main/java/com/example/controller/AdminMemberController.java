@@ -36,6 +36,11 @@ public class AdminMemberController {
 		System.out.println("logmsSelectBoards ? 호출됨");
 	}
 	
+	@GetMapping("logmsInsertBoard")
+	public void logmsInsertBoard() {
+		System.out.println("logmsSelectBoards ? 호출됨");
+	}
+	
 	@GetMapping("logmsDeleteBoard")
 	public void logmsDeleteBoard() {
 		System.out.println("logmsDeleteBoard ? 호출됨");
@@ -47,4 +52,11 @@ public class AdminMemberController {
 	public void logmsSelectQuiz() {
 		System.out.println("logmsSelectQuiz ? 호출됨");
 	}
+	
+	@GetMapping("logmsSelectNotice")
+	public void logmsSelectNotice() {
+		System.out.println("logmsSelectNotice ? 호출됨");
+	}
+	
+	
 }
