@@ -1,0 +1,60 @@
+.board-section .board-table {
+	width: 100%;
+}
+
+.board-section .board-table thead th, .board-section .board-table tbody td
+	{
+	padding: 7px 0;
+	border-bottom: 1px solid gray;
+	text-align: center;
+}
+
+.board-section .board-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.boardwrite .board-div {
+	width: 100%;
+}
+
+.boardwrite .board-div input, .boardwrite .board-div textarea {
+	width: 420px;
+}
+
+.boardwrite .board-div input {
+	height: 40px;
+}
+
+.boardwrite .board-div textarea {
+	height: 120px;
+}
+
+.boardwrite .board-div label {
+	display: inline-block;
+	width: 80px;
+}
+
+.boardwrite .board-div div {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.boardwrite h5 {
+	margin-bottom: 25px;
+}
+
+.boardwrite .btn-wrap {
+	display: flex;
+	justify-content: end;
+	max-width: 500px;
+}
+
+.board-section .btn-main-warp {
+	display: flex;
+	justify-content: end;
+}
+
+.board-section .btn-main-warp button:first-child {
+	margin-right: 10px;
+}

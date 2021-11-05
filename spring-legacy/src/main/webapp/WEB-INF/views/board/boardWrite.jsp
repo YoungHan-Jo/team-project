@@ -14,32 +14,35 @@
 
 	<main id="main">
 		<!-- Why Us Section -->
-		<section id="why-us" class="why-us">
+		<section id="why-us" class="boardwrite why-us">
 			<div class="container">
 				<h5>게시판 새글쓰기</h5>
+				
 
-				<form action="/board/write" method="POST"">
+				<form action="/board/write" method="POST">
 					<input type="hidden" name="pageNum" value="${ pageNum }">
+					
+					<div class="board-div">
 
-					<div>
-						<label for="id">아이디</label> <input id="id" type="text"
-							name="memberId" value="${ sessionScope.id }">
+						<div>
+							<label for="id">아이디</label> <input id="id" type="text"
+								name="memberId" value="${ sessionScope.id }">
+						</div>
+	
+						<div>
+							<label for="title">제목</label> <input type="text" id="title"
+								class="validate" name="subject">
+						</div>
+	
+						<div>
+							<label for="textarea1">내용</label>
+							<textarea id="textarea1" name="content"></textarea>
+						</div>
+
 					</div>
-
-					<div>
-						<label for="title">제목</label> <input type="text" id="title"
-							class="validate" name="subject">
-					</div>
-
-					<div>
-						<label for="textarea1">내용</label>
-						<textarea id="textarea1" name="content"></textarea>
-					</div>
-
-
 
 					<br>
-					<div>
+					<div class="btn-wrap">
 						<button type="submit">새글등록</button>
 						&nbsp;&nbsp;
 						<button type="reset">초기화</button>
