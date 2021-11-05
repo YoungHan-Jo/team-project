@@ -106,6 +106,44 @@
 			ORDER BY question_num ASC;
 		]]>
 	</select>
+	
+	<select id="getBunchesById" resultType="bunchVO">
+		<![CDATA[
+			SELECT *
+			FROM bunch
+			WHERE member_id = #{id}
+			ORDER BY reg_date DESC
+		]]>
+	</select>
+	
+	<select id="getSolveHistoryAndBunch" resultMap="solveHistoryAndBunch">
+		<![CDATA[
+			SELECT s.num, s.member_id, s.bunch_num, s.solve_date, s.point, s.answer_list, s.correct_list, s.incorrect_list,
+			b.num, b.title, b.member_id, b.reg_date
+			FROM solve_history s
+			JOIN bunch b
+			ON s.bunch_num = b.num
+			WHERE s.member_id = #{id}
+			ORDER BY s.solve_date DESC;
+		]]>
+	</select>
+	
+	<resultMap type="solveHistoryVO" id="solveHistoryAndBunch">
+		<id column="num" property="num"/>
+		<result column="member_id" property="memberId"/>
+		<result column="bunch_num" property="bunchNum"/>
+		<result column="solve_date" property="solveDate"/>
+		<result column="point" property="point"/>
+		<result column="answer_list" property="answerList"/>
+		<result column="correct_list" property="correctList"/>
+		<result column="incorrect_list" property="incorrectList"/>
+		<association property="bunchVO" javaType="bunchVO">
+			<id column="num" property="num"/>
+			<result column="title" property="title"/>
+			<result column="member_id" property="memberId"/>
+			<result column="reg_date" property="regDate"/>
+		</association>
+	</resultMap>
 
 
 	<!-- =================== insert ====================== -->
