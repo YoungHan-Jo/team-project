@@ -6,7 +6,7 @@
 
 	<insert id="addAttaches">
 		<![CDATA[
-			INSERT INTO attach (uuid, uploadpath, filename, filetype, boardNum) 
+			INSERT INTO attach (uuid, uploadpath, filename, filetype, board_num) 
 			VALUES 
 		]]>
 		<foreach collection="list" item="attach" separator=",">
@@ -44,7 +44,7 @@
 		<![CDATA[
 			SELECT * 
 			FROM attach 
-			WHERE boardNum = #{boardNum} 
+			WHERE board_num = #{boardNum} 
 			ORDER BY filetype, filename 
 		]]>
 	</select>
