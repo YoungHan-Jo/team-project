@@ -239,7 +239,7 @@ public class QuizController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
+	public String modify(String bunchNum,BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
 			String[] numFours, String[] answers, HttpSession session, RedirectAttributes rttr) {
 
 		System.out.println("write() 호출됨... ");
@@ -274,7 +274,7 @@ public class QuizController {
 
 		return "redirect:/quiz/content";
 
-	} // write
+	} // modify
 	
 	
 
