@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,63 +18,37 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h5>게시판 글수정</h5>
-				<div class="divider" style="margin: 30px 0;"></div>
+				<h5>게시판 새글쓰기</h5>
 
-				<form action="/board/modify" method="POST"
-					enctype="multipart/form-data">
+				<form action="/board/write" method="POST"">
 					<input type="hidden" name="pageNum" value="${ pageNum }">
-					<input type="hidden" name="num" value="${ board.num }">
 
-					<div class="row">
-						<div>
-							<input id="id" type="text" name="memberId" value="${ sessionScope.id }" readonly>
-							<label for="id">아이디</label>
-						</div>
+					<div>
+						<label for="id">아이디</label> <input id="id" type="text"
+							name="memberId" value="${ sessionScope.id }" readonly>
 					</div>
 
-					<div class="row">
-						<div class="input-field">
-							<input type="text" id="title" class="validate" name="subject" value="${ board.subject }">
-							<label for="title">제목</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field">
-							<textarea id="textarea1" name="content">${ board.content }</textarea>
-							<label for="textarea1">내용</label>
-						</div>
+					<div>
+						<label for="title">제목</label> <input type="text" id="title"
+							class="validate" name="subject" value="${ board.subject }">
 					</div>
 
-					<div class="row">
-						<div>
-							<button type="button" id="btnAddFile">파일 추가</button>
-						</div>
+					<div>
+						<label for="textarea1">내용</label>
+						<textarea id="textarea1" name="content">${ board.content }</textarea>
 					</div>
-
-					<div class="row" id="oldFileBox">
-						<c:forEach var="attach" items="${ attachList }">
-							<input type="hidden" name="oldfile" value="${ attach.uuid }">
-							<div>
-								<span class="filename">${ attach.filename }</span>
-								<button class="delete-oldfile">취소</button>
-							</div>
-						</c:forEach>
-					</div>
-
-					<div class="row" id="newFileBox"></div>
 
 					<br>
 					<div>
-						<button type="submit">글수정</button>
+						<button type="submit">새글등록</button>
 						&nbsp;&nbsp;
 						<button type="reset">초기화</button>
 						&nbsp;&nbsp;
-						<button  type="button"
-							onclick="location.href = '/board/list?pageNum=${ pageNum }'">글목록</button>
+						<button type="button" onclick="location.href = '/board/list'">글목록</button>
 					</div>
-				</form>
 
+
+				</form>
 			</div>
 
 		</section>
@@ -95,40 +68,6 @@
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
-	<script>
-  	var fileCount = ${ fn:length(attachList) };  // 현재 첨부된 파일 갯수
-  	
-  
-    $('button#btnAddFile').on('click', function () {
-    	if (fileCount > 5) {
-    		alert(`첨부파일은 최대 5개 까지만 첨부할 수 있습니다.`);
-    		return;
-    	}
-    	
-    	var str = `
-    		<div>
-	            <input type="file" name="files">
-	            <button class="delete-addfile">취소</button>
-            </div>
-    	`;
-    	
-    	$('div#newFileBox').append(str);
-    	fileCount++;
-    });
-    
-   
-    $('div#newFileBox').on('click', 'button.delete-addfile', function () {
-    	$(this).parent().remove();
-    	fileCount--;
-    });
-    
-    
-    $('button.delete-oldfile').on('click', function () {
-    	$(this).parent().prev().prop('name', 'delfile');
-    	$(this).parent().remove();
-    	fileCount--;
-    });
-  </script>
 
 </body>
 </html>
