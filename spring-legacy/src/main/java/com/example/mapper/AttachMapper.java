@@ -11,7 +11,7 @@ import com.example.domain.Criteria;
 
 public interface AttachMapper {
 	
-	@Insert("INSERT INTO attach (uuid, uploadpath, filename, filetype, boardNum) "
+	@Insert("INSERT INTO attach (uuid, uploadpath, filename, filetype, board_num) "
 			+ "VALUES (#{uuid}, #{uploadpath}, #{filename}, #{filetype}, #{boardNum}) ")
 	void addAttach(AttachVO attachVO);
 
@@ -27,7 +27,7 @@ public interface AttachMapper {
 	@Select("SELECT * FROM attach WHERE uploadpath = #{uploadpath} ")
 	List<AttachVO> getAttachesByUploadpath(String uploadpath);
 
-	@Delete("DELETE FROM attach WHERE boardNum = #{boardNum} ")
+	@Delete("DELETE FROM attach WHERE board_num = #{boardNum} ")
 	void deleteAttachesByboardNum(int boardNum);
 
 	@Delete("DELETE FROM attach WHERE uuid = #{uuid} ")
