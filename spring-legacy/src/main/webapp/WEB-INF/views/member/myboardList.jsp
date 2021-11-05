@@ -15,10 +15,9 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h3>내가 글 목록</h3>
+				<h3>내가 쓴 글 목록(글개수: ${ pageMaker.totalCount })</h3>
 				<br>
-				<form action="/myboardlist" method="post" id="frm" >
-					<table>
+					<table id="myboard">
 						<tr>
 							<th>번호</th>
 							<th>제목</th>
@@ -26,18 +25,94 @@
 							<th>작성일</th>
 							<th>조회수</th>
 						</tr>
+						
+						<tbody>
 
-						<c:forEach var="myboardList" items="${myboardList}" >
-							<tr>
-								<td><c:out value="${myboardList.num}" /></td>
-								<td><a href="/board/view?num=${ myboardList.num }"><c:out value="${myboardList.subject}" /></a></td>
-								<td><c:out value="${myboardList.memberId}" /></td>
-								<td><fmt:formatDate value="${myboardList.regDate}" pattern="yyyy/MM/dd" /></td>
-								<td><c:out value="${myboardList.viewCount}" /></td>
-							</tr>
-						</c:forEach>
+							<c:choose>
+								<c:when test="${ pageMaker.totalCount gt 0 }">
+	
+									<c:forEach var="myboardList" items="${myboardList}" >
+										<tr>
+											<td><c:out value="${myboardList.num}" /></td>
+											<td><a href="/board/view?num=${ myboardList.num }"><c:out value="${myboardList.subject}" /></a></td>
+											<td><c:out value="${myboardList.memberId}" /></td>
+											<td><fmt:formatDate value="${myboardList.regDate}" pattern="yyyy/MM/dd" /></td>
+											<td><c:out value="${myboardList.viewCount}" /></td>
+										</tr>
+									</c:forEach>
+	
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="5">작성한 글이 없습니다.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+	
+						</tbody>
 					</table>
-				</form>
+				<br>
+				<ul class="pagination center">
+						<%-- 이전 --%>
+						<c:if test="${ pageMaker.prev eq true }">
+							<li>
+							<a href="/member/myboardList?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myboard">
+							</a></li>
+						</c:if>
+	
+						<%-- 페이지블록 내 최대 5개 페이지씩 출력 --%>
+						<c:forEach var="i" begin="${ pageMaker.startPage }"
+							end="${ pageMaker.endPage }" step="1">
+							<li
+								class="waves-effect ${ (pageMaker.cri.pageNum eq i) ? 'active' : '' }"><a
+								href="/member/myboardList?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myboard">${ i }</a></li>
+						</c:forEach>
+	
+						<%-- 다음 --%>
+						<c:if test="${ pageMaker.next eq true }">
+							<li><a
+								href="/member/myboardList?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myboard">
+								</a></li>
+						</c:if>
+					</ul>
+	
+					<div class="divider" style="margin: 30px 0;"></div>
+	
+					<form action="#!" method="GET" id="frm">
+						<div class="row">
+							<div>
+								<div class="input-field">
+									<select
+										name="type">
+										<option value="" disabled selected>=선택=</option>
+										<option value="subject"
+											${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
+										<option value="content"
+											${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
+										<option value="memberId"
+											${ (pageMaker.cri.type eq 'memberId')     ? 'selected' : '' }>작성자</option>
+									</select> <label>검색 조건</label>
+								</div>
+							</div>
+
+							<div>
+								
+								<div class="input-field">
+									<i>search</i> <input type="text"
+										id="autocomplete-input" class="autocomplete" name="keyword"
+										value="${ pageMaker.cri.keyword }">
+										<label for="autocomplete-input">검색어</label>
+								</div>
+								
+							</div>
+	
+							<div>
+								<button type="button" id="btnSearch">
+									검색
+								</button>
+							</div>
+						</div>
+						</form>
 			</div>
 
 		</section>
