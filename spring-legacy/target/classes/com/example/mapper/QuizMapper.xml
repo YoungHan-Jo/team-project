@@ -32,7 +32,14 @@
 			FROM bunch
 		]]>
 	</select>
-	
+
+	<select id="getNextSolveHistoryNum" resultType="int">
+		<![CDATA[
+			SELECT IFNULL(MAX(num),0) + 1 AS nextnum 
+			FROM solve_history
+		]]>
+	</select>
+
 	<select id="getBunchAndQuizList" resultMap="bunchAndQuizList">
 		<![CDATA[
 			SELECT b.num, b.title, b.member_id, b.reg_date, q.bunch_num, q.question_num, 
@@ -44,22 +51,62 @@
 		]]>
 	</select>
 	<resultMap type="bunchVO" id="bunchAndQuizList">
-		<id column="num" property="num"/>
-		<result column="title" property="title"/>
-		<result column="member_id" property="memberId"/>
-		<result column="reg_date" property="regDate"/>
-		<collection property="quizList" javaType="list" ofType="quizVO">
-			<id column="bunch_num" property="bunchNum"/>
-			<id column="question_num" property="questionNum"/>
-			<result column="question" property="question"/>
-			<result column="num_one" property="numOne"/>
-			<result column="num_two" property="numTwo"/>
-			<result column="num_three" property="numThree"/>
-			<result column="num_four" property="numFour"/>
-			<result column="answer" property="answer"/>
+		<id column="num" property="num" />
+		<result column="title" property="title" />
+		<result column="member_id" property="memberId" />
+		<result column="reg_date" property="regDate" />
+		<collection property="quizList" javaType="list"
+			ofType="quizVO">
+			<id column="bunch_num" property="bunchNum" />
+			<id column="question_num" property="questionNum" />
+			<result column="question" property="question" />
+			<result column="num_one" property="numOne" />
+			<result column="num_two" property="numTwo" />
+			<result column="num_three" property="numThree" />
+			<result column="num_four" property="numFour" />
+			<result column="answer" property="answer" />
 		</collection>
 	</resultMap>
-	
+
+	<select id="getAnswerListByBunchNum" resultType="String">
+		<![CDATA[
+			SELECT answer
+			FROM quiz
+			WHERE bunch_num = #{bunchNum}
+			ORDER BY bunch_num, question_num
+		]]>
+	</select>
+
+	<select id="getSolveHistoryByNum" resultType="solveHistoryVO">
+		<![CDATA[
+			SELECT *
+			FROM solve_history
+			WHERE num = #{num}
+		]]>
+	</select>
+
+	<select id="getQuizListByResult" resultType="quizVO" parameterType="java.util.HashMap">
+		<![CDATA[
+			SELECT *
+			FROM quiz
+			WHERE bunch_num = #{bunchNum}
+		]]>
+		<choose>
+			<when test="questionlist.size != 0">
+				AND question_num IN
+				<foreach collection="questionlist" item="questionNum" open="(" separator="," close=")">
+					#{questionNum}
+				</foreach>
+			</when>
+			<otherwise>
+				AND bunch_num = -9999
+			</otherwise>
+		</choose>
+		<![CDATA[
+			ORDER BY question_num ASC;
+		]]>
+	</select>
+
 
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">
@@ -75,9 +122,18 @@
 			VALUES 
 		]]>
 		<foreach collection="list" item="quiz" separator=",">
-			(#{quiz.bunchNum}, #{quiz.questionNum}, #{quiz.question}, #{quiz.numOne},
-			#{quiz.numTwo}, #{quiz.numThree}, #{quiz.numFour}, #{quiz.answer})
+			(#{quiz.bunchNum}, #{quiz.questionNum}, #{quiz.question},
+			#{quiz.numOne},
+			#{quiz.numTwo}, #{quiz.numThree}, #{quiz.numFour},
+			#{quiz.answer})
 		</foreach>
+	</insert>
+
+	<insert id="insertSolveHistory">
+		<![CDATA[
+			INSERT INTO solve_history (num, member_id, bunch_num, solve_date, point, answer_list, correct_list, incorrect_list)
+			VALUES (#{num}, #{memberId}, #{bunchNum}, #{solveDate}, #{point}, #{answerList}, #{correctList}, #{incorrectList})
+		]]>
 	</insert>
 
 

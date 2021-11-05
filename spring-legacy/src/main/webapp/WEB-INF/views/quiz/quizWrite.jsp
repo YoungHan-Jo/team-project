@@ -21,14 +21,16 @@
 				<form action="/quiz/write" method="POST">
 
 					<div id='quizBox'>
-						<div style="border: solid 1px;">
+						<div class="quizList-form" style="border: solid 1px;">
 							<label>퀴즈 이름</label> <input type="text" name="title" required> <br>
-							<label>문제</label><input type="text" name="questions" required> <br> 
-							<label>1</label> <input type="text" name="numOnes" required> <br> 
-							<label>2</label> <input type="text" name="numTwos" required> <br> 
-							<label>3</label> <input type="text" name="numThrees" required> <br> 
-							<label>4</label> <input type="text" name="numFours" required> <br> 
-							<label>정답</label> <input type="text" name="answers" required> <br>
+							<div class="quiz-form">
+								<label>문제</label><input type="text" name="questions" required> <br> 
+								<label>1</label> <input type="text" name="numOnes" required> <br> 
+								<label>2</label> <input type="text" name="numTwos" required> <br> 
+								<label>3</label> <input type="text" name="numThrees" required> <br> 
+								<label>4</label> <input type="text" name="numFours" required> <br> 
+								<label>정답</label> <input type="text" name="answers" required> <br>
+							</div>
 						</div>
 						<br>
 					</div>
@@ -42,7 +44,6 @@
 
 		</section>
 		<!-- End Why Us Section -->
-
 	</main>
 
 	<!-- Footer -->

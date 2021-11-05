@@ -18,15 +18,15 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h3>글 상세보기</h3>
-				<br>
+
+				<h5>게시판 상세보기</h5>
 				<table id="boardList">
 					<tr>
 						<th>제목</th>
 						<td colspan="5">${ board.subject }</td>
 					</tr>
 					<tr>
-						<th class="center-align">작성자</th>
+						<th>작성자</th>
 						<td>${ board.memberId }</td>
 						<th>작성일</th>
 						<td><fmt:formatDate value="${ board.regDate }"
@@ -40,27 +40,22 @@
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td colspan="5"><c:choose>
-								<%-- 첨부파일이 있으면 --%>
+						<td colspan="5">
+							<c:choose>
+								<%-- 첨부파일 존재 --%>
 								<c:when test="${ fn:length(attachList) gt 0 }">
-									<%-- attachCount gt 0 --%>
 									<ul>
 										<c:forEach var="attach" items="${ attachList }">
 											<c:if test="${ attach.filetype eq 'O' }">
-												<%-- 일반파일 --%>
-												<%-- 다운로드할 일반파일 경로 --%>
 												<c:set var="fileCallPath"
 													value="${ attach.uploadpath }/${ attach.uuid }_${ attach.filename }" />
 												<li><a href="/download?fileName=${ fileCallPath }">
-														<i class="material-icons">file_present</i> ${ attach.filename }
+														 ${ attach.filename }
 												</a></li>
 											</c:if>
 											<c:if test="${ attach.filetype eq 'I' }">
-												<%-- 이미지파일 --%>
-												<%-- 썸네일 이미지 경로 --%>
 												<c:set var="fileCallPath"
 													value="${ attach.uploadpath }/s_${ attach.uuid }_${ attach.filename }" />
-												<%-- 원본 이미지 경로 --%>
 												<c:set var="fileCallPathOrigin"
 													value="${ attach.uploadpath }/${ attach.uuid }_${ attach.filename }" />
 												<li><a href="/display?fileName=${ fileCallPathOrigin }">
@@ -71,17 +66,95 @@
 									</ul>
 								</c:when>
 								<c:otherwise>
-						첨부파일 없음
-					</c:otherwise>
+												첨부파일 없음
+											</c:otherwise>
 							</c:choose></td>
 					</tr>
 				</table>
-				<a href="/board/modify?num=${ board.num }&pageNum=${ pageNum }">글수정</a>
-				<a onclick="remove(event)">글삭제</a> <a href="/board/list">글목록</a>
+
+
+				<div class="section">
+					<div class="row">
+						<div>
+
+							<!-- 로그인 -->
+							<c:if test="${ not empty sessionScope.id }">
+								<%-- 로그인 아이디와 글작성자가 같음  --%>
+								<c:if test="${ sessionScope.id eq board.memberId }">
+									<a href="/board/modify?num=${ board.num }&pageNum=${ pageNum }">
+										글수정
+									</a>&nbsp;&nbsp;
+									<a onclick="remove(event)">글삭제
+									</a>&nbsp;&nbsp;
+								</c:if>
+
+								<a href="/board/reply?reRef=${ board.reRef }&reLev=${ board.reLev }&reSeq=${ board.reSeq }&pageNum=${ pageNum }">
+									답글
+								</a>&nbsp;&nbsp;
+							</c:if>
+
+							<a href="/board/list?pageNum=${ pageNum }"> 글목록 </a>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!-- 댓글 -->
+				<div id="comment">
+					<a>댓글</a>
+					<ul class="commentList">
+						<c:forEach items="${ commentList }" var="comment">
+							<li>
+								<p>
+									댓글번호: ${ comment.num} 작성자 : ${comment.memberId}<br /> 작성 날짜 :
+									<fmt:formatDate value="${comment.regDate}" pattern="yyyy/MM/dd" />
+								</p>
+
+								<p>${ comment.content }</p> &nbsp;&nbsp; <a
+								href="/comment/modify?num=${ comment.num }">댓글수정</a>
+								&nbsp;&nbsp; <a
+								href="/comment/commentRemove?num=${ comment.num }">댓글삭제</a>
+							</li>
+							<br>
+						</c:forEach>
+					</ul>
+				</div>
+
+				<br> <br> <br>
+				<div>
+
+					<form method="post" action="/comment/commentWrite">
+
+
+						<input type="hidden" name="pageNum" value="${ pageNum }">
+						<input type="hidden" name="boardNum" value="${ board.num }">
+
+						<div>
+							<label for="id">작성자</label> <input id="id" type="text"
+								name="memberId" value="${ sessionScope.id }">
+						</div>
+
+						<div>
+							<label for="textarea1">내용</label>
+							<textarea id="textarea1" name="content"></textarea>
+						</div>
+
+
+
+						<br>
+						<div>
+							<button type="submit">댓글등록</button>
+						</div>
+
+					</form>
+
+				</div>
 			</div>
 
-
 		</section>
+
+
 		<!-- End Why Us Section -->
 
 	</main>

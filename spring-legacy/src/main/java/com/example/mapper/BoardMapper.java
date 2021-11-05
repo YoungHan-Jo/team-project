@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -40,7 +41,11 @@ public interface BoardMapper {
 	
 	@Update("UPDATE board SET view_count = view_count + 1 WHERE num = #{num}")
 	void updateViewcount(int num);
-	// 여기부분 수정했어요 확인부탁드려요
+	
+	@Update("UPDATE board SET re_seq = re_seq + 1 WHERE re_ref = #{reRef} AND re_seq > #{reSeq} ")
+	void updateReSeqPlusOne(@Param("reRef") int reRef, @Param("reSeq") int reSeq);
+
+	
 	@Delete("DELETE FROM board WHERE num = #{num}")
 	BoardVO deleteBoardByNum(int num);
 	
