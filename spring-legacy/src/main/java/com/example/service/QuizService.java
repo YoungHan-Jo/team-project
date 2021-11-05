@@ -70,5 +70,16 @@ public class QuizService {
 		quizMapper.deleteQuizList(bunchNum);
 		quizMapper.deleteBunch(bunchNum);
 	}
+	
+	// id에 해당하는 bunch 리스트
+	public List<BunchVO> getBunchesById(String id){
+		return quizMapper.getBunchesById(id);
+	}
+	
+	// id에 해당하는 (solveHistory + bunch) 리스트
+	public List<SolveHistoryVO> getSolveHistoryAndBunch(String id){
+		return quizMapper.getSolveHistoryAndBunch(id);
+	}
+	
 
 }

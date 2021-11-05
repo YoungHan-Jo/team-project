@@ -234,7 +234,6 @@ public class QuizController {
 		
 		BunchVO bunchVO = quizService.getBunchAndQuizList(bunchNum);
 		
-		
 		model.addAttribute("bunch", bunchVO);
 		
 		return "quiz/quizModify";
@@ -247,7 +246,7 @@ public class QuizController {
 		quizService.deleteBunchAndQuizList(bunchNum);
 		
 		
-		return "/quiz/list";
+		return "redirect:/quiz/list";
 		
 	} //deleteBunchAndQuizList
 

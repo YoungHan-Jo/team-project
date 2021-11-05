@@ -16,4 +16,5 @@ public class SolveHistoryVO { // 내가 푼 문제 내역
 	private String correctList; // 맞힌 문제 번호 리스트 json String 
 	private String incorrectList; // 틀린 문제 번호 리스트 json String
 	
+	private BunchVO bunchVO;
 }
