@@ -79,6 +79,46 @@
 		<result column="board_num" property="boardNum" />
 	</collection>
 </resultMap>
+
+<!-- =================================================================여기까지 내가 쓴 게시글 -->
+<!-- =======================================여기부터 내가 쓴 댓글 -->
+
+<select id="getCommentCountSearchingforMemberId" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) AS cnt 
+		FROM comment 
+		WHERE member_id = #{id}
+	]]>
+	<where>
+		<if test="cri.type == 'content'.toString()">
+			content LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+		<if test="cri.type == 'memberId'.toString()">
+			member_id LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+	</where>
+</select>
+
+<select id="getCommentsByPaging" resultType="CommentVO">
+	<![CDATA[
+		SELECT * 
+		FROM comment 
+		WHERE member_id = #{id}
+	]]>
+	<where>
+		<if test="cri.type == 'content'.toString()">
+			content LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+		<if test="cri.type == 'memberId'.toString()">
+			member_id LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+	</where>
+	<![CDATA[
+		ORDER BY reg_date
+		LIMIT #{cri.startRow}, #{cri.amount} 
+	]]>
+</select>
+
 	
 	
 </mapper>

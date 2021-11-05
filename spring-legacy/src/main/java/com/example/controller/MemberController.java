@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.BoardVO;
+import com.example.domain.CommentVO;
 import com.example.domain.Criteria;
 import com.example.domain.MemberVO;
 import com.example.domain.PageDTO;
@@ -122,6 +123,9 @@ public class MemberController {
 
 		// 로그인 성공
 		session.setAttribute("id", id);
+		
+		ProfileImg profileImg = profileImgService.getProfileImg(id);
+		session.setAttribute("profileImg", profileImg);
 
 		// 로그인 상태유지 체크
 		if (rememberMe == true) {
@@ -136,6 +140,7 @@ public class MemberController {
 		headers.add("Location", "/");
 
 		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
+		
 	}
 
 	@GetMapping("/logout")
@@ -486,7 +491,34 @@ public class MemberController {
 		model.addAttribute("pageMaker",pageDTO);
 		
 		return "member/myboardList";
-	} // list
+	} // myboardlistpage
+	
+	
+	
+	@GetMapping("/myCommentList")
+	public String myreplyListpage(Criteria cri, Model model, HttpSession session){
+		System.out.println("myCommentlistpage 화면 호출됨...");
+		
+		String id = (String) session.getAttribute("id");
+		
+		// board 테이블에서 (검색어가 있으면)검색, 페이징 적용한 글 리스트 가져오기 
+		List<CommentVO> commentList = boardService.getCommentsByPaging(cri, id);
+		
+		// 검색유형, 검색어가 있으면 적용하여 글개수 가져오기
+		int totalCount = boardService.getCommentCountSearchingforMemberId(cri, id);
+		
+		// 페이지블록 정보 객체준비. 필요한 정보를 생성자로 전달.
+		PageDTO pageDTO = new PageDTO(cri, totalCount);
+		
+		
+		// 뷰에서 사용할 데이터를 Model 객체에 저장 →  스프링(dispathcer servlet)이 requestScope로 옯겨줌.
+		model.addAttribute("myComment", commentList);
+		model.addAttribute("pageMaker",pageDTO);
+		
+		return "member/myCommentList";
+	} // myboardlistpage
+	
+	
 	
 	
 	

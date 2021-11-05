@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.AttachVO;
 import com.example.domain.BoardVO;
+import com.example.domain.CommentVO;
 import com.example.domain.Criteria;
 import com.example.mapper.AttachMapper;
 import com.example.mapper.BoardMapper;
@@ -143,5 +144,32 @@ public class BoardService {
 		int count = viewMapper.getCountBySearch(cri, id);
 		return count;
 	}
+	
+	
+	// =========================== 내가 쓴 댓글 가져오기 관련 메소드
+	
+	public int getCommentCountAllbyMemberId() {
+		return viewMapper.getCommentCountAll();
+	} // 회원 아이디로 쓴 댓글 갯수 가져오기
+	
+	public List<CommentVO> getCommentsbyMemberIdOrderByDate(String id) {
+		List<CommentVO> commentList = viewMapper.getCommentsbyRegDate(id);
+		return commentList;
+	} // 회원 아이디로 작성한 댓글을 날짜 순으로 가져오기
+	
+	
+	public int getCommentCountSearchingforMemberId(Criteria cri, String id) {
+		int count = viewMapper.getCommentCountSearchingforMemberId(cri, id);
+		return count;
+	} // 검색 조건이 있을 때 내 아이디로 작성한 댓글 갯수 가져오기
+	
+	
+	public List<CommentVO> getCommentsByPaging(Criteria cri, String id) {
+		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
+		cri.setStartRow(startRow);
+		
+		List<CommentVO> commentList = viewMapper.getCommentsByPaging(cri, id);
+		return commentList;
+	} // 회원 아이디로 댓글 페이징해서 가져오기
 
 }
