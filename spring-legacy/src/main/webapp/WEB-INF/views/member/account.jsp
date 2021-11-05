@@ -61,8 +61,13 @@
 												</div>
 												<div class="group">
 													<label for="passwd" class="label">비밀번호</label>
-													<input class="input" id="passwd" name="passwd" type="password" required>
+													<input class="input" id="signUpPasswd" name="passwd" type="password" required>
 												</div>
+												<div class="group">
+													<label for="passwd2" class="label">비밀번호 재확인</label>
+													<input class="input" id="signUpPasswd2" name="passwd2" type="password" required>
+												</div>
+												<hr class="dropdown-divider">
 												<div class="group">
 													<label for="name" class="label">이름</label>
 													<input class="input" id="name" name="name" type="text">
@@ -131,10 +136,24 @@
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
 	
     <script>
+	    $('#signUpPasswd2').on('focusout',function(){
+			const signUpPasswd = $('#signUpPasswd').val();
+			const signUpPasswd2 = $(this).val();
+			
+			if(signUpPasswd == signUpPasswd2){
+				alert('비밀번호 일치함.');
+			}else{
+				alert('비밀번호 일치하지 않음.');
+                $('input#signUpPasswd').focus().val('');
+                $('input#signUpPasswd2').val('');
+			}
+			
+		})
+    
         $('input#signUpId').on({
         	
             focusout : function() {
-                var id = $(this).val();
+            	const id = $(this).val();
                 $.ajax({
                     url : '/api/members/' + id,
                     method : 'GET',
@@ -155,7 +174,7 @@
             
             keyup : function(event) {
                 if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
-                    var id = $(this).val();
+                	const id = $(this).val();
                     $(this).val(id.replace(/[^a-z0-9]/gi, ''));
                 }
             }
