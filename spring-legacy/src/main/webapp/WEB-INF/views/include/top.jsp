@@ -5,7 +5,7 @@
 	<div class="container d-flex align-items-center">
 
 		<h1 class="logo me-auto">
-			<a href="/index">LOGO</a>
+			<a href="/index"><img src="/resources/img/logo.PNG" /></a>
 		</h1>
 
         <!-- navbar -->
