@@ -24,7 +24,7 @@
 				<h1>퀴즈 만들기</h1>
 				<br>
 
-				<form action="/quiz/write" method="POST">
+				<form action="/quiz/modify" method="POST">
 
 					<div id='quizBox'>
 						<label>퀴즈 이름</label> <input type="text" name="title" value="${ bunch.title }" required> <br>
