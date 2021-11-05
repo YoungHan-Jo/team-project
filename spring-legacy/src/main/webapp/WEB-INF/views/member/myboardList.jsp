@@ -15,7 +15,7 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h3>내가 쓴 글 목록(글개수: ${ pageMaker.totalCount })</h3>
+				<h3>내가 쓴 글 목록(글 개수: ${ pageMaker.totalCount })</h3>
 				<br>
 					<table id="myboard">
 						<tr>
