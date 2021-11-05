@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,11 @@
 				</div>
 				<br><br>
 				<div style="border-top : 5px solid black; height : 30px"></div>
+				
 				<h3>틀린 문제</h3>
+				<c:if test="${ fn:length(incorrectList) eq 0 }">
+					<h4>잘했어요~ 틀린 문제가 하나도 없네요~</h4>
+				</c:if>
 				<div class="incorrect-form" >
 					<c:forEach var="quiz" items="${ incorrectList }">
 					<div class="quiz-form" style="border-top : 1px solid black">
@@ -42,6 +47,9 @@
 				</div>
 				<div style="border-top : 5px solid black; height : 30px"></div>
 				<h3>맞은 문제</h3>
+				<c:if test="${ fn:length(correctList) eq 0 }">
+					<h4>노오력하세요! 맞은 문제가 하나도 없어요!</h4>
+				</c:if>
 				<div class="incorrect-form" >
 					<c:forEach var="quiz" items="${ correctList }">
 					<div class="quiz-form" style="border-top : 1px solid black">
