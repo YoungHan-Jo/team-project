@@ -228,5 +228,26 @@ public class QuizController {
 
 		return "quiz/quizResult";
 	}
+	
+	@GetMapping("/modify")
+	public String modifyForm(int bunchNum, Model model) {
+		
+		BunchVO bunchVO = quizService.getBunchAndQuizList(bunchNum);
+		
+		model.addAttribute("bunch", bunchVO);
+		
+		return "quiz/quizModify";
+	}
+	
+	
+	@GetMapping("/delete")
+	public String deleteBunchAndQuizList(int bunchNum) {
+		
+		quizService.deleteBunchAndQuizList(bunchNum);
+		
+		
+		return "redirect:/quiz/list";
+		
+	} //deleteBunchAndQuizList
 
 }

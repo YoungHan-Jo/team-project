@@ -25,6 +25,10 @@ public interface QuizMapper {
 	SolveHistoryVO getSolveHistoryByNum(int num);
 	
 	List<QuizVO> getQuizListByResult(Map<String, Object> map);
+	
+	List<BunchVO> getBunchesById(String id);
+	
+	List<SolveHistoryVO> getSolveHistoryAndBunch(String id);
 
 	// =================== insert ======================
 
@@ -33,5 +37,12 @@ public interface QuizMapper {
 	void addQuizList(List<QuizVO> quizList);
 	
 	void insertSolveHistory(SolveHistoryVO solveHistoryVO);
+	
+	// =================== delete ======================
+	
+	void deleteQuizList(int bunchNum);
+	
+	void deleteBunch(int num);
+	
 
 }
