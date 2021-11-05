@@ -113,6 +113,15 @@
 			FROM bunch
 			WHERE member_id = #{id}
 			ORDER BY reg_date DESC
+			LIMIT #{cri.startRow}, #{cri.amount}
+		]]>
+	</select>
+	
+	<select id="getCountBunchesById" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM bunch
+			WHERE member_id = #{id}
 		]]>
 	</select>
 	
@@ -124,7 +133,8 @@
 			JOIN bunch b
 			ON s.bunch_num = b.num
 			WHERE s.member_id = #{id}
-			ORDER BY s.solve_date DESC;
+			ORDER BY s.solve_date DESC
+			LIMIT #{cri.startRow}, #{cri.amount}
 		]]>
 	</select>
 	
@@ -145,6 +155,13 @@
 		</association>
 	</resultMap>
 
+	<select id="getCountSolveHistory" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM solve_history
+			WHERE member_id = #{id}
+		]]>
+	</select>
 
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">

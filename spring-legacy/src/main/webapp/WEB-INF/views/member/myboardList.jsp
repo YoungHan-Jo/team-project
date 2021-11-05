@@ -78,7 +78,8 @@
 	
 					<div class="divider" style="margin: 30px 0;"></div>
 	
-					<form action="#!" method="GET" id="frm">
+					<form action="/member/myboardList" method="GET" id="frm">
+						<input type="hidden" name="pageNum" value="${ pageMaker.cri.pageNum }">
 						<div class="row">
 							<div>
 								<div class="input-field">
@@ -107,9 +108,7 @@
 							</div>
 	
 							<div>
-								<button type="button" id="btnSearch">
-									검색
-								</button>
+								<button type="submit" id="btnSearch"> 검색 </button>
 							</div>
 						</div>
 						</form>
