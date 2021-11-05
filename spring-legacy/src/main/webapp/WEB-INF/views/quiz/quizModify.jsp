@@ -21,10 +21,10 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h1>퀴즈 만들기</h1>
+				<h1>퀴즈 수정</h1>
 				<br>
 
-				<form action="/quiz/modify" method="POST">
+				<form action="/quiz/modify?bunchNum=${ bunch.num }" method="POST">
 
 					<div id='quizBox'>
 						<label>퀴즈 이름</label> <input type="text" name="title" value="${ bunch.title }" required> <br>

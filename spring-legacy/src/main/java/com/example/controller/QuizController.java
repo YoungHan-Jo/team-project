@@ -239,12 +239,14 @@ public class QuizController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(String bunchNum,BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
+	public String modify(int bunchNum, BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
 			String[] numFours, String[] answers, HttpSession session, RedirectAttributes rttr) {
 
 		System.out.println("write() 호출됨... ");
-
-		int bunchNum = quizService.getNextBunchNum();
+		
+		System.out.println("/modify 로 들어온 bunchNum : " + bunchNum);
+		System.out.println("/modify 로 들어온 bunchVO : " + bunchVO);
+		
 		bunchVO.setNum(bunchNum);
 
 		List<QuizVO> quizList = new ArrayList<QuizVO>();
@@ -267,8 +269,10 @@ public class QuizController {
 		bunchVO.setMemberId(id);
 		bunchVO.setRegDate(new Date());
 		bunchVO.setQuizList(quizList);
+		
+		System.out.println("/modify 로 들어와 완성된 bunchVO : " + bunchVO);
 
-		//quizService.addBunchAndQuizList(bunchVO);
+		quizService.updateBunchAndQuizList(bunchVO);
 
 		rttr.addAttribute("bunchNum", bunchVO.getNum());
 

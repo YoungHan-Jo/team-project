@@ -28,7 +28,7 @@ public interface QuizMapper {
 	
 	// 마이바티스는 매퍼 메소드의 매개변수 선언이 두개 이상일때
 	// SQL문에서 각각 사용될 이름을 명시적으로 줘야함
-	//List<QuizVO> getQuizListByResult2(@RequestParam("quiz") QuizVO quizVO, @RequestParam("s") String str);
+	//List<QuizVO> getQuizListByResult2(@Param("quiz") QuizVO quizVO, @Param("s") String str);
 	
 	List<BunchVO> getBunchesById(String id);
 	

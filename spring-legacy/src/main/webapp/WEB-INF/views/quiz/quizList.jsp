@@ -20,10 +20,10 @@
 				<h1>퀴즈 리스트</h1>
 				<br>
 				<button class="btn-quizWrite" onclick="location.href='/quiz/write'">퀴즈 만들기</button>
-				<div id="bunchList-form">
+				<div class="row" id="bunchList-form">
 					<h3>퀴즈 리스트 (${ pageMaker.totalCount })</h3>
 					<c:forEach var="bunch" items="${ bunchList }">
-						<div style="border : 1px solid black;">
+						<div class="col-md-4" style="border : 1px solid black;">
 							<h4>${ bunch.num }. ${ bunch.title }</h4>
 							<span>${ bunch.memberId }</span><br> 
 							<span>${ bunch.regDate }</span>
