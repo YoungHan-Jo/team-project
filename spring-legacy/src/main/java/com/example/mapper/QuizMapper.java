@@ -3,10 +3,8 @@ package com.example.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.example.domain.Criteria;
 import com.example.domain.BunchVO;
+import com.example.domain.Criteria;
 import com.example.domain.QuizVO;
 import com.example.domain.SolveHistoryVO;
 
