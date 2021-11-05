@@ -42,7 +42,7 @@ public class BoardRestController {
 	@Autowired
 	private AttachService attachService;
 
-	// "년/월/일" 형식의 폴더명을 리턴하는 메소드
+	// "�뀈/�썡/�씪" �삎�떇�쓽 �뤃�뜑紐낆쓣 由ы꽩�븯�뒗 硫붿냼�뱶
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		String str = sdf.format(new Date());
@@ -54,7 +54,7 @@ public class BoardRestController {
 	public ResponseEntity<BoardVO> getOne(@PathVariable("num") int num){
 		// code
 		
-		// 특정 글 번호에 해당하는 게시글 한 개와 게시글에 포함된 첨부파일 정보 가져오기
+		// �듅�젙 湲� 踰덊샇�뿉 �빐�떦�븯�뒗 寃뚯떆湲� �븳 媛쒖� 寃뚯떆湲��뿉 �룷�븿�맂 泥⑤��뙆�씪 �젙蹂� 媛��졇�삤湲�
 		BoardVO dbBoardVO = boardService.getBoardAndAttaches(num);
 
 		return new ResponseEntity<BoardVO>(dbBoardVO, HttpStatus.OK);
@@ -68,21 +68,32 @@ public class BoardRestController {
 		Criteria cri = new Criteria();
 		cri.setPageNum(pageNum);
 
-		// 특정 페이지 번호에 해당하는 게시글 목록을 가져오기
+		// �듅�젙 �럹�씠吏� 踰덊샇�뿉 �빐�떦�븯�뒗 寃뚯떆湲� 紐⑸줉�쓣 媛��졇�삤湲�
 		List<BoardVO> boardList = boardService.getBoards(cri);
 
 		return new ResponseEntity<List<BoardVO>>(boardList, HttpStatus.OK);
 	}
+
+	
+	@PostMapping(value = "/boards", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public void write(List<MultipartFile> files, BoardVO boardVO, 
+			HttpServletRequest request, RedirectAttributes rttr) {
+		
+		boardService.addBoard(boardVO);
+		
+	}
 	
 	@DeleteMapping(value = "/boards/{num}",produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<BoardVO> remove(@PathVariable("num") int num){
+	public void remove(@PathVariable("num") int num){
 		
-		// boards/num 기준으로 삭제 한마디로 게시글의 번호 num에 맞는 수를 입력하여 버튼을 클릭하면 삭제가 됨
-		BoardVO dbboardVO = boardService.deleteBoard(num);
-		
-		
-		return new ResponseEntity<BoardVO>(dbboardVO,HttpStatus.OK);
+	
+		boardService.deleteBoard(num);
+
 	}
+	
+	
+	
+	
 	
 }
 

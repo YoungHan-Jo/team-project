@@ -13,7 +13,7 @@
 	<table border="1">
 		<thead>
 			<tr>
-				<th>퀴즈유형</th><th>퀴즈번호</th><th>질문</th><th>정답</th>
+				<th>퀴즈번호</th><th>퀴즈제목</th><th>작성자</th><th>시간</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,13 +31,19 @@
 		
 		if (array != null && array.length > 0) {
 			
-			for (var quiz of array) {
+			for (var bunch of array) {
 				str += `
 					<tr>
-						<td>\${quiz.bunchNum}</td>
-						<td>\${quiz.questionNum}</td>
-						<td>\${quiz.question}</td>
-						<td>\${quiz.answer}</td>
+						<td>\${bunch.num}</td>
+						<td>\${bunch.title}</td>
+						<td>\${bunch.memberId}</td>
+						<td>\${bunch.regDate}</td>
+						<td>
+							<a href="/quiz/modify?bunchNum=${bunch.num}">수정</a>
+						<td>
+						<td>
+							<a href="/quiz/delete?bunchNum=${bunch.num}">삭제</a>
+						<td>
 					</tr>
 				`;
 			} // for
@@ -55,7 +61,7 @@
 		
 		// ajax 함수 호출 - 비동기 자바스크립트 통신
 		$.ajax({
-			url: '/api/quizs',
+			url: '/api/bunches',
 			method: 'GET',
 			success: function (data) {
 				console.log(data);
