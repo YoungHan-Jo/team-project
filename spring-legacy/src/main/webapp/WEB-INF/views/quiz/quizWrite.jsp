@@ -5,6 +5,11 @@
 <head>
 <title>Insert title here</title>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
+<style>
+.quiz-form {
+	border: 1px solid black;
+}
+</style>
 </head>
 <body>
 	<!-- Header -->
@@ -21,17 +26,18 @@
 				<form action="/quiz/write" method="POST">
 
 					<div id='quizBox'>
-						<div class="quizList-form" style="border: solid 1px;">
-							<label>퀴즈 이름</label> <input type="text" name="title" required> <br>
-							<div class="quiz-form">
-								<label>문제</label><input type="text" name="questions" required> <br> 
-								<label>1</label> <input type="text" name="numOnes" required> <br> 
-								<label>2</label> <input type="text" name="numTwos" required> <br> 
-								<label>3</label> <input type="text" name="numThrees" required> <br> 
-								<label>4</label> <input type="text" name="numFours" required> <br> 
-								<label>정답</label> <input type="text" name="answers" required> <br>
-							</div>
+						<label>퀴즈 이름</label> <input type="text" name="title" required> <br>
+						
+						<div class="quiz-form"">
+							<button class="btn-delete">문제 삭제</button> <br>
+							<label>문제</label><input type="text" name="questions" required> <br>
+							<label>1</label> <input type="text" name="numOnes" required> <br>
+							<label>2</label> <input type="text" name="numTwos" required> <br>
+							<label>3</label> <input type="text" name="numThrees" required> <br>
+							<label>4</label> <input type="text" name="numFours" required> <br>
+							<label>정답</label> <input type="text" name="answers" required> <br>
 						</div>
+						
 						<br>
 					</div>
 					<div class="row">
@@ -39,16 +45,9 @@
 					</div>
 					<button type="submit">만들기</button>
 
-
-
-
-
-
-
 				</form>
 
 			</div>
-
 
 		</section>
 		<!-- End Why Us Section -->
@@ -61,7 +60,8 @@
 
 	<script>
 		$('#btn-addQuiz').on('click', function() {
-			const str = `<div style="border: solid 1px;">
+			const str = `<div class="quiz-form">
+							<button class="btn-delete">문제 삭제</button> <br>
 							<label>문제</label><input type="text" name="questions" required> <br> 
 							<label>1</label> <input type="text" name="numOnes" required> <br> 
 							<label>2</label> <input type="text" name="numTwos" required> <br> 
@@ -72,6 +72,10 @@
 						 <br>`;
 			$('#quizBox').append(str);
 						 
+		})
+		
+		$('#quizBox').on('click','button.btn-delete',function(){
+			$(this).closest('div').remove();
 		})
 	</script>
 
