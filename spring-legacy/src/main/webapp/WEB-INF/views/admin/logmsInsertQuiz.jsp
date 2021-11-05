@@ -26,7 +26,7 @@
 		<div class="row">
 			<button type="button" id="btn-addQuiz">+ 문제 추가</button>
 		</div>
-		<button type="submit">만들기</button>
+		<button type="button" onclick="history.go(-1);">되돌아가기</button>
 	</form>
 
 <script>

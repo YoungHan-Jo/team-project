@@ -1,9 +1,13 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.BoardVO;
 import com.example.domain.BunchVO;
@@ -53,18 +59,20 @@ public class QuizRestController {
 	}
 	
 	
-	@PostMapping(value = "/quizs", consumes = "application/json", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@PostMapping(value = "/quizs", 
+			consumes = "application/json", 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Map<String, Object>> create(@RequestBody BunchVO bunchVO){
 		
-		quizService.addBunchAndQuizList(bunchVO);
+			
+			quizService.addBunchAndQuizList(bunchVO);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("result", "success");
+			map.put("bunch", bunchVO);
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", "success");
-		map.put("bunch", bunchVO);
-		
-		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
-	
 	
 	
 	
