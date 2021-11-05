@@ -228,5 +228,15 @@ public class QuizController {
 
 		return "quiz/quizResult";
 	}
+	
+	@GetMapping("/delete")
+	public String deleteBunchAndQuizList(int bunchNum) {
+		
+		quizService.deleteBunchAndQuizList(bunchNum);
+		
+		
+		return "/quiz/list";
+		
+	} //deleteBunchAndQuizList
 
 }

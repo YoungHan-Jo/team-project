@@ -135,6 +135,22 @@
 			VALUES (#{num}, #{memberId}, #{bunchNum}, #{solveDate}, #{point}, #{answerList}, #{correctList}, #{incorrectList})
 		]]>
 	</insert>
+	
+	
+	<!-- =================== select ====================== -->
+	<delete id="deleteQuizList">
+		<![CDATA[
+			DELETE FROM quiz
+			WHERE bunch_num = #{bunchNum}
+		]]>
+	</delete>
+	
+	<delete id="deleteBunch">
+		<![CDATA[
+			DELETE FROM bunch
+			WHERE num = #{num}
+		]]>
+	</delete>
 
 
 </mapper>

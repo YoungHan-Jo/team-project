@@ -66,6 +66,9 @@ public class QuizService {
 		return quizMapper.getQuizListByResult(map);
 	}
 	
-	
+	public void deleteBunchAndQuizList(int bunchNum) {
+		quizMapper.deleteQuizList(bunchNum);
+		quizMapper.deleteBunch(bunchNum);
+	}
 
 }
