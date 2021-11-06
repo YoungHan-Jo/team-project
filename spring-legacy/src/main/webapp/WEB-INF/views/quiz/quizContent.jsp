@@ -25,6 +25,8 @@
 					<h2>${ bunch.title }</h2>
 					<form action="/quiz/submit?bunchNum=${ bunch.num }" method="POST">
 					<button>제출하기</button>
+					<button onclick="location.href='/quiz/modify?bunchNum=${ bunch.num }'">수정</button>
+					<button id="btn-delete" onclick="location.href='/quiz/delete?bunchNum=${ bunch.num }'">삭제</button>
 						<c:forEach var="quiz" items="${ quizList }">
 							<div style="border : 1px soild black">
 							<h4>${ quiz.questionNum }. ${ quiz.question }</h4>
