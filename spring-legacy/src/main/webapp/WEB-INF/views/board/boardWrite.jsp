@@ -18,7 +18,7 @@
 			<div class="container">
 				<h5>게시판 새글쓰기</h5>
 
-				<form action="/board/write" method="POST"">
+				<form action="/board/write" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="pageNum" value="${ pageNum }">
 
 					<div class="board-div">
@@ -37,7 +37,11 @@
 							<label for="textarea1">내용</label>
 							<textarea id="textarea1" name="content"></textarea>
 						</div>
-
+						
+						<div  id="fileBox">
+							<input type="file" name="files">
+							<button class="file-delete">파일삭제</button>
+						</div>
 					</div>
 
 					<br>
@@ -69,5 +73,13 @@
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
+	<script>
+    $('div#fileBox').on('click', 'button.file-delete', function () {
+    	$(this).parent().remove();
+    	
+    	fileCount--;
+    });
+    
+  </script>
 </body>
 </html>
