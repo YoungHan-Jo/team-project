@@ -44,7 +44,7 @@ public class QuizController {
 
 		System.out.println("list() 호출됨 ... ");
 
-		List<BunchVO> bunchList = quizService.getBunchesByCri(cri);
+		List<BunchVO> bunchList = quizService.getBunchesAndQuizListByCri(cri);
 
 		int totalCount = bunchList.size();
 
