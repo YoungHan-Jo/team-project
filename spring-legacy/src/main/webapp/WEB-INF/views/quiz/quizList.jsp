@@ -15,21 +15,24 @@
 
 	<main id="main">
 		<!-- Why Us Section -->
-		<section id="why-us" class="why-us">
+		<section class="our-skills">
 			<div class="container">
 				<h1>퀴즈 리스트</h1>
 				<br>
 				<button class="btn-quizWrite" onclick="location.href='/quiz/write'">퀴즈 만들기</button>
-				<div id="bunchList-form">
+				<div class="row" id="bunchList-form">
 					<h3>퀴즈 리스트 (${ pageMaker.totalCount })</h3>
 					<c:forEach var="bunch" items="${ bunchList }">
-						<div style="border : 1px solid black;">
-							<h4>${ bunch.num }. ${ bunch.title }</h4>
-							<span>${ bunch.memberId }</span><br> 
-							<span>${ bunch.regDate }</span>
-							<button onclick="location.href='/quiz/content?bunchNum=${ bunch.num }'">문제 풀기</button>
-							<button onclick="location.href='/quiz/modify?bunchNum=${ bunch.num }'">수정</button>
-							<button id="btn-delete" onclick="location.href='/quiz/delete?bunchNum=${ bunch.num }'">삭제</button>
+						<div class="col-sm-6 col-md-4">
+							<div>
+								<h4>${ bunch.num }. ${ bunch.title }</h4>
+								<span>${ bunch.memberId }</span><br> 
+								<span>${ bunch.regDate }</span>
+								<br>
+								<button onclick="location.href='/quiz/content?bunchNum=${ bunch.num }'">문제 풀기</button>
+								<button onclick="location.href='/quiz/modify?bunchNum=${ bunch.num }'">수정</button>
+								<button id="btn-delete" onclick="location.href='/quiz/delete?bunchNum=${ bunch.num }'">삭제</button>
+							</div>
 						</div>
 						<br> <br>
 					</c:forEach>
@@ -54,7 +57,6 @@
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
-
 	<script>
 		
 	</script>
