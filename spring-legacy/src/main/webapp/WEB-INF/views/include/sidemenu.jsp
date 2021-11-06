@@ -2,7 +2,6 @@
 
 <style>
 #myBox {
-
 	font-size: 70%;
 	line-height: 1;
 	border: 0;
