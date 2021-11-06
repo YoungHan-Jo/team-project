@@ -175,7 +175,7 @@
 	</insert>
 	
 	
-	<!-- =================== select ====================== -->
+	<!-- =================== delete ====================== -->
 	<delete id="deleteQuizList">
 		<![CDATA[
 			DELETE FROM quiz
