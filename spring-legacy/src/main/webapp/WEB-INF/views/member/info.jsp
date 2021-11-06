@@ -24,14 +24,17 @@
 	<!-- main -->
 	<main id="main" style="background-color: #DBE2EF;">
 
-      <!-- sidemenu -->
-	  <jsp:include page="/WEB-INF/views/include/sidemenu.jsp" />
+      
 
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row d-flex justify-content-center align-items-center" style="margin: 45px auto;">
-					<div class="col col-lg-6 mb-4 mb-lg-0">
+			<div class="row">
+				<div class="side-menu-area col-md-3">
+					<!-- sidemenu -->
+					  <jsp:include page="/WEB-INF/views/include/sidemenu.jsp" />
+				</div>
+				<div class="col-md-6">
 						<div class="card text-center text-white shadow" style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
 							<div class="row p-3">
 								<div class="col-md-4" style="margin-top: 100px;">
@@ -81,8 +84,8 @@
 							</div>
 						</div>
 							<button type="submit" onclick="location.href='/member/logout'" class="btn btn-dark btn-sm mt-2">로그아웃</button>
-					</div>
 				</div>
+			</div>
 			</div>
 		</section>
 		<!-- End Why Us Section -->
