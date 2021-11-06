@@ -25,6 +25,47 @@
 			LIMIT #{startRow} , #{amount}
 		]]>
 	</select>
+	
+	<select id="getBunchesAndQuizListByCri" resultMap="bunchesAndQuizList">
+		<![CDATA[
+			SELECT b.num, b.title, b.member_id, b.reg_date, q.bunch_num, q.question_num, 
+				   q.question, q.num_one, q.num_two, q.num_three, q.num_four, q.answer
+			FROM bunch b
+			LEFT OUTER JOIN quiz q
+			ON b.num = q.bunch_num
+		]]>
+		<where>
+			<!-- type는 criteria의 gettype로 꺼낸 값, ${} 사용안함 -->
+			<if test="type == 'title'.toString()">
+				<!-- #{keyword} 값 자체가 이미 ''로 씌어져 있음. sql의 concat 함수 이용 -->
+				title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'memberId'.toString()">
+				member_id LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+		<![CDATA[
+			ORDER BY num DESC
+			LIMIT #{startRow} , #{amount}
+		]]>
+	</select>
+	<resultMap type="bunchVO" id="bunchesAndQuizList">
+		<id column="num" property="num" />
+		<result column="title" property="title" />
+		<result column="member_id" property="memberId" />
+		<result column="reg_date" property="regDate" />
+		<collection property="quizList" javaType="list"
+			ofType="quizVO">
+			<id column="bunch_num" property="bunchNum" />
+			<id column="question_num" property="questionNum" />
+			<result column="question" property="question" />
+			<result column="num_one" property="numOne" />
+			<result column="num_two" property="numTwo" />
+			<result column="num_three" property="numThree" />
+			<result column="num_four" property="numFour" />
+			<result column="answer" property="answer" />
+		</collection>
+	</resultMap>
 
 	<select id="getNextBunchNum" resultType="int">
 		<![CDATA[

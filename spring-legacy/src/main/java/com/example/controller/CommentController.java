@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,7 +21,7 @@ public class CommentController {
 	private CommentService commentService;
 	
 	@PostMapping("/commentWrite")
-	public String write(CommentVO commentVO, RedirectAttributes rttr) {
+	public String write(CommentVO commentVO, RedirectAttributes rttr, String pageNum) {
 		System.out.println("c_write 호출됨...");
 		
 		int num = commentService.getNextnum();
@@ -34,6 +35,7 @@ public class CommentController {
 		commentService.addComment(commentVO);
 		
 		rttr.addAttribute("num", commentVO.getNum());
+		rttr.addAttribute("pageNum", pageNum);
 		
 		System.out.println("commentVO: " + commentVO);
 		return "redirect:/board/view?num=" + commentVO.getBoardNum();

@@ -98,7 +98,7 @@
 	<!-- End Header -->
 
 	<!-- main -->
-	<main id="main" style="background-color: #DBE2EF;">
+	<main id="main">
 
 		<!-- Menu Box -->
 		<div id="myBox">
@@ -120,7 +120,7 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row d-flex justify-content-center align-items-center" style="margin: 33px auto;">
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 40px auto;">
 					<div class="col col-lg-6 mb-4 mb-lg-0">
 						<div class="card shadow text-center"
 							style="background: #fff; border-radius: 1rem;">

@@ -100,7 +100,7 @@
   	
   
     $('button#btnAddFile').on('click', function () {
-    	if (fileCount > 5) {
+    	if (fileCount >= 5) {
     		alert(`첨부파일은 최대 5개 까지만 첨부할 수 있습니다.`);
     		return;
     	}

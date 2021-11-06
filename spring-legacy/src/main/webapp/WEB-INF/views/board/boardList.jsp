@@ -15,8 +15,6 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="board-section why-us">
 
-
-
 			<h3>게시판</h3>
 			<br>
 			<h5>일반 게시판 (글개수: ${ pageMaker.totalCount })</h5>
