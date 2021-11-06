@@ -84,7 +84,7 @@
 	<!-- End Header -->
 
 	<!-- main -->
-	<main id="main" style="background-color: #DBE2EF;">
+	<main id="main">
 
         <!-- Menu Box -->
 		<div id="myBox">
@@ -108,7 +108,7 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row d-flex justify-content-center align-items-center" style="margin: 45px auto;">
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 31px auto;">
 					<div class="col col-lg-6 mb-4 mb-lg-0">
 						<div class="card text-center text-white shadow" style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
 							<div class="row p-3">

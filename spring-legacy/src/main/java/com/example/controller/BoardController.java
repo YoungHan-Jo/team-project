@@ -107,12 +107,14 @@ public class BoardController {
 		boardVO.setReSeq(0);
 
 		boardVO.setAttachList(attachList);
+		
+		System.out.println("attachList");
 
 		boardService.addBoardAndAttaches(boardVO);
 
 		rttr.addAttribute("num", boardVO.getNum());
 		rttr.addAttribute("pageNum", 1);
-
+		
 		return "redirect:/board/view";
 	} // write
 

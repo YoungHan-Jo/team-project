@@ -17,7 +17,7 @@
 	<!-- End Header -->
 
 	<!-- main-->
-	<main id="main" style="background-color: #DBE2EF;">
+	<main id="main" style="margin-bottom: 0;">
 
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">

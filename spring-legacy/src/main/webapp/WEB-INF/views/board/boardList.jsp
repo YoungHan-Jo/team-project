@@ -31,7 +31,7 @@
 				</div>
 			</c:if>
 
-			<table id="board" class="board-table">
+			<table id="board" class="table table-hover">
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -55,6 +55,7 @@
 									<td><c:if test="${ board.reLev gt 0 }">
 											<%-- 답글 --%>
 											<span style="width: ${ board.reLev * 15 }px"></span>
+											<i class="bi bi-arrow-return-right"></i>
 										</c:if> ${ board.subject }</td>
 									<td>${ board.memberId }</td>
 									<td><fmt:formatDate value="${ board.regDate }"
@@ -76,11 +77,12 @@
 			</table>
 
 			<br>
-			<ul class="page-num pagination center">
+			<ul class="pagination justify-content-center">
 				<%-- 이전 --%>
 				<c:if test="${ pageMaker.prev eq true }">
-					<li><a
+					<li class="page-item"><a class="page-link"
 						href="/board/list?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#board">
+						<span aria-hidden="true">&laquo;</span>
 					</a></li>
 				</c:if>
 
@@ -88,14 +90,15 @@
 				<c:forEach var="i" begin="${ pageMaker.startPage }"
 					end="${ pageMaker.endPage }" step="1">
 					<li
-						class="waves-effect ${ (pageMaker.cri.pageNum eq i) ? 'active' : '' }"><a
+						class="page-item" ${ (pageMaker.cri.pageNum eq i) ? 'active' : '' }"><a class="page-link"
 						href="/board/list?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#board">${ i }</a></li>
 				</c:forEach>
 
 				<%-- 다음 --%>
 				<c:if test="${ pageMaker.next eq true }">
-					<li><a
+					<li class="page-item"><a class="page-link"
 						href="/board/list?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#board">
+						<span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</c:if>
 			</ul>
@@ -104,31 +107,23 @@
 
 			<form action="#!" method="GET" id="frm">
 				<div class="search row">
-					
-						<div class="input-field">
-							<select name="type">
-								<option value="" disabled selected>=선택=</option>
-								<option value="subject"
-									${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
-								<option value="content"
-									${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
-								<option value="memberId"
-									${ (pageMaker.cri.type eq 'memberId')     ? 'selected' : '' }>작성자</option>
-							</select> <input type="text" id="autocomplete-input" class="autocomplete"
-								name="keyword" value="${ pageMaker.cri.keyword }"> <label
-								for="autocomplete-input"></label>
 
-							<button type="button" id="btnSearch">검색</button>
-						
+					<div class="input-field">
+						<select name="type">
+							<option value="" disabled selected>=선택=</option>
+							<option value="subject"
+								${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
+							<option value="content"
+								${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
+							<option value="memberId"
+								${ (pageMaker.cri.type eq 'memberId')     ? 'selected' : '' }>작성자</option>
+						</select> <input type="text" id="autocomplete-input" class="autocomplete"
+							name="keyword" value="${ pageMaker.cri.keyword }"> <label
+							for="autocomplete-input"></label>
+
+						<button type="button" id="btnSearch">검색</button>
+
 					</div>
-
-
-
-
-
-
-
-
 				</div>
 			</form>
 
@@ -153,5 +148,15 @@
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
+	<script>
+		// 검색 버튼 클릭시
+		$('#btnSearch').on('click', function() {
+
+			var query = $('#frm').serialize();
+			console.log(query);
+
+			location.href = '/board/list?' + query + '#board';
+		});
+	</script>
 </body>
 </html>

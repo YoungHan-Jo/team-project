@@ -64,6 +64,7 @@ public class CommentController {
 		commentService.deleteComment(num);
 		
 		rttr.addAttribute("bno", bno);
+		rttr.addAttribute("pageNum", 1);
 		
 		return "redirect:/board/view?num=" + bno;
 	} // remove
