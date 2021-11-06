@@ -6,8 +6,6 @@
 <head>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
 
-<!-- Member Account CSS Files -->
-<link href="/resources/css/member.css" rel="stylesheet">
 </head>
 
 <body>
