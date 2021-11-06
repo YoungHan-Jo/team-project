@@ -16,10 +16,74 @@
 	<!-- End Header -->
 	<main id="main">
 		<!-- Why Us Section -->
-		<section id="why-us" class="why-us">
+		<section id="why-us" class="board-view why-us">
 			<div class="container">
 
 				<h5>게시판 상세보기</h5>
+				
+				
+				<section class="boardview-section">
+					<h2>제목 : ${ board.subject }</h2>
+				
+					<ul>
+						<li>작성자 : ${ board.memberId }</li>
+						<li>작성일 : <fmt:formatDate value="${ board.regDate }"
+								pattern="yyyy.MM.dd HH:mm:ss" /> </li>
+						<li>조회수 : ${ board.viewCount } </li>
+					</ul>
+					
+					<div class="contents"><pre>${ board.content }</pre></div>
+					
+					<div>첨부파일 : <c:choose>
+								<%-- 첨부파일 존재 --%>
+								<c:when test="${ fn:length(attachList) gt 0 }">
+									<ul>
+										<c:forEach var="attach" items="${ attachList }">
+											<c:if test="${ attach.filetype eq 'O' }">
+												<c:set var="fileCallPath"
+													value="${ attach.uploadpath }/${ attach.uuid }_${ attach.filename }" />
+												<li><a href="/download?fileName=${ fileCallPath }">
+														 ${ attach.filename }
+												</a></li>
+											</c:if>
+											<c:if test="${ attach.filetype eq 'I' }">
+												<c:set var="fileCallPath"
+													value="${ attach.uploadpath }/s_${ attach.uuid }_${ attach.filename }" />
+												<c:set var="fileCallPathOrigin"
+													value="${ attach.uploadpath }/${ attach.uuid }_${ attach.filename }" />
+												<li><a href="/display?fileName=${ fileCallPathOrigin }">
+														<img src="/display?fileName=${ fileCallPath }">
+												</a></li>
+											</c:if>
+										</c:forEach>
+									</ul>
+								</c:when>
+								<c:otherwise>
+												첨부파일 없음
+											</c:otherwise>
+							</c:choose></div>
+							
+						<div class="btn-boardview">
+							<button type="button" onclick="location='/board/modify?num=${ board.num }&pageNum=${ pageNum }'">글수정</button>
+							<button type="button" onclick="remove(event)">글삭제</button>
+							<button type="button" onclick="/board/reply?reRef=${ board.reRef }&reLev=${ board.reLev }&reSeq=${ board.reSeq }&pageNum=${ pageNum }'">답글</button>
+							<button type="button" onclick="location='/board/list?pageNum=${ pageNum }'">글목록</button>
+						</div>
+				
+				</section>
+				
+				<hr>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<%-- 
 				<table id="boardList">
 					<tr>
 						<th>제목</th>
@@ -42,7 +106,7 @@
 						<th>첨부파일</th>
 						<td colspan="5">
 							<c:choose>
-								<%-- 첨부파일 존재 --%>
+								첨부파일 존재
 								<c:when test="${ fn:length(attachList) gt 0 }">
 									<ul>
 										<c:forEach var="attach" items="${ attachList }">
@@ -70,16 +134,16 @@
 											</c:otherwise>
 							</c:choose></td>
 					</tr>
-				</table>
+				</table> --%>
 
 
-				<div class="section">
+				<%-- <div class="section">
 					<div class="row">
 						<div>
 
 							<!-- 로그인 -->
 							<c:if test="${ not empty sessionScope.id }">
-								<%-- 로그인 아이디와 글작성자가 같음  --%>
+								로그인 아이디와 글작성자가 같음 
 								<c:if test="${ sessionScope.id eq board.memberId }">
 									<a href="/board/modify?num=${ board.num }&pageNum=${ pageNum }">
 										글수정
@@ -96,7 +160,7 @@
 							<a href="/board/list?pageNum=${ pageNum }"> 글목록 </a>
 						</div>
 					</div>
-				</div>
+				</div> --%>
 
 
 
@@ -121,8 +185,11 @@
 					</ul>
 				</div>
 
-				<br> <br> <br>
-				<div>
+				<br>
+				<hr>
+				<br>
+				
+				<div class="comment">
 
 					<form method="post" action="/comment/commentWrite">
 
@@ -130,7 +197,7 @@
 						<input type="hidden" name="pageNum" value="${ pageNum }">
 						<input type="hidden" name="boardNum" value="${ board.num }">
 
-						<div>
+						<div class="comment-div">
 							<label for="id">작성자</label> <input id="id" type="text"
 								name="memberId" value="${ sessionScope.id }">
 						</div>
@@ -143,7 +210,7 @@
 
 
 						<br>
-						<div>
+						<div class="btn-comment">
 							<button type="submit">댓글등록</button>
 						</div>
 
