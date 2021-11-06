@@ -43,8 +43,14 @@ public class QuizService {
 	public void addBunchAndQuizList(BunchVO bunchVO) {
 		quizMapper.addBunch(bunchVO);
 		quizMapper.addQuizList(bunchVO.getQuizList());
-
 	}
+	
+	public void updateBunchAndQuizList(BunchVO bunchVO) {
+		quizMapper.deleteQuizList(bunchVO.getNum());
+		quizMapper.deleteBunch(bunchVO.getNum());
+		addBunchAndQuizList(bunchVO);
+	}
+	
 
 	public BunchVO getBunchAndQuizList(int bunchNum) {
 		return quizMapper.getBunchAndQuizList(bunchNum);
