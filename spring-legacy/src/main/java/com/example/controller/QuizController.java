@@ -41,7 +41,7 @@ public class QuizController {
 
 	@GetMapping("/list")
 	public String list(Criteria cri, Model model) {
-		cri.setAmount(9);
+		cri.setAmount(10);
 
 		System.out.println("list() 호출됨 ... ");
 
