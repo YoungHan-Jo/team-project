@@ -19,65 +19,73 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h5>게시판 글수정</h5>
-				<div class="divider" style="margin: 30px 0;"></div>
+				<div class="card">
+					<div class="col-sm-12 col-md-8 col-lg-10 p-5">
+						<h5 class="fw-bold">게시판 글수정</h5>
+						<div class="divider" style="margin: 30px 0;"></div>
 
-				<form action="/board/modify" method="POST"
-					enctype="multipart/form-data">
-					<input type="hidden" name="pageNum" value="${ pageNum }">
-					<input type="hidden" name="num" value="${ board.num }">
+						<form action="/board/modify" method="POST" enctype="multipart/form-data">
+							<input type="hidden" name="pageNum" value="${ pageNum }"> <input type="hidden" name="num" value="${ board.num }">
 
-					<div class="row">
-						<div>
-							<input id="id" type="text" name="memberId" value="${ sessionScope.id }" readonly>
-							<label for="id">아이디</label>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="input-field">
-							<input type="text" id="title" class="validate" name="subject" value="${ board.subject }">
-							<label for="title">제목</label>
-						</div>
-					</div>
-					<div class="row">
-						<div class="input-field">
-							<textarea id="textarea1" name="content">${ board.content }</textarea>
-							<label for="textarea1">내용</label>
-						</div>
-					</div>
-
-					<div class="row">
-						<div>
-							<button type="button" id="btnAddFile">파일 추가</button>
-						</div>
-					</div>
-
-					<div class="row" id="oldFileBox">
-						<c:forEach var="attach" items="${ attachList }">
-							<input type="hidden" name="oldfile" value="${ attach.uuid }">
-							<div>
-								<span class="filename">${ attach.filename }</span>
-								<button class="delete-oldfile">취소</button>
+							<div class="row p-2">
+								<div class="col-sm-1">
+									<label for="id">아이디</label>
+								</div>
+								<div class="col-sm-11">
+									<input id="id" class="form-control form-control-sm col-md-8" type="text" name="memberId" value="${ sessionScope.id }" readonly>
+								</div>
 							</div>
-						</c:forEach>
+
+
+							<div class="row p-2">
+								<div class="col-sm-1">
+									<label for="title">제목</label>
+								</div>
+								<div class="col-sm-11">
+									<input type="text" id="title" class="validate form-control form-control-sm" name="subject" value="${ board.subject }">
+								</div>
+							</div>
+
+							<div class="row p-2">
+								<div class="col-sm-1">
+									<label for="textarea1">내용</label>
+								</div>
+								<div class="col-sm-11 form-floating">
+									<textarea class="form-control" id="textarea1" name="content" style="height: 100px">${ board.content }</textarea>
+								</div>
+							</div>
+
+							<div class="row p-2">
+								<div class="col-sm-11">
+									<button type="button" id="btnAddFile">파일 추가</button>
+								</div>
+							</div>
+
+							<div class="row" id="oldFileBox">
+								<c:forEach var="attach" items="${ attachList }">
+									<input type="hidden" name="oldfile" value="${ attach.uuid }">
+									<div>
+										<span class="filename">${ attach.filename }</span>
+										<button class="delete-oldfile">취소</button>
+									</div>
+								</c:forEach>
+							</div>
+							
+							<div class="row" id="newFileBox"></div>
+
+							<br>
+							<div>
+								<button type="submit" class="btn btn-outline-success">수정</button>
+								&nbsp;&nbsp;
+								<button type="reset" class="btn btn-outline-warning">초기화</button>
+								&nbsp;&nbsp;
+								<button type="button" class="btn btn-outline-info" onclick="location.href = '/board/list?pageNum=${ pageNum }'">글목록</button>
+							</div>
+						</form>
+
 					</div>
-
-					<div class="row" id="newFileBox"></div>
-
-					<br>
-					<div>
-						<button type="submit">글수정</button>
-						&nbsp;&nbsp;
-						<button type="reset">초기화</button>
-						&nbsp;&nbsp;
-						<button  type="button"
-							onclick="location.href = '/board/list?pageNum=${ pageNum }'">글목록</button>
-					</div>
-				</form>
-
+				</div>
 			</div>
-
 		</section>
 		<!-- End Why Us Section -->
 
@@ -88,9 +96,7 @@
 
 	<!-- Top Button -->
 	<div id="preloader"></div>
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center">
-		<i class="bi bi-arrow-up-short"></i>
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"> <i class="bi bi-arrow-up-short"></i>
 	</a>
 
 	<!-- JavaScript -->
@@ -106,10 +112,10 @@
     	}
     	
     	var str = `
-    		<div>
-	            <input type="file" name="files">
-	            <button class="delete-addfile">취소</button>
-            </div>
+    		<div class="input-group">
+    		  <input type="file" class="form-control" name="files"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+    		  <button class="btn btn-outline-secondary delete-addfile" type="button" id="inputGroupFileAddon04"><i class="bi bi-x"></i></button>
+    		</div>
     	`;
     	
     	$('div#newFileBox').append(str);
