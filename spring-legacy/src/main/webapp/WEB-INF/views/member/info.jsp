@@ -158,7 +158,7 @@
 								</div>
 							</div>
 						</div>
-							<button type="submit" onclick="location.href='/member/logout'" class="btn btn-dark btn-sm mt-2">로그아웃</button>
+						<button type="button" class="btn btn-dark btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#logoutModal">로그아웃</button>
 					</div>
 				</div>
 			</div>
@@ -177,6 +177,25 @@
 	<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
 		<i class="bi bi-arrow-up-short"></i>
 	</a>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      정말 로그아웃을 하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary"  onclick="location.href='/member/logout'">예</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />

@@ -15,7 +15,7 @@ public class Criteria {
 
 	 
 	public Criteria() {
-		this(1, 10);
+		this(1, 15);
 	}
 
 	public Criteria(int pageNum, int amount) {
