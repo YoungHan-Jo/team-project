@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.domain.BoardVO;
 import com.example.domain.CommentVO;
 import com.example.service.CommentService;
 
@@ -42,13 +43,15 @@ public class CommentController {
 	}
 	
 	@GetMapping("/commentModify")
-	public String modify(int num) {
+	public String modify(int num, CommentVO commentVO, String pageNum, RedirectAttributes rttr) {
 		System.out.println("c_modify() 호출됨...");
 		
-		CommentVO commentVO = commentService.getBoard(num);
-		System.out.println("commentVO: " + commentVO);
+		commentService.updateComment(commentVO);
 		
-		return "redirect:/board/view?num=";
+		rttr.addAttribute("num", commentVO.getNum());
+		rttr.addAttribute("pageNum", pageNum);
+		
+		return "redirect:/board/view?num=" + commentVO.getBoardNum();
 	}
 
 	@GetMapping("/commentRemove")
