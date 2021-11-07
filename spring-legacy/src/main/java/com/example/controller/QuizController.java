@@ -41,12 +41,13 @@ public class QuizController {
 
 	@GetMapping("/list")
 	public String list(Criteria cri, Model model) {
+		cri.setAmount(9);
 
 		System.out.println("list() 호출됨 ... ");
 
 		List<BunchVO> bunchList = quizService.getBunchesAndQuizListByCri(cri);
 
-		int totalCount = bunchList.size();
+		int totalCount = quizService.getBunchCountBySearch(cri);
 
 		System.out.println(bunchList);
 
@@ -265,8 +266,10 @@ public class QuizController {
 			quizList.add(quizVO);
 		}
 
-		String id = (String) session.getAttribute("id");
-		bunchVO.setMemberId(id);
+		BunchVO dbBunchVO = quizService.getBunchAndQuizList(bunchNum);
+		System.out.println("dbBunchVO : " + dbBunchVO);
+		
+		bunchVO.setMemberId(dbBunchVO.getMemberId());
 		bunchVO.setRegDate(new Date());
 		bunchVO.setQuizList(quizList);
 		

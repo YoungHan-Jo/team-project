@@ -17,7 +17,7 @@
 	<main id="main">
 		<div id="head">
 			<div class="container">
-				<h1 id="title">QUIZ 수정</h1>
+				<h1 id="title">QUIZ 풀기</h1>
 				<div id="btn-return-form">
 					<button class="btn-quiz return" onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
 					
