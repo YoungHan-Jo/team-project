@@ -37,7 +37,13 @@
 								<label>2</label> <input class="input-form" type="text" name="numTwos" value="${ quiz.numTwo }" required> <br>
 								<label>3</label> <input class="input-form" type="text" name="numThrees" value="${ quiz.numThree }" required> <br>
 								<label>4</label> <input class="input-form" type="text" name="numFours" value="${ quiz.numFour }" required> <br>
-								<label>정답</label> <input class="input-form" type="text" name="answers" value="${ quiz.answer }" required> <br>
+								<label>정답</label>
+								<select class="selectpicker input-form input-search" name="answers" required>
+								    <option value="1" ${ quiz.answer eq '1' ? 'selected' : '' }>1</option>
+								    <option value="2" ${ quiz.answer eq '2' ? 'selected' : '' }>2</option>
+								    <option value="3" ${ quiz.answer eq '3' ? 'selected' : '' }>3</option>
+								    <option value="4" ${ quiz.answer eq '4' ? 'selected' : '' }>4</option>
+								</select>
 							</div>
 						</c:forEach>
 					</div>
@@ -66,7 +72,14 @@
 							<label>2</label> <input class="input-form" type="text" name="numTwos" required> <br> 
 							<label>3</label> <input class="input-form" type="text" name="numThrees" required> <br> 
 							<label>4</label> <input class="input-form" type="text" name="numFours" required> <br> 
-							<label>정답</label> <input class="input-form" type="text" name="answers" required> <br>	
+							<label>정답</label>
+							<select class="selectpicker input-form input-search" name="answers" required>
+								<option value="" disabled selected>--</option>
+							    <option value="1">1</option>
+							    <option value="2">2</option>
+							    <option value="3">3</option>
+							    <option value="4">4</option>
+							</select>
 						 </div>`;
 			$('#quizBox').append(str);
 						 
