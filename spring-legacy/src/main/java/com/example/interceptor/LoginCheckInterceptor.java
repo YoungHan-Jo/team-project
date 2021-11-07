@@ -16,15 +16,14 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 	private MemberService memberService;
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 		HttpSession session = request.getSession();
 
 		String id = (String) session.getAttribute("id");
 
 		if (id == null) {
-			response.sendRedirect("/member/login");
+			response.sendRedirect("/member/account");
 			return false;
 		}
 

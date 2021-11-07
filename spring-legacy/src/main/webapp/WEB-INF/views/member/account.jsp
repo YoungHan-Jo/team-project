@@ -153,20 +153,23 @@
         $('input#signUpId').on({
         	
             focusout : function() {
-            	const id = $(this).val();
+            	const signUpId = $(this).val();
+            	if (signUpId.length == 0) {
+                    return;
+                }
                 $.ajax({
-                    url : '/api/members/' + id,
+                    url : '/api/members/' + signUpId,
                     method : 'GET',
                     success : function(data) {
                         console.log(data);
                         console.log(typeof data);
 
                         if (data.count == 0) {
-                            alert('중복된 아이디입니다.');
-                            $('input#signUpId').focus().val('');
-                        } else { // obj.count == 0
                             alert('사용 가능한 아이디입니다.');
                             $('input#signUpId').attr('readonly', true);
+                        } else { // obj.count == 1
+                            alert('중복된 아이디입니다.');
+                            $('input#signUpId').focus().val('');
                         }
                     }
                 });
