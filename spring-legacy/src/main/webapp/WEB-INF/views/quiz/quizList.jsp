@@ -40,7 +40,7 @@
 							<div class="bunch-card" onclick="location.href='/quiz/content?bunchNum=${ bunch.num }'">
 								<h4>${ bunch.title }</h4>
 								<div class="quizList-count-form">
-									<span class="quizList-count">${ fn:length(bunch.quizList) } 문제</span>
+									<span class="quizList-count">${ bunch.quizCount } 문제</span>
 								</div>
 								<span>${ bunch.memberId }</span><br>
 							</div>

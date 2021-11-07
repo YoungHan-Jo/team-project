@@ -30,7 +30,7 @@
 						
 						<div class="quiz-form">
 							<label class="question-title">문제</label><input class="question-title input-form" type="text" name="questions" required>
-							<button class="btn-delete-question btn-quiz">문제 삭제</button> <br>
+							<button type="button" class="btn-delete-question btn-quiz">문제 삭제</button> <br>
 							<label>1</label> <input class="input-form" type="text" name="numOnes" required> <br> 
 							<label>2</label> <input class="input-form" type="text" name="numTwos" required> <br> 
 							<label>3</label> <input class="input-form" type="text" name="numThrees" required> <br> 
@@ -84,7 +84,7 @@
 						 
 		})
 		
-		$('#quizBox').on('click','button.btn-delete',function(){
+		$('#quizBox').on('click','button.btn-delete-question',function(){
 			$(this).closest('div').remove();
 		})
 	</script>

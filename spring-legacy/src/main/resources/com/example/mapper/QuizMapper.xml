@@ -205,8 +205,8 @@
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">
 		<![CDATA[
-			INSERT INTO bunch (num, title, member_id, reg_date)
-			VALUES (#{num}, #{title}, #{memberId}, #{regDate})
+			INSERT INTO bunch (num, title, quiz_count, member_id, reg_date)
+			VALUES (#{num}, #{title}, #{quizCount}, #{memberId}, #{regDate})
 		]]>
 	</insert>
 
