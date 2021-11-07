@@ -87,15 +87,24 @@
 					<ul class="commentList">
 						<c:forEach items="${ commentList }" var="comment">
 							<li>
-								<p>
-									댓글번호: ${ comment.num} 작성자 : ${comment.memberId}<br /> 작성 날짜 :
-									<fmt:formatDate value="${comment.regDate}" pattern="yyyy/MM/dd" />
-								</p>
-
-								<p>${ comment.content }</p> &nbsp;&nbsp;
-								<a href="/comment/modify?num=${ comment.num }">댓글수정</a>
-								&nbsp;&nbsp; <a
-								href="/comment/commentRemove?num=${ comment.num }">댓글삭제</a>
+								<div>
+					    					<input type=hidden name="pageNum" value="${ pageNum }">
+											<input type="hidden" name="boardNum" value="${ board.num }">
+											<input type="hidden" name="num" value="${ comment.num }">
+											<input type="hidden" name="reRef" value="${ comment.reRef }"> 
+											<input type="hidden" name="reLev" value="${ comment.reLev }"> 
+											<input type="hidden" name="reSeq" value="${ comment.reSeq }">
+											<p>
+												작성자 : ${comment.memberId}<br/>
+												작성 날짜 : <fmt:formatDate value="${comment.regDate}" pattern="yyyy/MM/dd" /><br/>
+												${ comment.content }
+											</p>
+											<a href="/comment/reply?num=${ comment.num }">대댓글</a>
+											&nbsp;&nbsp; 
+											<a href="/comment/modify?num=${ comment.num }">댓글수정</a>
+											&nbsp;&nbsp; 
+											<a href="/comment/commentRemove?num=${ comment.num }">댓글삭제</a>	
+					    				</div>
 							</li>
 							<br>
 						</c:forEach>
@@ -110,13 +119,12 @@
 
 					<form method="post" action="/comment/commentWrite">
 
-
 						<input type="hidden" name="pageNum" value="${ pageNum }">
 						<input type="hidden" name="boardNum" value="${ board.num }">
 
 						<div class="comment-div">
-							<label for="id">작성자</label> <input id="id" type="text"
-								name="memberId" value="${ sessionScope.id }">
+							<label for="id">작성자</label> 
+							<input id="id" type="text" name="memberId" value="${ sessionScope.id }">
 						</div>
 
 						<div>
@@ -162,7 +170,7 @@
 
 			var isRemove = confirm('이 글을 삭제하시겠습니까?');
 			if (isRemove == true) {
-				location.href = '/board/remove?num=${ board.num }';
+				location.href = '/board/remove?num=${ board.num }&pageNum=${ pageNum }';
 			}
 		}
 	</script>
