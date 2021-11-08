@@ -24,11 +24,22 @@
 
 					<section class="boardview-section">
 						<div class="btn-boardview">
-							<button type="button" class="btn btn-outline-success" onclick="location='/board/modify?num=${ board.num }&pageNum=${ pageNum }'"><i class="bi bi-pencil-fill"></i>글수정</button>
-							<button type="button" class="btn btn-outline-success" onclick="location='/board/reply?reRef=${ board.reRef }&reLev=${ board.reLev }&reSeq=${ board.reSeq }&pageNum=${ pageNum }'"><i class="bi bi-reply"></i>답글</button>
-							<button type="button" class="btn btn-outline-danger" onclick="remove(event)"><i class="bi bi-trash2"></i>글삭제</button>
-							<button type="button" class="btn btn-outline-info" onclick="location='/board/list?pageNum=${ pageNum }'"><i class="bi bi-list-task"></i>글목록</button>
+							<c:if test="${ not empty sessionScope.id }">
+								<c:if test="${ sessionScope.id eq board.memberId }">
+									<button type="button" class="btn btn-outline-success" onclick="location='/board/modify?num=${ board.num }&pageNum=${ pageNum }'">
+										<i class="bi bi-pencil-fill"></i>글수정
+									</button>
+									<button type="button" class="btn btn-outline-danger" onclick="remove(event)">
+										<i class="bi bi-trash2"></i>글삭제
+									</button>
+								</c:if>
+								<button type="button" class="btn btn-outline-success" onclick="location='/board/reply?reRef=${ board.reRef }&reLev=${ board.reLev }&reSeq=${ board.reSeq }&pageNum=${ pageNum }'">
+									<i class="bi bi-reply"></i>답글
+								</button>
+							</c:if>
+
 						</div>
+
 
 						<table class="table table-borderless" id="boardList">
 							<tr>
@@ -89,7 +100,7 @@
 								<table class="table-borderless table-sm">
 									<tr>
 										<th class="text-center ">작성자</th>
-										<td> ${comment.memberId}</td>
+										<td>${comment.memberId}</td>
 										<th class="text-center ">작성날짜</th>
 										<td><fmt:formatDate value="${comment.regDate}" pattern="yyyy/MM/dd" /></td>
 									</tr>
@@ -98,42 +109,54 @@
 										<td colspan=“3” class="text-center">${ comment.content }</td>
 									</tr>
 									<tr>
-										<th><button class="btn btn-outline-success btn-sm" onclick="location='/comment/reply?num=${ comment.num }'"><i class="bi bi-reply"></i>댓글</button></th>
-										<td><button class="btn btn-outline-success btn-sm" onclick="location='/comment/commentModify'"><i class="bi bi-pencil"></i>수정</button></td>
-										<td><button class="btn btn btn-outline-danger btn-sm" onclick="location='/comment/commentRemove?num=${ comment.num }'"><i class="bi bi-trash2"></i>삭제</button></td>
+										<c:if test="${ not empty sessionScope.id }">
+											<c:if test="${ sessionScope.id eq board.memberId }">
+
+												<th><button class="btn btn-outline-success btn-sm" onclick="location='/comment/commentModify'">
+														<i class="bi bi-pencil"></i>수정
+													</button></th>
+												<td><button class="btn btn btn-outline-danger btn-sm" onclick="location='/comment/commentRemove?num=${ comment.num }'">
+														<i class="bi bi-trash2"></i>삭제
+													</button></td>
+											</c:if>
+											<td><button class="btn btn-outline-success btn-sm" onclick="location='/comment/reply?num=${ comment.num }'">
+													<i class="bi bi-reply"></i>댓글
+												</button></td>
+
+										</c:if>
+									</tr>
 								</table>
 								<br>
 							</c:forEach>
 						</ul>
 					</div>
 
-					
-					<div class="comment">
+					<c:if test="${ not empty sessionScope.id }">
+						<div class="comment">
 
-						<form method="post" action="/comment/commentWrite">
+							<form method="post" action="/comment/commentWrite">
 
-							<input type="hidden" name="pageNum" value="${ pageNum }"> <input type="hidden" name="boardNum" value="${ board.num }">
+								<input type="hidden" name="pageNum" value="${ pageNum }"> <input type="hidden" name="boardNum" value="${ board.num }">
 
-							<div class="comment-div">
-								<label for="id">작성자</label>
-								<input id="id" type="text" name="memberId" value="${ sessionScope.id }" readonly="readonly">
-							</div>
+								<div class="comment-div">
+									<label for="id">작성자</label> <input id="id" type="text" name="memberId" value="${ sessionScope.id }" readonly="readonly">
+								</div>
 
-							<div>
-								<label for="textarea1">내용</label>
-								<textarea id="textarea1" name="content"></textarea>
-							</div>
+								<div>
+									<label for="textarea1">내용</label>
+									<textarea id="textarea1" name="content"></textarea>
+								</div>
+								<br>
+								<div class="btn-comment">
+									<button class="btn btn-outline-primary" type="submit">
+										<i class="bi bi-pencil"></i>댓글등록
+									</button>
+								</div>
 
+							</form>
 
-
-							<br>
-							<div class="btn-comment">
-								<button  class="btn btn-outline-primary" type="submit"><i class="bi bi-pencil"></i>댓글등록</button>
-							</div>
-
-						</form>
-
-					</div>
+						</div>
+					</c:if>
 				</div>
 			</div>
 
