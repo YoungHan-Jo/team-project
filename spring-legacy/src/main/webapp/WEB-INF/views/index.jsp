@@ -18,7 +18,7 @@
 	<!-- Hero -->
 	<section id="hero" class="d-flex align-items-center text-center">
 		<div class="container">
-			<h1>Welcome to LOGO</h1>
+			<h1>Welcome to Quiz Site</h1>
 			<h2>Take a quiz and make a quiz.</h2>
 			<a href="#!" class="btn-get-started scrollto">quiz Start</a>
 		</div>
@@ -36,11 +36,7 @@
 					<div class="col-lg-4 d-flex align-items-stretch">
 						<div class="content">
 							<h3>어떤 사이트일까?</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-								sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-								Duis aute irure dolor in reprehenderit Asperiores dolores sed et.
-								Tenetur quia eos.
-								Autem tempore quibusdam vel necessitatibus optio ad corporis.</p>
+							<p>다양한 퀴즈를 통하여 반복, 지식 슥듭을 통하여 내가 필요한 지식을 향상 시켜주는 사이트 입니다.</p>
 							<div class="text-center">
 								<a href="#!" class="more-btn">QUIZ START
 								<i class="bx bx-chevron-right"></i>
@@ -55,24 +51,21 @@
 									<div class="icon-box mt-4 mt-xl-0">
 										<i class="bx bx-receipt"></i>
 										<h4>복습이 된다</h4>
-										<p>Consequuntur sunt aut quasi enim aliquam quae
-										harum pariatur laboris nisi ut aliquip</p>
+										<p>반복된 퀴즈 학습으로 다양한 문제를 복습 할 수 있습니다.</p>
 									</div>
 								</div>
 								<div class="col-xl-4 d-flex align-items-stretch">
 									<div class="icon-box mt-4 mt-xl-0">
 										<i class="bx bx-cube-alt"></i>
 										<h4>다양한 퀴즈가 있다</h4>
-										<p>Excepteur sint occaecat cupidatat non proident,
-										sunt in culpa qui officia deserunt</p>
+										<p>다양한 퀴즈를 이용하여 여러가지 문제를 체험 할 수 있습니다.</p>
 									</div>
 								</div>
 								<div class="col-xl-4 d-flex align-items-stretch">
 									<div class="icon-box mt-4 mt-xl-0">
 										<i class="bx bx-images"></i>
 										<h4>점수를 확인 할 수 있다</h4>
-										<p>Aut suscipit aut cum nemo deleniti aut omnis.
-										Doloribus ut maiores omnis facere</p>
+										<p>나의 퀴즈 점수를 확인하며 문제 학습 능력을 향상 시킬 수 있습니다.</p>
 									</div>
 								</div>
 							</div>
