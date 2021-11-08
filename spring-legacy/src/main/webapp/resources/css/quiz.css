@@ -82,3 +82,65 @@
 .point{
 	margin-bottom: 20px;
 }
+.quiz-form {
+	border: 1px solid black;
+	margin: 20px 0;
+	padding: 20px;
+	border: 1px solid rgba(1,1,1,0.1);
+}
+.modify-quiz-title{
+	font-size: 30px;
+}
+.input-form{
+	background-color: none;
+	outline: none;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 2px solid rgb(66, 87, 178);
+}
+.btn-delete-question{
+	background-color: red;
+}
+.question-title{
+	font-size: 25px;
+}
+#btn-addQuiz{
+	padding: 30px;
+	border: none;
+	border-radius: 20px;
+	font-size: 30px;
+	
+}
+.add-form{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.page-form{
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+.search-form{
+	display: flex;
+	justify-content: center;
+}
+.input-search{
+	font-size: 25px;
+}
+
+.btn-search{
+	background-color: rgb(66, 87, 178);
+	color: white;
+	border: none;
+	border-radius: 15px;
+	font-size: 25px;
+	padding: 10px;
+	margin-left: 5px;
+}
+.no-result{
+	display: flex;
+	justify-content: center;
+	font-size: 40px;
+}

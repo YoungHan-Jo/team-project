@@ -29,5 +29,21 @@
 
 	<context:component-scan base-package="com.example.controller" />
 
+	<interceptors>
+
+		<interceptor>
+			<mapping path="/**" />
+			<beans:bean class="com.example.interceptor.RememberMeInterceptor" />
+		</interceptor>
+
+		<interceptor>
+			<mapping path="/member/*" />
+			<exclude-mapping path="/member/account" />
+			<exclude-mapping path="/member/login" />
+			<exclude-mapping path="/member/signUp" />
+			<beans:bean class="com.example.interceptor.LoginCheckInterceptor" />
+		</interceptor>
+
+	</interceptors>
 
 </beans:beans>
