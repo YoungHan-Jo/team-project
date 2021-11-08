@@ -1,8 +1,12 @@
 package com.example.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -10,7 +14,6 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -30,6 +33,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.example.domain.OpenApiDTO;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Controller
 public class HomeController {
@@ -90,7 +95,7 @@ public class HomeController {
 	public String homeAPI(
 			@RequestParam(required = false, defaultValue = "10") String numOfRows,
 			@RequestParam(required = false, defaultValue = "1") String pageNo,
-			@RequestParam(required = false, defaultValue = "xml") String dataFormat,
+			@RequestParam(required = false, defaultValue = "json") String dataFormat,
 			@RequestParam(required = false, defaultValue = "2021") String implYy,
 			@RequestParam(required = false, defaultValue = "T") String qualgbCd,
 			@RequestParam(required = false, defaultValue = "7910") String jmCd,
@@ -118,6 +123,25 @@ public class HomeController {
 	        urlBuilder.append("&" + URLEncoder.encode("qualgbCd","UTF-8") + "=" + URLEncoder.encode(qualgbCd, "UTF-8")); /*자격구분코드 - T : 국가기술자격 - C : 과정평가형자격 - W : 일학습병행자격 - S : 국가전문자격*/
 	        urlBuilder.append("&" + URLEncoder.encode("jmCd","UTF-8") + "=" + URLEncoder.encode(jmCd, "UTF-8")); /*종목코드 값 (예) 7910 : 한식조리 기능사(검정형)*/
 		
+	        URL url = new URL(urlBuilder.toString());
+	        System.out.println(url.toString());
+	        
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Content-type", "application/json");
+	        
+	        BufferedReader bf;
+	        bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+	        
+	        String result = bf.readLine();
+	        
+	        JsonParser jsonParser = new JsonParser();
+	        
+	        JsonObject jsonObject = (JsonObject)jsonParser.parse(result);
+	        jsonObject.get("items");
+	        
+	        
+	        
 	        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newDefaultInstance();
 	        DocumentBuilder builder = builderFactory.newDocumentBuilder();
 	        
@@ -125,7 +149,9 @@ public class HomeController {
 	        document.getDocumentElement().normalize();
 	        System.out.println("Root Element : " + document.getDocumentElement().getNodeName());
 	        
-	        NodeList nodeList = document.getElementsByTagName("item");
+	        document.getElementsByTagName("items");
+	        
+	        NodeList nodeList = document.getElementsByTagName("items");
 	        
 	        System.out.println("nodeList size : " + nodeList.getLength());
 	        
@@ -161,6 +187,8 @@ public class HomeController {
 					apiDTO.setImplYyDTO(pracExamEndDt);
 					String pracPassDt = element.getElementsByTagName("pracPassDt").item(0).getTextContent();
 					apiDTO.setImplYyDTO(pracPassDt);
+					
+					System.out.println(i +" 번 아이템 : "+ apiDTO);
 	        		
 					apiList.add(apiDTO);
 	        	}
