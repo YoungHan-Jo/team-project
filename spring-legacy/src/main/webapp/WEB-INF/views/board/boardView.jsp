@@ -110,7 +110,7 @@
 									</tr>
 									<tr>
 										<c:if test="${ not empty sessionScope.id }">
-											<c:if test="${ sessionScope.id eq board.memberId }">
+											<c:if test="${ sessionScope.id eq comment.memberId }">
 
 												<th><button class="btn btn-outline-success btn-sm" onclick="location='/comment/commentModify'">
 														<i class="bi bi-pencil"></i>수정
