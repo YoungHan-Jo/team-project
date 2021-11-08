@@ -19,6 +19,15 @@ public class AdminMemberController {
 		System.out.println("logmsmain ?호출됨...");
 	}
 	
+	@GetMapping("logmsSelectMember")
+	public void logmsSelectMember() {
+		System.out.println("logmsSelectMember ?호출됨...");
+	}
+	
+	@GetMapping("logmsUpdateMember")
+	public void logmsInsertMember() {
+		System.out.println("logmsInsertMember 호출됨");
+	}
 	
 	@GetMapping("logmsDeleteMember")
 	public void logmsDeleteMember() {
@@ -26,20 +35,13 @@ public class AdminMemberController {
 	}
 	
 	
-	@GetMapping("logmsSelectMember")
-	public void logmsSelectMember() {
-		System.out.println("logmsSelectMember ?호출됨...");
-	}
+	
 	
 	@GetMapping("logmsSelectBoards")
 	public void logmsSelectBoards() {
 		System.out.println("logmsSelectBoards ? 호출됨");
 	}
 	
-	@GetMapping("logmsInsertBoard")
-	public void logmsInsertBoard() {
-		System.out.println("logmsSelectBoards ? 호출됨");
-	}
 	
 	@GetMapping("logmsDeleteBoard")
 	public void logmsDeleteBoard() {
@@ -53,9 +55,9 @@ public class AdminMemberController {
 		System.out.println("logmsSelectQuiz ? 호출됨");
 	}
 	
-	@GetMapping("logmsSelectNotice")
+	@GetMapping("logmsInsertNotice")
 	public void logmsSelectNotice() {
-		System.out.println("logmsSelectNotice ? 호출됨");
+		System.out.println("logmsInsertNotice ? 호출됨");
 	}
 	
 	

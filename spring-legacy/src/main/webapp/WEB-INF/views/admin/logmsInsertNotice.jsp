@@ -7,14 +7,16 @@
 </head>
 <body>
 	
-<form id="frm">
-	번호 : <input type="number" name="num">
-	선택문제 : <input type="text" name="subject">
-	공지사항 : <input type="text" name="content">
-	검색횟수 : <input type="number" name="viewCount"> 
-	날짜 : <input type="date" name="regDate">
+<form id="frm" enctype="multipart/form-data">
+	번호 		: <input type="number" name="num"><br>
+	선택문제 	: <input type="text" name="subject"><br>
+	공지사항 	: 
+	<textarea rows="13" cols="40" name="content" id="content"></textarea>
+	<br>
+	날짜 		: <input type="date" name="regDate"><br>
 	
 	<button type="button" id="btn">공지사항입력</button>
+	<button type="button" onclick="history.go(-1);">되돌아가기</button>
 </form>
 	
 <script src="/resources/js/jquery-3.6.0.js"></script>
