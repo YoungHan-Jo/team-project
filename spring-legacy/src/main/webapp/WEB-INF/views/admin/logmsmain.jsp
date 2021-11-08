@@ -20,7 +20,6 @@
 			<button type="button" id="btn4" onclick="location.href='/admin/logmsInsertBoard'">게시글입력</button><br>
 			<button type="button" id="btn5" onclick="location.href='/admin/logmsDeleteBoard'">게시글삭제</button><br>
 			<button type="button" id="btn6" onclick="location.href='/admin/logmsSelectQuiz'">퀴즈조회</button><br>
-			<button type="button" id="btn7" onclick="location.href='/admin/logmsSelectNotice'">공지사항</button><br>
 			<button onclick="history.go(-1);">되돌아가기</button>
 		</div>
 	</section>
