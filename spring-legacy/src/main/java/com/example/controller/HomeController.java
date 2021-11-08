@@ -137,7 +137,7 @@ public class HomeController {
 		NodeList nodeList = document.getElementsByTagName("item"); // 행단위로 반복되는 item 태그명을 기준으로 NodeList 가져옴.
 		
 		System.out.println("nodeList : "+ nodeList);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Date 객체로 파싱할 SimpleDateFormat 준비.
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // Date 객체로 파싱할 SimpleDateFormat 준비.
 		
 		// 필요한 데이터만 DTO에 담아서 준비된 covidList에 추가하기
 		for (int i=0; i < nodeList.getLength(); i++) {
@@ -160,11 +160,15 @@ public class HomeController {
 				String qualgbNm = element.getElementsByTagName("qualgbNm").item(0).getTextContent();
 				dto.setQualgbNm(qualgbNm);
 				
-				String docRegStartDT = element.getElementsByTagName("docRegStartDT").item(0).getTextContent();
-				dto.setDocRegStartDT(sdf.parse(docRegStartDT));
-				
-				String docRegEndDT = element.getElementsByTagName("docRegEndDT").item(0).getTextContent();
-				dto.setDocRegEndDT(sdf.parse(docRegEndDT));
+				if (element.getElementsByTagName("docRegStartDt") != null) {
+					String docRegStartDt = element.getElementsByTagName("docRegStartDt").item(0).getTextContent(); // 필수 요소들은 null 체크 필요 없지만 어떻게 하는지 알기 위해서 null 체크 한번 해보기!!
+					dto.setDocRegStartDt(docRegStartDt);
+				}
+			
+				if (element.getElementsByTagName("docRegStartDt") != null) {
+					String docRegEndDt = element.getElementsByTagName("docRegEndDt").item(0).getTextContent();
+					dto.setDocRegEndDt(docRegEndDt);
+				}
 				
 				String docExamStartDt = element.getElementsByTagName("docExamStartDt").item(0).getTextContent();
 				dto.setDocExamStartDt(sdf.parse(docExamStartDt));
@@ -176,19 +180,29 @@ public class HomeController {
 				dto.setDocPassDt(sdf.parse(docPassDt));
 				
 				String pracRegStartDt = element.getElementsByTagName("pracRegStartDt").item(0).getTextContent();
-				dto.setPracRegStartDt(sdf.parse(pracRegStartDt));
+				if (pracRegStartDt.length() > 0) { // pracRegStartDt != null && !pracRegStartDt.equals("") 
+					dto.setPracRegStartDt(sdf.parse(pracRegStartDt));
+				}
 				
 				String pracRegEndDt = element.getElementsByTagName("pracRegEndDt").item(0).getTextContent();
-				dto.setPracRegEndDt(sdf.parse(pracRegEndDt));
+				if (!pracRegEndDt.equals("")) { // equals보다는 length가 좀 더 속도가 빠르다
+					dto.setPracRegEndDt(sdf.parse(pracRegEndDt));
+				}
 				
 				String pracExamStartDt = element.getElementsByTagName("pracExamStartDt").item(0).getTextContent();
-				dto.setPracExamStartDt(sdf.parse(pracExamStartDt));
+				if (pracExamStartDt.length() > 0 ) {
+					dto.setPracExamStartDt(sdf.parse(pracExamStartDt));
+				}
 				
 				String pracExamEndDt = element.getElementsByTagName("pracExamEndDt").item(0).getTextContent();
-				dto.setPracExamEndDt(sdf.parse(pracExamEndDt));
+				if (pracExamEndDt.length() > 0 ) {
+					dto.setPracExamEndDt(sdf.parse(pracExamEndDt));
+				}
 				
 				String pracPassDt = element.getElementsByTagName("pracPassDt").item(0).getTextContent();
-				dto.setPracPassDt(sdf.parse(pracPassDt));
+				if (pracPassDt.length() > 0) {
+					dto.setPracPassDt(sdf.parse(pracPassDt));
+				}
 				
 				System.out.println("dto : " + dto);
 				
