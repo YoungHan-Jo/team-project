@@ -12,6 +12,7 @@ import com.example.domain.CommentVO;
 import com.example.domain.Criteria;
 import com.example.mapper.AttachMapper;
 import com.example.mapper.BoardMapper;
+import com.example.mapper.CommentMapper;
 import com.example.mapper.ViewMemberMapper;
 
 @Service
@@ -23,6 +24,8 @@ public class BoardService {
 	private AttachMapper attachMapper;
 	@Autowired
 	private ViewMemberMapper viewMapper;
+	@Autowired
+	private CommentMapper commentMapper;
 
 	public List<BoardVO> getBoards(Criteria cri) {
 		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
@@ -99,9 +102,10 @@ public class BoardService {
 	}
 
 	@Transactional
-	public void deleteBoardAndAttaches(int num) {
+	public void deleteBoardAndAttachesAndComments(int num) {
 		attachMapper.deleteAttachesByboardNum(num);
 		boardMapper.deleteBoardByNum(num);
+		commentMapper.deleteCommentByNum(num);
 	}
 
 	@Transactional

@@ -33,6 +33,9 @@ public interface CommentMapper {
 	@Delete("DELETE FROM comment WHERE num = #{num}")
 	void deleteCommentByNum(int num);
 	
+	@Delete("DELETE FROM comment WHERE board_num = #{boardNum}")
+	void deleteCommentByBoardNum(int num);
+	
 	@Delete("DELETE FROM board")
 	void deleteAll();
 	
