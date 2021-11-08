@@ -20,7 +20,7 @@
 		<div class="container">
 			<h1>Welcome to Quiz Site</h1>
 			<h2>Take a quiz and make a quiz.</h2>
-			<a href="#!" class="btn-get-started scrollto">quiz Start</a>
+			<a href="/quiz/list" class="btn-get-started scrollto">quiz Start</a>
 		</div>
 	</section>
 	<!-- End Hero -->
@@ -38,7 +38,7 @@
 							<h3>어떤 사이트일까?</h3>
 							<p>다양한 퀴즈를 통하여 반복, 지식 슥듭을 통하여 내가 필요한 지식을 향상 시켜주는 사이트 입니다.</p>
 							<div class="text-center">
-								<a href="#!" class="more-btn">QUIZ START
+								<a href="/quiz/list" class="more-btn">QUIZ START
 								<i class="bx bx-chevron-right"></i>
 								</a>
 							</div>
