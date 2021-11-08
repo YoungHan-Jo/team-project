@@ -8,6 +8,7 @@
 <head>
 <title>Insert title here</title>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
+<link rel="stylesheet" type="text/css" href="/resources/css/quiz.css">
 </head>
 <body>
 	<!-- Header -->
@@ -15,16 +16,18 @@
 	<!-- End Header -->
 
 	<main id="main">
-		<!-- Why Us Section -->
-		<section id="why-us" class="why-us">
+		<div id="head">
 			<div class="container">
-				<h1>채점 결과</h1>
-				<br>
-				<button onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
-				<div>
-					<h3>점수 : ${ solveHistory.point } 점</h3>
+				<h1 id="title">채점 결과</h1>
+				<div id="btn-return-form">
+					<button class="btn-quiz return" onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
 				</div>
-				<br><br>
+			</div>
+		</div>
+	
+		<div id="body">
+			<div class="container">
+				<h3 class="point">점수 : ${ solveHistory.point } 점</h3>
 				<div style="border-top : 5px solid black; height : 30px"></div>
 				
 				<h3>틀린 문제</h3>
@@ -63,25 +66,19 @@
 						<br><br><br>
 					</div>
 					</c:forEach>
-				</div>
-				
+				</div>		
 				
 			</div>
-
-		</section>
-		<!-- End Why Us Section -->
-
-	</main>
+				
+				
+		</div>
+	
+		
+		</main>
 
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer -->
-
-	<!-- Tob Button -->
-	<div id="preloader"></div>
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center"><i
-		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />

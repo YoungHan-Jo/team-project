@@ -31,6 +31,18 @@ public class QuizService {
 
 		return quizMapper.getBunchesByCri(cri);
 	}
+	public List<BunchVO> getBunchesAndQuizListByCri(Criteria cri) {
+		
+		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
+		
+		cri.setStartRow(startRow);
+		
+		return quizMapper.getBunchesAndQuizListByCri(cri);
+	}
+	
+	public int getBunchCountBySearch(Criteria cri) {
+		return quizMapper.getBunchCountBySearch(cri);
+	}
 
 	public int getNextBunchNum() {
 		return quizMapper.getNextBunchNum();
@@ -97,4 +109,6 @@ public class QuizService {
 	}
 	
 
+	
+	
 }

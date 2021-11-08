@@ -47,7 +47,7 @@ public interface BoardMapper {
 
 	
 	@Delete("DELETE FROM board WHERE num = #{num}")
-	void deleteBoardByNum(int num);
+	BoardVO deleteBoardByNum(int num);
 	
 	@Delete("DELETE FROM board")
 	void deleteAll();

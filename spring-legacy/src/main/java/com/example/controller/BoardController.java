@@ -107,12 +107,14 @@ public class BoardController {
 		boardVO.setReSeq(0);
 
 		boardVO.setAttachList(attachList);
+		
+		System.out.println("attachList");
 
 		boardService.addBoardAndAttaches(boardVO);
 
 		rttr.addAttribute("num", boardVO.getNum());
 		rttr.addAttribute("pageNum", 1);
-
+		
 		return "redirect:/board/view";
 	} // write
 
@@ -198,13 +200,12 @@ public class BoardController {
 		System.out.println("num: " + num);
 
 		List<AttachVO> attachList = attachService.getAttachesByBoardNum(num);
-		List<CommentVO> commentList = commentService.getCommentsByBoardNum(num);
 
 		deleteAttachFiles(attachList);
 
 		System.out.println("첨부파일 삭제 완료...");
 
-		boardService.deleteBoardAndAttaches(num);
+		boardService.deleteBoardAndAttachesAndComments(num);
 
 		return "redirect:/board/list?pageNum=" + pageNum;
 	} // remove

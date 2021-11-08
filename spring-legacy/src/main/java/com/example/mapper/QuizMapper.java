@@ -16,6 +16,10 @@ public interface QuizMapper {
 	// =================== select ======================
 
 	List<BunchVO> getBunchesByCri(Criteria cri);
+	
+	List<BunchVO> getBunchesAndQuizListByCri(Criteria cri);
+	
+	int getBunchCountBySearch(Criteria cri);
 
 	int getNextBunchNum();
 	
