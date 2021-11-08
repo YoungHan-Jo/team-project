@@ -26,7 +26,7 @@
 	<!-- End Hero -->
 
 	<!-- main -->
-	<main id="main">
+	<main id="main m-0">
 
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
@@ -80,54 +80,60 @@
 						<!-- End .content-->
 					</div>
 				</div>
-
+				
+				<div class="text-center mt-5">
+				    <div>
+				    <h2 class="panel-title text-white p-3" style="background-color: #112D4E; border-radius: 0.5rem; font-weight: bold;">한국산업인력공단_국자격자격 시험일정 조회</h2>
+				    </div>
+				    <div>
+				    <table class="table table-bordered table-hover bg-white" style="border: 3px solid #112D4E; font-size: 0.9em; border-radius: 0.5rem;">
+				        <thead>
+				            <tr style="background-color: #F9F7F7;">
+				                <th>시행년도<br>(시행회차)</th>
+				                <th>필기시험 원서접수<br>시작일 ~ 종료일</th>
+				                <th>필기시험<br>시작일 ~ 종료일</th>
+				                <th>필기시험 합격(예정)자<br>발표일</th>
+				                <th>실기(작업)/면접시험 원서접수<br>시작일 ~ 종료일</th>
+				                <th>실기(작업)/면접시험<br>시작일 ~ 종료일</th>
+				                <th>실기(작업)/면접시험<br>발표일</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <c:choose>
+				                <c:when test="${ fn:length(apiList) gt 0 }">
+				                    <c:forEach var="item" items="${ apiList }">
+				                        <tr>
+				                            <td>${ item.implYyDTO }(${ item.implSeq })</td>
+				                            <td>
+				                            <fmt:parseDate var="docRegStartDt" value="${ item.docRegStartDt }" pattern="yyyyMMdd"/>
+				                            <fmt:parseDate var="docRegEndDt" value="${ item.docRegEndDt }" pattern="yyyyMMdd"/>
+				                            
+				                            <fmt:formatDate value="${ docRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ docRegEndDt }" pattern="yyyy-MM-dd" />
+				                            </td>
+				                            <td><fmt:formatDate value="${ item.docExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
+				                            <td><fmt:formatDate value="${ item.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
+				                            <td><fmt:formatDate value="${ item.pracRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.pracRegEndDt }" pattern="yyyy-MM-dd" /></td>
+				                            <td><fmt:formatDate value="${ item.pracExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.pracExamEndDt }" pattern="yyyy-MM-dd" /></td>
+				                            <td><fmt:formatDate value="${ item.pracPassDt }" pattern="yyyy-MM-dd" /></td>
+				                        </tr>
+				                    </c:forEach>
+				                </c:when>
+				                <c:otherwise>
+				                    <tr>
+				                        <td colspan="7">데이터가 없습니다.</td>
+				                    </tr>
+				                </c:otherwise>
+				            </c:choose>
+				        </tbody>
+				    </table>
+				    </div>
+				</div>
+				
 			</div>
 		</section>
 		<!-- End Why Us Section -->
 
-		<h3>한국산업인력공단_국자격자격 시험일정 조회</h3>
-	<hr>
-	
-	<table border="1">
-		<thead>
-			<tr>
-				<th>시행년도(시행회차)</th>
-				<th>필기시험 원서접수 시작일 ~ 종료일</th>
-				<th>필기시험 시작일 ~ 종료일</th>
-				<th>필기시험 합격(예정)자 발표일</th>
-				<th>실기(작업)/면접시험 원서접수 시작일 ~ 종료일</th>
-				<th>실기(작업)/면접시험 시작일 ~ 종료일</th>
-				<th>실기(작업)/면접시험 발표일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:choose>
-				<c:when test="${ fn:length(apiList) gt 0 }">
-					<c:forEach var="item" items="${ apiList }">
-						<tr>
-							<td>${ item.implYyDTO }(${ item.implSeq })<td>
-							<td>
-							<fmt:parseDate var="docRegStartDt" value="${ item.docRegStartDt }" pattern="yyyyMMdd"/>
-							<fmt:parseDate var="docRegEndDt" value="${ item.docRegEndDt }" pattern="yyyyMMdd"/>
-							
-							<fmt:formatDate value="${ docRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ docRegEndDt }" pattern="yyyy-MM-dd" />
-							</td>
-							<td><fmt:formatDate value="${ item.docExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ item.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ item.pracRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.pracRegEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ item.pracExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.pracExamEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ item.pracPassDt }" pattern="yyyy-MM-dd" /></td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="5">데이터가 없습니다.</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-		</tbody>
-	</table>
+
 	</main>
 	<!-- End main -->
 
