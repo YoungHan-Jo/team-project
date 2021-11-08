@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +85,49 @@
 		</section>
 		<!-- End Why Us Section -->
 
+		<h3>한국산업인력공단_국자격자격 시험일정 조회</h3>
+	<hr>
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>시행년도(시행회차)</th>
+				<th>필기시험 원서접수 시작일 ~ 종료일</th>
+				<th>필기시험 시작일 ~ 종료일</th>
+				<th>필기시험 합격(예정)자 발표일</th>
+				<th>실기(작업)/면접시험 원서접수 시작일 ~ 종료일</th>
+				<th>실기(작업)/면접시험 시작일 ~ 종료일</th>
+				<th>실기(작업)/면접시험 발표일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:choose>
+				<c:when test="${ fn:length(apiList) gt 0 }">
+					<c:forEach var="item" items="${ apiList }">
+						<tr>
+							<td>${ item.implYyDTO }(${ item.implSeq })<td>
+							<td>
+							<fmt:parseDate var="docRegStartDt" value="${ item.docRegStartDt }" pattern="yyyyMMdd"/>
+							<fmt:parseDate var="docRegEndDt" value="${ item.docRegEndDt }" pattern="yyyyMMdd"/>
+							
+							<fmt:formatDate value="${ docRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ docRegEndDt }" pattern="yyyy-MM-dd" />
+							</td>
+							<td><fmt:formatDate value="${ item.docExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ item.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ item.pracRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.pracRegEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ item.pracExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ item.pracExamEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ item.pracPassDt }" pattern="yyyy-MM-dd" /></td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">데이터가 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</tbody>
+	</table>
 	</main>
 	<!-- End main -->
 
