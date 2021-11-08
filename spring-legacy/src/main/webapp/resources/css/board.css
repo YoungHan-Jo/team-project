@@ -1,0 +1,173 @@
+.board-section .board-table {
+	width: 100%;
+}
+
+.board-section .board-table thead th, .board-section .board-table tbody td
+	{
+	padding: 7px 0;
+	border-bottom: 1px solid gray;
+	text-align: center;
+}
+
+.board-section .board-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.boardwrite .board-div {
+	width: 100%;
+}
+
+.replyWrite .board-div {
+	width: 100%;
+}
+
+.boardwrite .board-div input, .boardwrite .board-div textarea {
+	width: 420px;
+}
+
+.replyWrite .board-div input, .boardwrite .board-div textarea {
+	width: 420px;
+}
+
+.boardwrite .board-div input {
+	height: 40px;
+}
+
+.replyWrite .board-div input {
+	height: 40px;
+}
+
+.boardwrite .board-div textarea {
+	height: 120px;
+}
+
+.replyWrite .board-div textarea {
+	height: 120px;
+}
+
+.boardwrite .board-div label {
+	display: inline-block;
+	width: 80px;
+}
+
+.replyWrite .board-div label {
+	display: inline-block;
+	width: 80px;
+}
+
+.boardwrite .board-div div {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.replyWrite .board-div div {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.boardwrite h5 {
+	margin-bottom: 25px;
+}
+
+.replyWrite h5 {
+	margin-bottom: 25px;
+}
+
+.boardwrite .btn-wrap {
+	display: flex;
+	justify-content: end;
+	max-width: 500px;
+}
+
+.replyWrite .btn-wrap {
+	display: flex;
+	justify-content: end;
+	max-width: 500px;
+}
+
+.board-section .btn-main-warp {
+	display: flex;
+	justify-content: end;
+}
+
+.replyWrite .btn-main-warp {
+	display: flex;
+	justify-content: end;
+}
+
+.board-section .btn-main-warp button:first-child {
+	margin-right: 10px;
+}
+
+.replyWrite .btn-main-warp button:first-child {
+	margin-right: 10px;
+}
+
+.page-num {
+	display: flex;
+	justify-content: center;
+}
+
+.search>div {
+	display: flex;
+	justify-content: end;
+}
+
+.btn-board {
+	width: 110px;
+}
+
+.write-btn {
+	display: flex;
+	justify-content: end;
+	margin: 0;
+}
+
+.boardview-section>ul>li {
+	list-style: none;
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+.comment label {
+	display: inline-block;
+	width: 80px;
+}
+
+.comment input {
+	height: 40px;
+}
+
+.comment textarea {
+	height: 120px;
+	width: 223px;
+}
+
+.contents pre {
+	font-size: 25px;
+}
+
+.comment-div {
+	margin-bottom: 20px;
+}
+
+.comment div {
+	display: flex;
+	align-items: center;
+}
+
+.btn-comment {
+	display:flex;
+	justify-content: end;
+}
+
+.btn-boardview {
+	display:flex;
+	justify-content: end;
+}
+
+.btn-boardview button {
+	margin-left:10px;
+}

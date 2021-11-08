@@ -84,7 +84,7 @@
 	<!-- End Header -->
 
 	<!-- main -->
-	<main id="main" style="background-color: #DBE2EF;">
+	<main id="main">
 
         <!-- Menu Box -->
 		<div id="myBox">
@@ -96,7 +96,9 @@
                         <li><a href="/member/passwd">비밀번호 변경</a></li>
                         <li><a href="/member/remove">회원 탈퇴</a></li>
                         <li><a href="/member/myboardList">내가 쓴 게시물</a></li>
-                        <li><a href="/member/myreplyList">내가 쓴 댓글</a></li>
+                        <li><a href="/member/myCommentList">내가 쓴 댓글</a></li>
+                        <li><a href="/member/myQuizList">내가 만든 퀴즈</a></li>
+                        <li><a href="/member/quizCheckList">내가 푼 퀴즈</a></li>
                     </ul>
 				</div>
 			</div>
@@ -106,7 +108,7 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row d-flex justify-content-center align-items-center" style="margin: 45px auto;">
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 31px auto;">
 					<div class="col col-lg-6 mb-4 mb-lg-0">
 						<div class="card text-center text-white shadow" style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
 							<div class="row p-3">
@@ -156,7 +158,7 @@
 								</div>
 							</div>
 						</div>
-							<button type="submit" onclick="location.href='/member/logout'" class="btn btn-dark btn-sm mt-2">로그아웃</button>
+						<button type="button" class="btn btn-dark btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#logoutModal">로그아웃</button>
 					</div>
 				</div>
 			</div>
@@ -175,6 +177,25 @@
 	<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
 		<i class="bi bi-arrow-up-short"></i>
 	</a>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      정말 로그아웃을 하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary"  onclick="location.href='/member/logout'">예</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />

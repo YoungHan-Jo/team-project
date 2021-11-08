@@ -25,6 +25,62 @@
 			LIMIT #{startRow} , #{amount}
 		]]>
 	</select>
+	
+	<select id="getBunchesAndQuizListByCri" resultMap="bunchesAndQuizList">
+		<![CDATA[
+			SELECT b.num, b.title, b.member_id, b.reg_date, q.bunch_num, q.question_num, 
+				   q.question, q.num_one, q.num_two, q.num_three, q.num_four, q.answer
+			FROM bunch b
+			LEFT OUTER JOIN quiz q
+			ON b.num = q.bunch_num
+		]]>
+		<where>
+			<!-- type는 criteria의 gettype로 꺼낸 값, ${} 사용안함 -->
+			<if test="type == 'title'.toString()">
+				<!-- #{keyword} 값 자체가 이미 ''로 씌어져 있음. sql의 concat 함수 이용 -->
+				title LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'memberId'.toString()">
+				member_id LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</where>
+		<![CDATA[
+			ORDER BY num DESC
+			LIMIT #{startRow} , #{amount}
+		]]>
+	</select>
+	<resultMap type="bunchVO" id="bunchesAndQuizList">
+		<id column="num" property="num" />
+		<result column="title" property="title" />
+		<result column="member_id" property="memberId" />
+		<result column="reg_date" property="regDate" />
+		<collection property="quizList" javaType="list"
+			ofType="quizVO">
+			<id column="bunch_num" property="bunchNum" />
+			<id column="question_num" property="questionNum" />
+			<result column="question" property="question" />
+			<result column="num_one" property="numOne" />
+			<result column="num_two" property="numTwo" />
+			<result column="num_three" property="numThree" />
+			<result column="num_four" property="numFour" />
+			<result column="answer" property="answer" />
+		</collection>
+	</resultMap>
+	
+	<select id="getBunchCountBySearch" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM bunch
+		]]>
+		<where>
+			<if test="type == 'title'.toString()">
+				title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type == 'memberId'.toString()">
+				member_id LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</where>
+	</select>
 
 	<select id="getNextBunchNum" resultType="int">
 		<![CDATA[
@@ -106,13 +162,51 @@
 			ORDER BY question_num ASC;
 		]]>
 	</select>
+	
+	<select id="getBunchesById" resultType="bunchVO">
+		<![CDATA[
+			SELECT *
+			FROM bunch
+			WHERE member_id = #{id}
+			ORDER BY reg_date DESC
+		]]>
+	</select>
+	
+	<select id="getSolveHistoryAndBunch" resultMap="solveHistoryAndBunch">
+		<![CDATA[
+			SELECT s.num, s.member_id, s.bunch_num, s.solve_date, s.point, s.answer_list, s.correct_list, s.incorrect_list,
+			b.num, b.title, b.member_id, b.reg_date
+			FROM solve_history s
+			JOIN bunch b
+			ON s.bunch_num = b.num
+			WHERE s.member_id = #{id}
+			ORDER BY s.solve_date DESC;
+		]]>
+	</select>
+	
+	<resultMap type="solveHistoryVO" id="solveHistoryAndBunch">
+		<id column="num" property="num"/>
+		<result column="member_id" property="memberId"/>
+		<result column="bunch_num" property="bunchNum"/>
+		<result column="solve_date" property="solveDate"/>
+		<result column="point" property="point"/>
+		<result column="answer_list" property="answerList"/>
+		<result column="correct_list" property="correctList"/>
+		<result column="incorrect_list" property="incorrectList"/>
+		<association property="bunchVO" javaType="bunchVO">
+			<id column="num" property="num"/>
+			<result column="title" property="title"/>
+			<result column="member_id" property="memberId"/>
+			<result column="reg_date" property="regDate"/>
+		</association>
+	</resultMap>
 
 
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">
 		<![CDATA[
-			INSERT INTO bunch (num, title, member_id, reg_date)
-			VALUES (#{num}, #{title}, #{memberId}, #{regDate})
+			INSERT INTO bunch (num, title, quiz_count, member_id, reg_date)
+			VALUES (#{num}, #{title}, #{quizCount}, #{memberId}, #{regDate})
 		]]>
 	</insert>
 
@@ -137,7 +231,7 @@
 	</insert>
 	
 	
-	<!-- =================== select ====================== -->
+	<!-- =================== delete ====================== -->
 	<delete id="deleteQuizList">
 		<![CDATA[
 			DELETE FROM quiz

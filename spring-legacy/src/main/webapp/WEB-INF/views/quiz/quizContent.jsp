@@ -7,6 +7,7 @@
 <head>
 <title>Insert title here</title>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
+<link rel="stylesheet" type="text/css" href="/resources/css/quiz.css">
 </head>
 <body>
 	<!-- Header -->
@@ -14,45 +15,44 @@
 	<!-- End Header -->
 
 	<main id="main">
-		<!-- Why Us Section -->
-		<section id="why-us" class="why-us">
+		<div id="head">
 			<div class="container">
-				<h1>퀴즈 풀기</h1>
-				<br>
-				<button onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
-				
-				<div>
-					<h2>${ bunch.title }</h2>
-					<form action="/quiz/submit?bunchNum=${ bunch.num }" method="POST">
-					<button>제출하기</button>
-						<c:forEach var="quiz" items="${ quizList }">
-							<div style="border : 1px soild black">
-							<h4>${ quiz.questionNum }. ${ quiz.question }</h4>
+				<h1 id="title">QUIZ 풀기</h1>
+				<div id="btn-return-form">
+					<button class="btn-quiz return" onclick="location.href='/quiz/list'">목록으로 돌아가기</button>
+					
+					<c:if test="${ id eq bunch.memberId || id eq 'admin' }">
+						<button class="btn-quiz modify" onclick="location.href='/quiz/modify?bunchNum=${ bunch.num }'">수정</button>
+						<button class="btn-quiz delete" id="btn-delete" onclick="location.href='/quiz/delete?bunchNum=${ bunch.num }'">삭제</button>					
+					</c:if>
+				</div>	
+			</div>
+		</div>
+		<div id="body">
+			<div class="container">
+				<h2 class="quiz-title">${ bunch.title }</h2>
+				<form action="/quiz/submit?bunchNum=${ bunch.num }" method="POST">
+					<c:forEach var="quiz" items="${ quizList }">
+						<div style="border : 1px soild black">
+							<h4 class="question">${ quiz.questionNum }. ${ quiz.question }</h4>
 							<p><input type="radio" name="reply${ quiz.questionNum }" value="1" required>1번 ${ quiz.numOne }</p>
 							<p><input type="radio" name="reply${ quiz.questionNum }" value="2" required>2번 ${ quiz.numTwo }</p>
 							<p><input type="radio" name="reply${ quiz.questionNum }" value="3" required>3번 ${ quiz.numThree }</p>
 							<p><input type="radio" name="reply${ quiz.questionNum }" value="4" required>4번 ${ quiz.numFour }</p>
-							</div>
-							<br>
-						</c:forEach>
-					</form>
-				</div>
+						</div>
+						<br>
+					</c:forEach>
+					<div id="btn-submit-form">
+						<button class="btn-quiz submit">제출하기</button>
+					</div>
+				</form>
 			</div>
-
-		</section>
-		<!-- End Why Us Section -->
-
+		</div>
 	</main>
 
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<!-- End Footer -->
-
-	<!-- Tob Button -->
-	<div id="preloader"></div>
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center"><i
-		class="bi bi-arrow-up-short"></i></a>
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />

@@ -1,0 +1,146 @@
+#head {
+	padding-top: 50px;
+	padding-bottom: 20px;
+}
+
+#body {
+	background-color: #F6F7FB;
+	padding: 50px 0;
+}
+
+#title {
+	font-size: 50px;
+}
+
+.bunch-card {
+	background-color: white;
+	border-radius: 10px;
+	margin: 10px;
+	padding: 20px;
+}
+
+.bunch-card:hover {
+	box-shadow: 0 8px 4px -4px rgba(0, 0, 255, 1);
+	cursor: pointer;
+}
+
+#btn-write-form,#btn-return-form {
+	display: flex;
+	justify-content: flex-end;
+}
+
+#btn-submit-form {
+	display: flex;
+	justify-content: center;
+}
+
+#btn-quizWrite, .btn-quiz {
+	border: none;
+	background-color: rgb(66, 87, 178);
+	color: white;
+	padding: 10px;
+	border-radius: 20px;
+	font-size: 20px;
+}
+
+.quizList-count-form {
+	display: flex;
+	width: 60px;
+	background-color: rgb(239, 243, 251);
+	justify-content: center;
+	border-radius: 20px;
+	color: rgb(66, 87, 178);
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+.quiz-title {
+	margin-bottom: 30px;
+}
+
+.return {
+	background-color: rgb(247, 213, 95);
+}
+
+.modify, .delete {
+	background-color: rgba(1, 1, 1, 0.5);
+}
+
+.quiz-title {
+	font-size: 35px;
+	font-weight: 700;
+}
+
+.submit {
+	margin-bottom: 20px;
+}
+
+.question {
+	font-weight: 600;
+}
+
+.point{
+	margin-bottom: 20px;
+}
+.quiz-form {
+	border: 1px solid black;
+	margin: 20px 0;
+	padding: 20px;
+	border: 1px solid rgba(1,1,1,0.1);
+}
+.modify-quiz-title{
+	font-size: 30px;
+}
+.input-form{
+	background-color: none;
+	outline: none;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 2px solid rgb(66, 87, 178);
+}
+.btn-delete-question{
+	background-color: red;
+}
+.question-title{
+	font-size: 25px;
+}
+#btn-addQuiz{
+	padding: 30px;
+	border: none;
+	border-radius: 20px;
+	font-size: 30px;
+	
+}
+.add-form{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.page-form{
+	display: flex;
+	justify-content: center;
+	margin-top: 30px;
+}
+.search-form{
+	display: flex;
+	justify-content: center;
+}
+.input-search{
+	font-size: 25px;
+}
+
+.btn-search{
+	background-color: rgb(66, 87, 178);
+	color: white;
+	border: none;
+	border-radius: 15px;
+	font-size: 25px;
+	padding: 10px;
+	margin-left: 5px;
+}
+.no-result{
+	display: flex;
+	justify-content: center;
+	font-size: 40px;
+}

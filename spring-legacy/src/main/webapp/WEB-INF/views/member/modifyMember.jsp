@@ -88,7 +88,7 @@
 	<!-- End Header -->
 
 	<!-- main -->
-	<main id="main" style="background-color: #DBE2EF;">
+	<main id="main">
 
 		<!-- Menu Box -->
 		<div id="myBox">
@@ -100,7 +100,9 @@
                         <li><a href="/member/passwd">비밀번호 변경</a></li>
                         <li><a href="/member/remove">회원 탈퇴</a></li>
                         <li><a href="/member/myboardList">내가 쓴 게시물</a></li>
-                        <li><a href="/member/myreplyList">내가 쓴 댓글</a></li>
+                        <li><a href="/member/myCommentList">내가 쓴 댓글</a></li>
+                        <li><a href="/member/myQuizList">내가 만든 퀴즈</a></li>
+                        <li><a href="/member/quizCheckList">내가 푼 퀴즈</a></li>
                     </ul>
 				</div>
 			</div>
@@ -110,7 +112,7 @@
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row d-flex justify-content-center align-items-center" style="margin: 33px auto;">
+				<div class="row d-flex justify-content-center align-items-center" style="margin-top: 38px;">
 					<div class="col col-lg-6 mb-4 mb-lg-0">
 
 						<form action="/member/modify" method="POST" enctype="multipart/form-data">

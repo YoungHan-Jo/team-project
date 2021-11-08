@@ -41,12 +41,13 @@ public class QuizController {
 
 	@GetMapping("/list")
 	public String list(Criteria cri, Model model) {
+		cri.setAmount(9);
 
 		System.out.println("list() 호출됨 ... ");
 
 		List<BunchVO> bunchList = quizService.getBunchesByCri(cri);
 
-		int totalCount = bunchList.size();
+		int totalCount = quizService.getBunchCountBySearch(cri);
 
 		System.out.println(bunchList);
 
@@ -91,6 +92,7 @@ public class QuizController {
 			quizList.add(quizVO);
 		}
 
+		bunchVO.setQuizCount(quizList.size());
 		String id = (String) session.getAttribute("id");
 		bunchVO.setMemberId(id);
 		bunchVO.setRegDate(new Date());
@@ -197,58 +199,101 @@ public class QuizController {
 	public String result(int solveHistoryNum, Model model) {
 
 		SolveHistoryVO solveHistoryVO = quizService.getSolveHistoryByNum(solveHistoryNum);
-		
-		List<Integer> answerList = JsonUtils.strJsonToList(solveHistoryVO.getAnswerList()); 
+
+		List<Integer> answerList = JsonUtils.strJsonToList(solveHistoryVO.getAnswerList());
 		List<Integer> correctList = JsonUtils.strJsonToList(solveHistoryVO.getCorrectList());
 		List<Integer> incorrectList = JsonUtils.strJsonToList(solveHistoryVO.getIncorrectList());
 
 		Map<String, Object> mapCorrect = new HashMap<String, Object>();
 		mapCorrect.put("bunchNum", solveHistoryVO.getBunchNum());
 		mapCorrect.put("questionlist", correctList);
-		
+
 		Map<String, Object> mapIncorrect = new HashMap<String, Object>();
 		mapIncorrect.put("bunchNum", solveHistoryVO.getBunchNum());
 		mapIncorrect.put("questionlist", incorrectList);
 
 		List<QuizVO> correctQuizList = quizService.getQuizListByResult(mapCorrect);
 		List<QuizVO> incorrectQuizList = quizService.getQuizListByResult(mapIncorrect);
-		
+
 		System.out.println("내 대답");
 		System.out.println(answerList);
-		
+
 		System.out.println("====맞힌문제 리스트==");
 		System.out.println(correctQuizList);
 		System.out.println("====틀린문제 리스트==");
 		System.out.println(incorrectQuizList);
 
 		model.addAttribute("solveHistory", solveHistoryVO);
-		model.addAttribute("correctList",correctQuizList);
-		model.addAttribute("incorrectList",incorrectQuizList);
-		
+		model.addAttribute("correctList", correctQuizList);
+		model.addAttribute("incorrectList", incorrectQuizList);
 
 		return "quiz/quizResult";
 	}
-	
+
 	@GetMapping("/modify")
 	public String modifyForm(int bunchNum, Model model) {
-		
+
 		BunchVO bunchVO = quizService.getBunchAndQuizList(bunchNum);
-		
-		
+
 		model.addAttribute("bunch", bunchVO);
-		
+
 		return "quiz/quizModify";
 	}
 	
+	@PostMapping("/modify")
+	public String modify(int bunchNum, BunchVO bunchVO, String[] questions, String[] numOnes, String[] numTwos, String[] numThrees,
+			String[] numFours, String[] answers, HttpSession session, RedirectAttributes rttr) {
+
+		System.out.println("write() 호출됨... ");
+		
+		System.out.println("/modify 로 들어온 bunchNum : " + bunchNum);
+		System.out.println("/modify 로 들어온 bunchVO : " + bunchVO);
+		
+		bunchVO.setNum(bunchNum);
+
+		List<QuizVO> quizList = new ArrayList<QuizVO>();
+
+		for (int i = 0; i < questions.length; ++i) {
+			QuizVO quizVO = new QuizVO();
+			quizVO.setBunchNum(bunchNum);
+			quizVO.setQuestionNum(i + 1);
+			quizVO.setQuestion(questions[i]);
+			quizVO.setNumOne(numOnes[i]);
+			quizVO.setNumTwo(numTwos[i]);
+			quizVO.setNumThree(numThrees[i]);
+			quizVO.setNumFour(numFours[i]);
+			quizVO.setAnswer(answers[i]);
+
+			quizList.add(quizVO);
+		}
+
+		BunchVO dbBunchVO = quizService.getBunchAndQuizList(bunchNum);
+		System.out.println("dbBunchVO : " + dbBunchVO);
+		
+		bunchVO.setQuizCount(quizList.size());
+		bunchVO.setMemberId(dbBunchVO.getMemberId());
+		bunchVO.setRegDate(new Date());
+		bunchVO.setQuizList(quizList);
+		
+		System.out.println("/modify 로 들어와 완성된 bunchVO : " + bunchVO);
+
+		quizService.updateBunchAndQuizList(bunchVO);
+
+		rttr.addAttribute("bunchNum", bunchVO.getNum());
+
+		return "redirect:/quiz/content";
+
+	} // modify
 	
+	
+
 	@GetMapping("/delete")
 	public String deleteBunchAndQuizList(int bunchNum) {
-		
+
 		quizService.deleteBunchAndQuizList(bunchNum);
-		
-		
-		return "/quiz/list";
-		
-	} //deleteBunchAndQuizList
+
+		return "redirect:/quiz/list";
+
+	} // deleteBunchAndQuizList
 
 }
