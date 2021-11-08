@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -87,7 +87,7 @@ public class HomeController {
 	
 	// 외부 api 등록 controller
 	@GetMapping(value = { "/", "/index" })
-	public String examInfoServiceforMember(
+	public String homeAPI(
 			@RequestParam(required = false, defaultValue = "10") String numOfRows,
 			@RequestParam(required = false, defaultValue = "1") String pageNo,
 			@RequestParam(required = false, defaultValue = "xml") String dataFormat,
@@ -96,109 +96,78 @@ public class HomeController {
 			@RequestParam(required = false, defaultValue = "7910") String jmCd,
 			Model model) throws Exception {
 		
-		System.out.println("pageNo : "+ pageNo);
-		System.out.println("dataFormat : " + dataFormat);
-		System.out.println("numOfRows : " + numOfRows);
-		System.out.println("implyYy : " + implYy);
-		
-		System.out.println("home의 시험 서비스도 같이 호출됨");
-		List<OpenApiDTO> apiList = getExamInfo(numOfRows, pageNo, dataFormat, implYy, qualgbCd, jmCd);
-		
-		System.out.println("apiList : " + apiList);
-		
-		model.addAttribute("apiList", apiList);
+			List<OpenApiDTO> apiList = getApiList(numOfRows, pageNo, dataFormat, implYy, qualgbCd, jmCd);
+			
+			System.out.println("apiList : " +apiList);
+			
+			model.addAttribute("apiList", apiList);
 		
 		return "index";
-	} // examInfoServiceforMember
+	} // homeAPI
 	
-	private List<OpenApiDTO> getExamInfo(String numOfRows, String pageNo,String dataFormat, String implYy, String qualgbCd, String jmCd) throws Exception {
+	private List<OpenApiDTO> getApiList(String numOfRows, String pageNo, String dataFormat, String implYy, String qualgbCd, String jmCd) throws Exception{
 		
-		List<OpenApiDTO> apiList = new ArrayList<OpenApiDTO>(); // 리턴할 List 준비
+		List<OpenApiDTO> apiList = new ArrayList<OpenApiDTO>();
 		
-		// 데이터 가져올 요청주소 만들기
-		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B490007/qualExamSchd/getQualExamSchdList"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=9HO9k9I%2FIXeQLCVQLiHGJkcTKvvHZRy%2Fi6%2BZa%2F2mMUsZ7TIprrrKXIkJSBDuBjkBh5Ufb2bbweUEOSBUZGmSBQ%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("dataFormat","UTF-8") + "=" + URLEncoder.encode(dataFormat, "UTF-8")); /*format형식*/
-        urlBuilder.append("&" + URLEncoder.encode("implYy","UTF-8") + "=" + URLEncoder.encode(implYy, "UTF-8")); /*검색할 생성일 범위의 시작*/
-        urlBuilder.append("&" + URLEncoder.encode("qualgbCd","UTF-8") + "=" + URLEncoder.encode(qualgbCd, "UTF-8")); 
-        urlBuilder.append("&" + URLEncoder.encode("jmCd","UTF-8") + "=" + URLEncoder.encode(jmCd, "UTF-8")); 
-        
-        System.out.println("urlBuilder : "+ urlBuilder);
-		// 이하 내용은 요청주소를 통해 가져온 XML 응답을 자바 오브젝트로 파싱하는 코드임.
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newDefaultInstance();
-		DocumentBuilder builder = builderFactory.newDocumentBuilder(); // DocumentBuilder가 XML 파서이다.
+			StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B490007/qualExamSchd/getQualExamSchdList"); /*URL*/
+	        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + "WW16hiX2MbDQMssfhL75OdFFAoJ47xq202Eb4A%2FoEjJ9W1HAAI8p5IzSqje7xi930mcFoin%2FZPotmpWSjUseqQ%3D%3D"); /*공공데이터포털에서 받은 인증키*/
+	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /*한 페이지 결과 수*/
+	        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /*페이지번호*/
+	        urlBuilder.append("&" + URLEncoder.encode("dataFormat","UTF-8") + "=" + URLEncoder.encode(dataFormat, "UTF-8")); /*응답 데이터 표준 형식 - xml / json (대소문자 구분 없음)*/
+	        urlBuilder.append("&" + URLEncoder.encode("implYy","UTF-8") + "=" + URLEncoder.encode(implYy, "UTF-8")); /*시행년도*/
+	        urlBuilder.append("&" + URLEncoder.encode("qualgbCd","UTF-8") + "=" + URLEncoder.encode(qualgbCd, "UTF-8")); /*자격구분코드 - T : 국가기술자격 - C : 과정평가형자격 - W : 일학습병행자격 - S : 국가전문자격*/
+	        urlBuilder.append("&" + URLEncoder.encode("jmCd","UTF-8") + "=" + URLEncoder.encode(jmCd, "UTF-8")); /*종목코드 값 (예) 7910 : 한식조리 기능사(검정형)*/
 		
-		Document document = builder.parse(urlBuilder.toString()); // 요청주소를 DocumentBuilder에 인자로 전달하면 XML 응답을 Document 객체로 리턴받음.
-		document.getDocumentElement().normalize();
-		System.out.println("Root Element : " + document.getDocumentElement().getNodeName()); // Node는 html 형식을 말하는데 안에는 <>인 element가 있고, textnode(p 태그 사이에 오는 안녕하세요와 같은 text)가 있다. 
-		
-		NodeList nodeList = document.getElementsByTagName("item"); // 행단위로 반복되는 item 태그명을 기준으로 NodeList 가져옴.
-		
-		System.out.println("nodeList : "+ nodeList);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Date 객체로 파싱할 SimpleDateFormat 준비.
-		
-		// 필요한 데이터만 DTO에 담아서 준비된 covidList에 추가하기
-		for (int i=0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
-			System.out.println("Current Element : " + node.getNodeName());
-			
-			if (node.getNodeType() == Node.ELEMENT_NODE) {// 여러 요소가 node 안에 있기 때문에 node인지 먼저 확인하기
-				Element element = (Element) node;  // item 요소(Element)  // node 중에서 element만 사용할 것이기 때문에 element로 다운캐스팅 해주기
-				OpenApiDTO dto = new OpenApiDTO();
-				
-				String implYyDTO = element.getElementsByTagName("implYy").item(0).getTextContent();
-				dto.setImplYyDTO(implYyDTO);
-				
-				String implSeq = element.getElementsByTagName("implSeq").item(0).getTextContent();
-				dto.setImplSeq(implSeq);
-				
-				String qualgbCdDTO = element.getElementsByTagName("qualgbCd").item(0).getTextContent();
-				dto.setQualgbCdDTO(qualgbCdDTO);
-				
-				String qualgbNm = element.getElementsByTagName("qualgbNm").item(0).getTextContent();
-				dto.setQualgbNm(qualgbNm);
-				
-				String docRegStartDT = element.getElementsByTagName("docRegStartDT").item(0).getTextContent();
-				dto.setDocRegStartDT(sdf.parse(docRegStartDT));
-				
-				String docRegEndDT = element.getElementsByTagName("docRegEndDT").item(0).getTextContent();
-				dto.setDocRegEndDT(sdf.parse(docRegEndDT));
-				
-				String docExamStartDt = element.getElementsByTagName("docExamStartDt").item(0).getTextContent();
-				dto.setDocExamStartDt(sdf.parse(docExamStartDt));
-				
-				String docExamEndDt = element.getElementsByTagName("docExamEndDt").item(0).getTextContent();
-				dto.setDocExamEndDt(sdf.parse(docExamEndDt));
-				
-				String docPassDt = element.getElementsByTagName("docPassDt").item(0).getTextContent();
-				dto.setDocPassDt(sdf.parse(docPassDt));
-				
-				String pracRegStartDt = element.getElementsByTagName("pracRegStartDt").item(0).getTextContent();
-				dto.setPracRegStartDt(sdf.parse(pracRegStartDt));
-				
-				String pracRegEndDt = element.getElementsByTagName("pracRegEndDt").item(0).getTextContent();
-				dto.setPracRegEndDt(sdf.parse(pracRegEndDt));
-				
-				String pracExamStartDt = element.getElementsByTagName("pracExamStartDt").item(0).getTextContent();
-				dto.setPracExamStartDt(sdf.parse(pracExamStartDt));
-				
-				String pracExamEndDt = element.getElementsByTagName("pracExamEndDt").item(0).getTextContent();
-				dto.setPracExamEndDt(sdf.parse(pracExamEndDt));
-				
-				String pracPassDt = element.getElementsByTagName("pracPassDt").item(0).getTextContent();
-				dto.setPracPassDt(sdf.parse(pracPassDt));
-				
-				System.out.println("dto : " + dto);
-				
-				apiList.add(dto); // 리스트에 DTO를 추가
-			} // if
-		} // for
-		
-		System.out.println("파싱결과 : " + apiList);
-        
-		return apiList; // 파싱된 List를 리턴
-	} // getCovid19XmlData
+	        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newDefaultInstance();
+	        DocumentBuilder builder = builderFactory.newDocumentBuilder();
+	        
+	        Document document = builder.parse(urlBuilder.toString());
+	        document.getDocumentElement().normalize();
+	        System.out.println("Root Element : " + document.getDocumentElement().getNodeName());
+	        
+	        NodeList nodeList = document.getElementsByTagName("item");
+	        
+	        System.out.println("nodeList size : " + nodeList.getLength());
+	        
+	        for(int i = 0; i < nodeList.getLength(); ++i) {
+	        	Node node = nodeList.item(i);
+	        	System.out.println("Current Element : "+ node.getNodeName());
+	        	
+	        	if(node.getNodeType() == Node.ELEMENT_NODE) {
+	        		Element element = (Element) node;
+	        		OpenApiDTO apiDTO = new OpenApiDTO();
+	        		
+	        		String implYyDTO = element.getElementsByTagName("implYy").item(0).getTextContent();
+					apiDTO.setImplYyDTO(implYyDTO);
+					String implSeqDTO = element.getElementsByTagName("implSeq").item(0).getTextContent();
+					apiDTO.setImplYyDTO(implSeqDTO);
+					String docRegStartDt = element.getElementsByTagName("docRegStartDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(docRegStartDt);
+					String docRegEndDt = element.getElementsByTagName("docRegEndDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(docRegEndDt);
+					String docExamStartDt = element.getElementsByTagName("docExamStartDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(docExamStartDt);
+					String docExamEndDt = element.getElementsByTagName("docExamEndDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(docExamEndDt);
+					String docPassDt = element.getElementsByTagName("docPassDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(docPassDt);
+					String pracRegStartDt = element.getElementsByTagName("pracRegStartDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(pracRegStartDt);
+					String pracRegEndDt = element.getElementsByTagName("pracRegEndDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(pracRegEndDt);
+					String pracExamStartDt = element.getElementsByTagName("pracExamStartDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(pracExamStartDt);
+					String pracExamEndDt = element.getElementsByTagName("pracExamEndDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(pracExamEndDt);
+					String pracPassDt = element.getElementsByTagName("pracPassDt").item(0).getTextContent();
+					apiDTO.setImplYyDTO(pracPassDt);
+	        		
+					apiList.add(apiDTO);
+	        	}
+	        }
+	        
+		return apiList;
+	}
+	
 
 }

@@ -103,15 +103,15 @@
 		<tbody>
 			<c:choose>
 				<c:when test="${ fn:length(apiList) gt 0 }">
-					<c:forEach var="apiList" items="${ apiList }">
+					<c:forEach var="api" items="${ apiList }">
 						<tr>
-							<td>${ apiList.implYy }(${ apiList.implSeq })<td>
-							<td><fmt:formatDate value="${ apiList.docRegStartDT }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ apiList.docRegEndDT }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ apiList.docExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ apiList.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ apiList.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ apiList.pracRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ apiList.pracRegEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ apiList.pracExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ apiList.pracExamEndDt }" pattern="yyyy-MM-dd" /></td>
-							<td><fmt:formatDate value="${ apiList.pracPassDt }" pattern="yyyy-MM-dd" /></td>
+							<td>${ api.implYyDTO }(${ api.implSeqDTO })<td>
+							<td>${ api.docRegStartDt } ~ ${ api.docRegEndDt }</td>
+							<td><fmt:formatDate value="${ api.docExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ api.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ api.docExamEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ api.pracRegStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ api.pracRegEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ api.pracExamStartDt }" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate value="${ api.pracExamEndDt }" pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${ api.pracPassDt }" pattern="yyyy-MM-dd" /></td>
 						</tr>
 					</c:forEach>
 				</c:when>
