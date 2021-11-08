@@ -15,9 +15,9 @@
 	<!-- Hero -->
 	<section id="hero" class="d-flex align-items-center text-center">
 		<div class="container">
-			<h1>Welcome to LOGO</h1>
+			<h1>Welcome!</h1>
 			<h2>Take a quiz and make a quiz.</h2>
-			<a href="#!" class="btn-get-started scrollto">quiz Start</a>
+			<a href="/quiz/list" class="btn-get-started scrollto">quiz Start</a>
 		</div>
 	</section>
 	<!-- End Hero -->
@@ -39,7 +39,7 @@
 								Tenetur quia eos.
 								Autem tempore quibusdam vel necessitatibus optio ad corporis.</p>
 							<div class="text-center">
-								<a href="#!" class="more-btn">QUIZ START
+								<a href="/quiz/list" class="more-btn">QUIZ START
 								<i class="bx bx-chevron-right"></i>
 								</a>
 							</div>
