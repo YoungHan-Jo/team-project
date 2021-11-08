@@ -37,6 +37,7 @@
 									<i class="bi bi-reply"></i>답글
 								</button>
 							</c:if>
+							<button type="button" class="btn btn-outline-info" onclick="location='/board/list?pageNum=${ pageNum }'"><i class="bi bi-list-task"></i>글목록</button>
 
 						</div>
 

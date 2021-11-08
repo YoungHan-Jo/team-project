@@ -63,6 +63,7 @@
 										<i class="bi bi-x"></i>
 									</button>
 								</div>
+								<div class="divider" style="margin: 10px 0;"></div>
 							</div>
 
 							<br> <br>
@@ -110,6 +111,7 @@
 				<i class="bi bi-x"></i>
 			</button>
 		</div>
+		<div class="divider" style="margin: 10px 0;"></div>
     	`;
     	
     	$('div#fileBox').append(str);
