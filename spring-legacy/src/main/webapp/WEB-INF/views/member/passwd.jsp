@@ -16,61 +16,66 @@
 	<!-- End Header -->
 
 	<!-- main -->
-	<main id="main" style="background-color: #DBE2EF;">
+	<main id="main">
+
+		<!-- Menu Box -->
+		<div id="myBox">
+			<div id="wrap">
+				<div id="menu">
+					<a>내 정보</a>
+					<ul>
+                        <li><a href="/member/modify">정보 수정</a></li>
+                        <li><a href="/member/passwd">비밀번호 변경</a></li>
+                        <li><a href="/member/remove">회원 탈퇴</a></li>
+                        <li><a href="/member/myboardList">내가 쓴 게시물</a></li>
+                        <li><a href="/member/myCommentList">내가 쓴 댓글</a></li>
+                        <li><a href="/member/myQuizList">내가 만든 퀴즈</a></li>
+                        <li><a href="/member/quizCheckList">내가 푼 퀴즈</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- End Menu Box -->
 
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<div class="row">
-					<div class="side-menu-area col-md-3">
-						<!-- sidemenu -->
-						<jsp:include page="/WEB-INF/views/include/sidemenu.jsp" />
-					</div>
-					<div class="col-md-9">
-						<div class="col col-lg-6 mb-4 mb-lg-0">
-							<form action="/member/passwd" method="POST" id="frm">
-								<div class="card text-center text-white shadow"
-									style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
-									<div class="row p-3">
-										<div class="col-md-12">
-											<div class="card-body p-4">
-												<h1>
-													<b>비밀번호 변경</b>
-												</h1>
-												<hr class="mt-0 mb-4">
-												<div class="row pt-1">
-													<div class="col-6 mb-3 input-group-sm">
-														<h6 style="font-weight: bold; color: #BBE1FA;">아이디</h6>
-														<input id="id" name="id" class="form-control" type="text"
-															value="${id}" readonly>
-													</div>
-													<div class="col-6 mb-3 input-group-sm">
-														<h6 style="font-weight: bold; color: #BBE1FA;">기존
-															비밀번호</h6>
-														<input id="passwd" name="passwd" type="password"
-															class="form-control">
-													</div>
-													<div class="col-6 mt-3 input-group-sm">
-														<h6 style="font-weight: bold; color: #BBE1FA;">새 비밀번호</h6>
-														<input id="npasswd" name="npasswd" type="password"
-															class="form-control">
-													</div>
-													<div class="col-6 mt-3 input-group-sm">
-														<h6 style="font-weight: bold; color: #BBE1FA;">새 비밀번호
-															재확인</h6>
-														<input id="npasswd2" name="npasswd2" type="password"
-															class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div>
-									<button type="submit" class="btn btn-primary btn-sm mt-2">변경하기</button>
-								</div>
-							</form>
-						</div>
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 94px auto;">
+					<div class="col col-lg-6 mb-4 mb-lg-0">
+
+						<form action="/member/passwd" method="POST" id="frm">
+							<div class="card text-center text-white shadow" style="background: linear-gradient(to right bottom, #112D4E, #3F72AF); border-radius: 1rem;">
+							    <div class="row p-3">
+							        <div class="col-md-12">
+							            <div class="card-body p-4">
+							                <h1><b>비밀번호 변경</b></h1>
+							                <hr class="mt-0 mb-4">
+							                <div class="row pt-1">
+							                    <div class="col-6 mb-3 input-group-sm">
+							                        <h6 style="font-weight: bold; color: #BBE1FA;">아이디</h6>
+							                        <input id="id" name="id" class="form-control" type="text" value="${id}" readonly>
+							                    </div>
+							                    <div class="col-6 mb-3 input-group-sm">
+                                                    <h6 style="font-weight: bold; color: #BBE1FA;">기존 비밀번호</h6>
+                                                    <input id="passwd" name="passwd" type="password" class="form-control">
+                                                </div>
+							                    <div class="col-6 mt-3 input-group-sm">
+					                                <h6 style="font-weight: bold; color: #BBE1FA;">새 비밀번호</h6>
+                                                    <input id="npasswd" name="npasswd" type="password" class="form-control">
+							                    </div>
+							                    <div class="col-6 mt-3 input-group-sm">
+					                                <h6 style="font-weight: bold; color: #BBE1FA;">새 비밀번호 재확인</h6>
+                                                    <input id="npasswd2" name="npasswd2" type="password" class="form-control">
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+							<div>
+								<button type="submit" class="btn btn-primary btn-sm mt-2">변경하기</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

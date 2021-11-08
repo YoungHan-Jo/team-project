@@ -12,16 +12,33 @@
 	<jsp:include page="/WEB-INF/views/include/top.jsp" />
 	<!-- End Header -->
 
+	<!-- main -->
 	<main id="main">
+
+		<!-- Menu Box -->
+		<div id="myBox">
+			<div id="wrap">
+				<div id="menu">
+					<a>내 정보</a>
+					<ul>
+                        <li><a href="/member/modify">정보 수정</a></li>
+                        <li><a href="/member/passwd">비밀번호 변경</a></li>
+                        <li><a href="/member/remove">회원 탈퇴</a></li>
+                        <li><a href="/member/myboardList">내가 쓴 게시물</a></li>
+                        <li><a href="/member/myCommentList">내가 쓴 댓글</a></li>
+                        <li><a href="/member/myQuizList">내가 만든 퀴즈</a></li>
+                        <li><a href="/member/quizCheckList">내가 푼 퀴즈</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- End Menu Box -->
+
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-			<div class="row">
-				<div class="side-menu-area col-md-3">
-					<!-- sidemenu -->
-					  <jsp:include page="/WEB-INF/views/include/sidemenu.jsp" />
-				</div>
-				<div class="col-md-6">
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 40px auto;">
+					<div class="col col-lg-6 mb-4 mb-lg-0">
 						<div class="card shadow text-center"
 							style="background: #fff; border-radius: 1rem;">
 							<div class="panel panel-primary p-3">
