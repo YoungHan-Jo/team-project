@@ -66,6 +66,21 @@
 			<result column="answer" property="answer" />
 		</collection>
 	</resultMap>
+	
+	<select id="getBunchCountBySearch" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM bunch
+		]]>
+		<where>
+			<if test="type == 'title'.toString()">
+				title LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type == 'memberId'.toString()">
+				member_id LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</where>
+	</select>
 
 	<select id="getNextBunchNum" resultType="int">
 		<![CDATA[
@@ -190,8 +205,8 @@
 	<!-- =================== insert ====================== -->
 	<insert id="addBunch">
 		<![CDATA[
-			INSERT INTO bunch (num, title, member_id, reg_date)
-			VALUES (#{num}, #{title}, #{memberId}, #{regDate})
+			INSERT INTO bunch (num, title, quiz_count, member_id, reg_date)
+			VALUES (#{num}, #{title}, #{quizCount}, #{memberId}, #{regDate})
 		]]>
 	</insert>
 

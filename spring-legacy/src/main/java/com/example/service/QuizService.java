@@ -39,6 +39,10 @@ public class QuizService {
 		
 		return quizMapper.getBunchesAndQuizListByCri(cri);
 	}
+	
+	public int getBunchCountBySearch(Criteria cri) {
+		return quizMapper.getBunchCountBySearch(cri);
+	}
 
 	public int getNextBunchNum() {
 		return quizMapper.getNextBunchNum();
@@ -96,4 +100,6 @@ public class QuizService {
 	}
 	
 
+	
+	
 }

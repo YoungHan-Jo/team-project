@@ -84,7 +84,7 @@
 				<div id="menu">
 					<a>내 정보</a>
 					<ul>
-						<li><a href="/member/modify">정보 수정</a></li>
+                        <li><a href="/member/modify">정보 수정</a></li>
                         <li><a href="/member/passwd">비밀번호 변경</a></li>
                         <li><a href="/member/remove">회원 탈퇴</a></li>
                         <li><a href="/member/myboardList">내가 쓴 게시물</a></li>
