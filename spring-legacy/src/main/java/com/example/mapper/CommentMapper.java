@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -31,16 +32,18 @@ public interface CommentMapper {
 	void updateComment(CommentVO commentVO);
 	
 	@Delete("DELETE FROM comment WHERE num = #{num}")
-	void deleteCommentByNum(int num);
+	int deleteCommentByNum(int num);
 	
 	@Delete("DELETE FROM comment WHERE board_num = #{boardNum}")
 	void deleteCommentByBoardNum(int num);
 	
-	@Delete("DELETE FROM board")
+	@Delete("DELETE FROM comment")
 	void deleteAll();
 	
+	@Select("SELECT * FROM comment ORDER BY re_ref DESC, re_seq ASC ")
+	List<CommentVO> getCommentsAll();
 	
-	
-	
+	@Update("UPDATE comment SET re_seq = re_seq + 1 WHERE re_ref = #{reRef} AND re_seq > #{reSeq} ")
+	void updateReSeqPlusOne(@Param("reRef") int reRef, @Param("reSeq") int reSeq);
 	
 }

@@ -6,8 +6,8 @@
 </head>
 
 <body>
-    	<button type="button" id="btn">버튼</button>
-		<button onclick="history.go(-1);">되돌아가기</button>
+    	<!-- <button type="button" id="btn">버튼</button> -->
+		<!-- <button onclick="history.go(-1);">되돌아가기</button> -->
 		<br><br>
 		<table border="1">
 			<thead>

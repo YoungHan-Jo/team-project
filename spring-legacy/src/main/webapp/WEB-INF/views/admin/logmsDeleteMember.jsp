@@ -10,7 +10,7 @@
 
 <input type="text" name="id" id="id">
 <button type="button" id="btn">회원탈퇴</button>
-<button type="button" onclick="history.go(-1);">되돌아가기</button>
+<!-- <button type="button" onclick="history.go(-1);">되돌아가기</button> -->
 <p id="message"></p>
 
 

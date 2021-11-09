@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.domain.AttachVO;
+import com.example.domain.BoardVO;
 import com.example.domain.CommentVO;
 import com.example.mapper.CommentMapper;
 
@@ -18,7 +21,7 @@ public class CommentService {
 		return commentMapper.getCommentsByBoardNum(boardNum);
 	}
 
-	public CommentVO getBoard(int num) {
+	public CommentVO getComment(int num) {
 		return commentMapper.getComment(num);
 	}
 
@@ -34,8 +37,21 @@ public class CommentService {
 		commentMapper.updateComment(commentVO);
 	}
 
-	public void deleteComment(int num) {
-		commentMapper.deleteCommentByNum(num);
+	public int deleteComment(int num) {
+		return commentMapper.deleteCommentByNum(num);
 	}
 
+	public List<CommentVO> getCommentsAll() {
+		return commentMapper.getCommentsAll();
+	}
+	
+	@Transactional
+	public void addReply(CommentVO commentVO) {
+		commentMapper.updateReSeqPlusOne(commentVO.getReRef(), commentVO.getReSeq());
+		
+		commentVO.setReLev(commentVO.getReLev() + 1);
+		commentVO.setReSeq(commentVO.getReSeq() + 1);
+
+		commentMapper.addComment(commentVO);
+	}
 }
