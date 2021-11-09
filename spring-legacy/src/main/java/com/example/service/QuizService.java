@@ -90,15 +90,23 @@ public class QuizService {
 	}
 	
 	// id에 해당하는 bunch 리스트
-	public List<BunchVO> getBunchesById(String id){
-		return quizMapper.getBunchesById(id);
+	public List<BunchVO> getBunchesById(Criteria cri, String id){
+		return quizMapper.getBunchesById(cri, id);
+	}
+	// id에 해당하는 bunch 리스트 개수
+	public int getCountBunchesById(String id){
+		return quizMapper.getCountBunchesById(id);
 	}
 	
 	// id에 해당하는 (solveHistory + bunch) 리스트
-	public List<SolveHistoryVO> getSolveHistoryAndBunch(String id){
-		return quizMapper.getSolveHistoryAndBunch(id);
+	public List<SolveHistoryVO> getSolveHistoryAndBunch(Criteria cri, String id){
+		return quizMapper.getSolveHistoryAndBunch(cri, id);
 	}
 	
+	// id에 해당하는 solveHistory 개수
+	public int getCountSolveHistory(String id) {
+		return quizMapper.getCountSolveHistory(id);
+	}
 
 	
 	

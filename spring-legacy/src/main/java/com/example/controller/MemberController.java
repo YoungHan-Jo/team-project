@@ -520,6 +520,64 @@ public class MemberController {
 	
 	
 	
+
+	
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------
+	// -------------------------------------------- 여기서부터는 내가 만든 퀴즈 관련
+	
+	
+	@GetMapping("/myQuizList")
+	public String myQuizListpage(Criteria cri, Model model, HttpSession session){
+		System.out.println("myQuizListpage 화면 호출됨...");
+		
+		String id = (String) session.getAttribute("id");
+		
+		// BunchVO 테이블에서 (검색어가 있으면)검색, 페이징 적용한 글 리스트 가져오기 
+		List<BunchVO> myQuizList = quizService.getBunchesById(cri, id);
+		
+		// 검색유형, 검색어가 있으면 적용하여 글개수 가져오기
+		int totalCount = quizService.getCountBunchesById(id);
+		
+		// 페이지블록 정보 객체준비. 필요한 정보를 생성자로 전달.
+		PageDTO pageDTO = new PageDTO(cri, totalCount);
+		
+		
+		// 뷰에서 사용할 데이터를 Model 객체에 저장 →  스프링(dispathcer servlet)이 requestScope로 옯겨줌.
+		model.addAttribute("myQuiz", myQuizList);
+		model.addAttribute("pageMaker",pageDTO);
+		
+		return "member/myQuizList";
+	} // myQuizListpage
+
+	
+	
+	@GetMapping("/myPrevQuizList")
+	public String myPrevQuizListpage(Criteria cri, Model model, HttpSession session){
+		System.out.println("myPrevQuizListpage 화면 호출됨...");
+		
+		String id = (String) session.getAttribute("id");
+		
+		// SolveHistoryVO 테이블에서 (검색어가 있으면)검색, 페이징 적용한 글 리스트 가져오기 
+		List<SolveHistoryVO> myPrevQuizList = quizService.getSolveHistoryAndBunch(cri, id);
+		
+		// 검색유형, 검색어가 있으면 적용하여 글개수 가져오기
+		int totalCount = quizService.getCountSolveHistory(id);
+		
+		// 페이지블록 정보 객체준비. 필요한 정보를 생성자로 전달.
+		PageDTO pageDTO = new PageDTO(cri, totalCount);
+		
+		
+		// 뷰에서 사용할 데이터를 Model 객체에 저장 →  스프링(dispathcer servlet)이 requestScope로 옯겨줌.
+		model.addAttribute("quizCheck", myPrevQuizList);
+		model.addAttribute("pageMaker",pageDTO);
+		
+		return "member/myPrevQuizList";
+	} // myquizCheckListpage
+	
+	
 	
 	
 	
