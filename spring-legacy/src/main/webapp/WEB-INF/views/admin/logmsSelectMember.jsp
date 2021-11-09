@@ -46,7 +46,6 @@
 	} // showData
 
 
-	
 	$('button#btn').on('click', function () {
 		
 		// ajax 함수 호출 - 비동기 자바스크립트 통신

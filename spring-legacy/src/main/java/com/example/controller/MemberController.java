@@ -480,6 +480,8 @@ public class MemberController {
 		
 		String id = (String) session.getAttribute("id");
 		
+		// cri.setAmount(1000); // 페이징을 안하면 페이지에 나오는 개수가 없으니까 임의의 높은 숫자로 글 개수를 가져온다. 
+		
 		// board 테이블에서 (검색어가 있으면)검색, 페이징 적용한 글 리스트 가져오기 
 		List<BoardVO> boardList = boardService.getBoardsbyMemberIdwithPaging(cri, id);
 		
