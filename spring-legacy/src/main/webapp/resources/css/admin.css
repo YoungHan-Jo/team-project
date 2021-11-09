@@ -1,0 +1,22 @@
+.admin-main {
+	display: flex;
+	justify-content: space-between;
+}
+
+.admin-main nav{
+	width:300px;
+}
+
+.admin-main nav button {
+	width: 100%;
+	padding: 7px 0;
+	font-size: 18px;
+	margin: 2px;
+}
+
+.admin-section {
+	width: 900px;
+	height: 500px;
+
+	background-color:white;
+}

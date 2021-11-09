@@ -5,7 +5,24 @@
 <html>
 <head>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
+<link href="/resources/css/sidemenu.css" rel="stylesheet"/>
+<style>
 
+.form-check {
+	display: inline-block;
+	margin-left: 5px;
+	margin-right: 8px;
+}
+
+.panel-heading div {
+	margin-top: -18px;
+	font-size: 15px;
+}
+
+.panel-heading div span {
+	margin-left: 5px;
+}
+</style>
 </head>
 <body>
 	<!-- Header -->
@@ -15,24 +32,8 @@
 	<!-- main -->
 	<main id="main">
 
-		<!-- Menu Box -->
-		<div id="myBox">
-			<div id="wrap">
-				<div id="menu">
-					<a>내 정보</a>
-					<ul>
-                        <li><a href="/member/modify">정보 수정</a></li>
-                        <li><a href="/member/passwd">비밀번호 변경</a></li>
-                        <li><a href="/member/remove">회원 탈퇴</a></li>
-                        <li><a href="/member/myboardList">내가 쓴 게시물</a></li>
-                        <li><a href="/member/myCommentList">내가 쓴 댓글</a></li>
-                        <li><a href="/member/myQuizList">내가 만든 퀴즈</a></li>
-                        <li><a href="/member/quizCheckList">내가 푼 퀴즈</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!-- End Menu Box -->
+		<!-- sidemenu -->
+		<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
@@ -112,46 +113,25 @@
 							</c:if>
 						</ul>
 
-						<div class="divider" style="margin: 30px 0;"></div>
-
 						<form action="/member/myboardList" method="GET" id="frm">
-							<input type="hidden" name="pageNum"
-								value="${ pageMaker.cri.pageNum }">
-							<div class="row">
-								<div>
-									<div class="input-field">
-										<select name="type">
-											<option value="" disabled selected>=선택=</option>
-											<option value="subject"
-												${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
-											<option value="content"
-												${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
-											<option value="memberId"
-												${ (pageMaker.cri.type eq 'memberId')     ? 'selected' : '' }>작성자</option>
-										</select> <label>검색 조건</label>
-									</div>
+							<input type="hidden" name="pageNum" value="${ pageMaker.cri.pageNum }">
+							<div class="input-group mx-auto my-2" style="width: 60%">
+								<div class="input-group-prepend">
+									<select class="btn btn-dark px-2" name="type">
+										<option value="" disabled selected>선택</option>
+										<option value="subject" ${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
+										<option value="content" ${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
+										<option value="memberId" ${ (pageMaker.cri.type eq 'memberId') ? 'selected' : '' }>작성자</option>
+									</select>
 								</div>
-
-								<div>
-
-									<div class="input-field">
-										<i>search</i> <input type="text" id="autocomplete-input"
-											class="autocomplete" name="keyword"
-											value="${ pageMaker.cri.keyword }"> <label
-											for="autocomplete-input">검색어</label>
-									</div>
-
-								</div>
-
-								<div>
-									<button type="submit" id="btnSearch">검색</button>
+								<input id="autocomplete-input" type="text" class="form-control autocomplete" name="keyword" value="${ pageMaker.cri.keyword }">
+								<div class="input-group-append">
+									<button class="btn btn-dark px-3" type="submit" id="btnSearch">검색</button>
 								</div>
 							</div>
 						</form>
-					</div>
-				
-			</div>	
-				
+						
+				</div>
 			</div>
 		</section>
 		<!-- End Why Us Section -->

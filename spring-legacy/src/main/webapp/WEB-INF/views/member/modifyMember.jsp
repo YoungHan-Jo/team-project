@@ -14,7 +14,16 @@
 <html>
 <head>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
+<link href="/resources/css/sidemenu.css" rel="stylesheet"/>
+<style>
 
+.form-check {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 8px;
+}
+
+</style>
 </head>
 
 <body>
@@ -25,6 +34,9 @@
 
 	<!-- main -->
 	<main id="main">
+
+		<!-- sidemenu -->
+		<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">

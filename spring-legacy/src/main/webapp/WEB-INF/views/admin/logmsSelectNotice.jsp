@@ -1,52 +1,88 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert notice here</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table {
+		width: 600px;
+	}
+</style>
 </head>
 <body>
-	
-<form id="frm">
-	¹øÈ£ : <input type="number" name="num">
-	¼±ÅÃ¹®Á¦ : <input type="text" name="subject">
-	°øÁö»çÇ× : <input type="text" name="content">
-	°Ë»öÈ½¼ö : <input type="number" name="viewCount"> 
-	³¯Â¥ : <input type="date" name="regDate">
-	
-	<button type="button" id="btn">°øÁö»çÇ×ÀÔ·Â</button>
-</form>
-	
-<script src="/resources/js/jquery-3.6.0.js"></script>
-<script src="/resources/js/jquery.serializeObject.min.js"></script>
-<script>
-	$('#btn').on('click', function () {
 
-		var obj = $('form#frm').serializeObject();
-		console.log(obj);
-		console.log(typeof obj);
+<h1>ê³µì§€ì‚¬í•­</h1>
+<button type="button" id="btn">ë²„íŠ¼</button>
+<button onclick="history.go(-1);">ë˜ëŒì•„ê°€ê¸°</button>
+		<br><br>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>ë²ˆí˜¸</th><th>ì„ íƒë²ˆí˜¸</th><th>ê³µì§€ì‚¬í•­ë‚´ìš©</th><button type="button" id="btnDelete">ì‚­ì œ</button>
+				</tr>
+			</thead>
+			<tbody>
+				<tr><td colspan="3"></td></tr>
+			</tbody>
+		</table>
+
+<script src="/resources/js/jquery-3.6.0.js"></script>
+<script>
+
+
+
+	function showData(array) {
+		str = '';
 		
-		var strJson = JSON.stringify(obj);
-		console.log(strJson);
-		console.log(typeof strJson);
+		if (array.length > 0) {
+			for (var notice of array) {
+				str += `
+					<tr>
+						<td>\${notice.num}</td>
+						<td>\${notice.subject}</td>
+						<td>\${notice.content}</td>
+					</tr>
+				`;
+			} // for
+		} else {
+			str += `
+				<tr>
+					<td colspan="3">ê³µì§€ì‚¬í•­ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
+				</tr>
+			`;
+		}
 		
-		// ajax ÇÔ¼ö È£Ãâ
+		$('tbody').append(str);
+	} // showData
+	
+
+
+	
+	$('button#btn').on('click', function () {
+		
+		// ajax í•¨ìˆ˜ í˜¸ì¶œ - ë¹„ë™ê¸° ìë°”ìŠ¤í¬ë¦½íŠ¸ í†µì‹ 
 		$.ajax({
 			url: '/api/notices',
-			method: 'POST',
-			data: strJson,
-			contentType: 'application/json; charset=UTF-8',
+			method: 'GET',
 			success: function (data) {
 				console.log(data);
+				console.log(typeof data);
 				
-				if (data.result == 'success') {
-					alert('°øÁö»çÇ× ÀÔ·Â ¼º°ø!');
-				}
-			} // success
+				showData(data);
+			}
 		});
-		
-	});
-</script>
 
+	});
+	
+	
+</script>
 </body>
 </html>
+
+
+
+
+
+

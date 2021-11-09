@@ -10,15 +10,16 @@
 		FROM board
 		WHERE member_id = #{id}
 	]]>
-	<if test="cri.type == 'subject'.toString()">
-		AND subject LIKE CONCAT('%', #{cri.keyword}, '%')
-	</if>
-	<if test="cri.type == 'content'.toString()">
-		AND content LIKE CONCAT('%', #{cri.keyword}, '%')
-	</if>
-	<if test="cri.type == 'memberId'.toString()">
-		AND member_id LIKE CONCAT('%', #{cri.keyword}, '%')
-	</if>
+		<if test="cri.type == 'subject'.toString()">
+			AND subject LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+		<if test="cri.type == 'content'.toString()">
+			AND content LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+		<if test="cri.type == 'memberId'.toString()">
+			AND member_id LIKE CONCAT('%', #{cri.keyword}, '%')
+		</if>
+	
 </select>
 
 

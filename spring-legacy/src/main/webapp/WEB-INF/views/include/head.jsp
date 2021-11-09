@@ -26,3 +26,4 @@
 <link href="/resources/css/style.css" rel="stylesheet">
 <link href="/resources/css/board.css" rel="stylesheet">
 <link href="/resources/css/member.css" rel="stylesheet">
+<link href="/resources/css/admin.css" rel="stylesheet">
