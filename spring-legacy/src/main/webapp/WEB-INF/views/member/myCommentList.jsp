@@ -1,108 +1,140 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<!-- 문자열 →  Date 객체 변환  -->
+<fmt:parseDate value="${member.birthday}" pattern="yyyymmdd"
+	var="dateBirthday" />
+<!-- Date 객체 → 문자열 변환  -->
+<fmt:formatDate value="${pageScope.dateBirthday}" pattern="yyyy-mm-dd"
+	var="strBirthday" />
+
+<!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/WEB-INF/views/include/head.jsp" />
+<link href="/resources/css/sidemenu.css" rel="stylesheet"/>
+<style>
+
+.form-check {
+	display: inline-block;
+	margin-left: 5px;
+	margin-right: 8px;
+}
+
+.panel-heading div {
+	margin-top: -18px;
+	font-size: 15px;
+}
+
+.panel-heading div span {
+	margin-left: 5px;
+}
+</style>
 </head>
+
 <body>
+
 	<!-- Header -->
 	<jsp:include page="/WEB-INF/views/include/top.jsp" />
 	<!-- End Header -->
 
+	<!-- main -->
 	<main id="main">
+
+		<!-- sidemenu -->
+		<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
+
 		<!-- Why Us Section -->
 		<section id="why-us" class="why-us">
 			<div class="container">
-				<h3>내가 쓴 댓글 목록(댓글개수: ${ pageMaker.totalCount })</h3>
-				<br>
-					<table id="myComment">
-						<tr>
-							<th>댓글 번호</th>
-							<th>댓글 내용</th>
-							<th>작성자</th>
-							<th>작성 날짜</th>
-						</tr>
+				<div class="row d-flex justify-content-center align-items-center" style="margin: 40px auto;">
+					<div class="col col-lg-6 mb-4 mb-lg-0">
+						<div class="card shadow text-center"
+							style="background: #fff; border-radius: 1rem;">
+							<div class="panel panel-primary p-3">
+								<div class="panel-heading">
+									<h3 class="panel-title text-white p-3" style="background-color: #112D4E; border-radius: 0.5rem; font-weight: bold;">내가 쓴 댓글 목록</h3>
+									<div class="pull-right">
+										<label class="mt-3"><small>&laquo; 댓글개수: ${ pageMaker.totalCount } &raquo;</small></label>
+										<span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
+											<i class="glyphicon glyphicon-filter"></i>
+										</span>
+									</div>
+								</div>
+								<table class="table table-hover" id="myComment">
+									<thead>
+										<tr>
+											<th>댓글 번호</th>
+											<th>댓글 내용</th>
+											<th>작성자</th>
+											<th>작성 날짜</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="myComment" items="${myComment}" >
+											<tr>
+												<td><c:out value="${myComment.num}" /></td>
+												<td><a href="/board/view?num=${ myComment.num }"><c:out value="${myComment.content}" /></a></td>
+												<td><c:out value="${myComment.memberId}" /></td>
+												<td><fmt:formatDate value="${myComment.regDate}" pattern="yyyy/MM/dd" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
 
-						<c:forEach var="myComment" items="${myComment}" >
-							<tr>
-								<td><c:out value="${myComment.num}" /></td>
-								<td><a href="/board/view?num=${ myComment.num }"><c:out value="${myComment.content}" /></a></td>
-								<td><c:out value="${myComment.memberId}" /></td>
-								<td><fmt:formatDate value="${myComment.regDate}" pattern="yyyy/MM/dd" /></td>
-							</tr>
-						</c:forEach>
-					</table>
-					<br>
-					<ul class="pagination center">
-							<%-- 이전 --%>
+						<ul class="pagination justify-content-center mt-4">
 							<c:if test="${ pageMaker.prev eq true }">
-								<li>
-								<a href="/member/myCommentList?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myComment">
-								</a></li>
+								<li class="page-item">
+									<a href="/member/myCommentList?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myComment">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
 							</c:if>
-		
-							<%-- 페이지블록 내 최대 5개 페이지씩 출력 --%>
-							<c:forEach var="i" begin="${ pageMaker.startPage }"
-								end="${ pageMaker.endPage }" step="1">
-								<li
-									class="waves-effect ${ (pageMaker.cri.pageNum eq i) ? 'active' : '' }"><a
-									href="/member/myCommentList?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myComment">${ i }</a></li>
+
+							<c:forEach var="i" begin="${ pageMaker.startPage }" end="${ pageMaker.endPage }" step="1">
+								<li class="page-item ${ pageMaker.cri.pageNum eq i ? 'active' : '' }">
+									<a class="page-link" href="/member/myCommentList?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myComment">${ i }</a>
+								</li>
 							</c:forEach>
-		
-							<%-- 다음 --%>
+
 							<c:if test="${ pageMaker.next eq true }">
-								<li><a
-									href="/member/myCommentList?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myComment">
-									</a></li>
+								<li class="page-item">
+									<a href="/member/myCommentList?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myComment">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
 							</c:if>
 						</ul>
-		
-						<div class="divider" style="margin: 30px 0;"></div>
-		
+
 						<form action="#!" method="GET" id="frm">
-							<div class="row">
-								<div>
-									<div class="input-field">
-										<select
-											name="type">
-											<option value="" disabled selected>=선택=</option>
-											<option value="content"
-												${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
-											<option value="memberId"
-												${ (pageMaker.cri.type eq 'memberId')     ? 'selected' : '' }>작성자</option>
-										</select> <label>검색 조건</label>
-									</div>
+							<div class="input-group mx-auto my-2" style="width: 60%">
+								<div class="input-group-prepend">
+									<select class="btn btn-dark px-2" name="type">
+										<option value="" disabled selected>선택</option>
+										<option value="subject" ${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
+										<option value="content" ${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
+										<option value="memberId" ${ (pageMaker.cri.type eq 'memberId') ? 'selected' : '' }>작성자</option>
+									</select>
 								</div>
-	
-								<div>
-									
-									<div class="input-field">
-										<i>search</i> <input type="text"
-											id="autocomplete-input" class="autocomplete" name="keyword"
-											value="${ pageMaker.cri.keyword }">
-											<label for="autocomplete-input">검색어</label>
-									</div>
-									
-								</div>
-		
-								<div>
-									<button type="button" id="btnSearch">
-										검색
-									</button>
+								<input id="autocomplete-input" type="text" class="form-control autocomplete" name="keyword" value="${ pageMaker.cri.keyword }">
+								<div class="input-group-append">
+									<button class="btn btn-dark px-3" type="button" id="btnSearch">검색</button>
 								</div>
 							</div>
 						</form>
-				
-				
-			</div>
 
+					</div>
+				</div>
+			</div>
 		</section>
 		<!-- End Why Us Section -->
 
 	</main>
-
+	<!-- End main -->
 
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
@@ -110,12 +142,12 @@
 
 	<!-- Top Button -->
 	<div id="preloader"></div>
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center">
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
 		<i class="bi bi-arrow-up-short"></i>
 	</a>
 
 	<!-- JavaScript -->
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
 </body>
+
 </html>

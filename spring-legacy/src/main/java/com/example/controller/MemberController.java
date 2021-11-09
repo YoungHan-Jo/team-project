@@ -20,21 +20,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.domain.BoardVO;
+import com.example.domain.BunchVO;
 import com.example.domain.CommentVO;
 import com.example.domain.Criteria;
 import com.example.domain.MemberVO;
 import com.example.domain.PageDTO;
 import com.example.domain.ProfileImg;
+import com.example.domain.SolveHistoryVO;
 import com.example.service.BoardService;
 import com.example.service.MemberService;
 import com.example.service.ProfileService;
+import com.example.service.QuizService;
 import com.example.util.JScript;
 
 import net.coobird.thumbnailator.Thumbnailator;
@@ -50,6 +52,8 @@ public class MemberController {
 	
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private QuizService quizService;
 	
 	
 
