@@ -168,7 +168,26 @@
 			SELECT *
 			FROM bunch
 			WHERE member_id = #{id}
-			ORDER BY reg_date DESC
+		]]>
+			<if test="cri.type == 'title'.toString()">
+				AND title LIKE CONCAT('%', #{cri.keyword}, '%')
+			</if>
+			<if test="cri.type == 'memberId'.toString()">
+				AND member_id LIKE CONCAT('%', #{cri.keyword}, '%')
+			</if>
+			<![CDATA[
+				ORDER BY reg_date DESC
+				LIMIT #{cri.startRow}, #{cri.amount}
+			]]>
+				
+		
+	</select>
+	
+	<select id="getCountBunchesById" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM bunch
+			WHERE member_id = #{id}
 		]]>
 	</select>
 	
@@ -180,8 +199,18 @@
 			JOIN bunch b
 			ON s.bunch_num = b.num
 			WHERE s.member_id = #{id}
-			ORDER BY s.solve_date DESC;
-		]]>
+			]]>
+			<if test="cri.type == 'title'.toString()">
+				AND title LIKE CONCAT('%', #{cri.keyword}, '%')
+			</if>
+			<if test="cri.type == 'memberId'.toString()">
+				AND member_id LIKE CONCAT('%', #{cri.keyword}, '%')
+			</if>
+			<![CDATA[
+				ORDER BY s.solve_date DESC
+				LIMIT #{cri.startRow}, #{cri.amount}
+			]]>
+			
 	</select>
 	
 	<resultMap type="solveHistoryVO" id="solveHistoryAndBunch">
@@ -200,6 +229,14 @@
 			<result column="reg_date" property="regDate"/>
 		</association>
 	</resultMap>
+
+	<select id="getCountSolveHistory" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM solve_history
+			WHERE member_id = #{id}
+		]]>
+	</select>
 
 
 	<!-- =================== insert ====================== -->
