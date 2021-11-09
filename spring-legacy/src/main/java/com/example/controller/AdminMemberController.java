@@ -56,8 +56,13 @@ public class AdminMemberController {
 	}
 	
 	@GetMapping("logmsInsertNotice")
-	public void logmsSelectNotice() {
+	public void logmsInsertNotice() {
 		System.out.println("logmsInsertNotice ? 호출됨");
+	}
+	
+	@GetMapping("logmsSelectNotice")
+	public void logmsSelectNotice() {
+		System.out.println("logmsSelectNotice ? 호출됨");
 	}
 	
 	

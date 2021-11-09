@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.BoardVO;
+import com.example.domain.Criteria;
 import com.example.domain.NoticeVO;
 import com.example.service.BoardService;
 import com.example.service.NoticeService;
@@ -38,10 +39,11 @@ public class NoticeController {
 	private BoardService boardService;
 	
 	@GetMapping(value = "/notices", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public void getAll() {
+	public ResponseEntity<List<NoticeVO>> getAll() {
 		
-		Notice noticeVO = noticeService.getNotice(0);
+		List<NoticeVO> noticeList = noticeService.getNotices();
 		
+		return new ResponseEntity<List<NoticeVO>>(noticeList, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/notices", 
@@ -65,6 +67,6 @@ public class NoticeController {
 		noticeService.deleteNotice(num);
 	}
 	
-	
+
 	
 }

@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,7 @@ public class NoticeService {
 		noticeMapper.deleteNotice(num);
 	}
 	
-	
+	public List<NoticeVO> getNotices(){
+		return noticeMapper.getNotices();
+	}
 }
