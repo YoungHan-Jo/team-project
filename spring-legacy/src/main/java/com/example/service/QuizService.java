@@ -31,15 +31,16 @@ public class QuizService {
 
 		return quizMapper.getBunchesByCri(cri);
 	}
+
 	public List<BunchVO> getBunchesAndQuizListByCri(Criteria cri) {
-		
+
 		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
-		
+
 		cri.setStartRow(startRow);
-		
+
 		return quizMapper.getBunchesAndQuizListByCri(cri);
 	}
-	
+
 	public int getBunchCountBySearch(Criteria cri) {
 		return quizMapper.getBunchCountBySearch(cri);
 	}
@@ -56,13 +57,12 @@ public class QuizService {
 		quizMapper.addBunch(bunchVO);
 		quizMapper.addQuizList(bunchVO.getQuizList());
 	}
-	
+
 	public void updateBunchAndQuizList(BunchVO bunchVO) {
 		quizMapper.deleteQuizList(bunchVO.getNum());
 		quizMapper.deleteBunch(bunchVO.getNum());
 		addBunchAndQuizList(bunchVO);
 	}
-	
 
 	public BunchVO getBunchAndQuizList(int bunchNum) {
 		return quizMapper.getBunchAndQuizList(bunchNum);
@@ -88,16 +88,29 @@ public class QuizService {
 		quizMapper.deleteQuizList(bunchNum);
 		quizMapper.deleteBunch(bunchNum);
 	}
-	
+
 	// id에 해당하는 bunch 리스트
-	public List<BunchVO> getBunchesById(String id){
-		return quizMapper.getBunchesById(id);
+	public List<BunchVO> getBunchesById(Criteria cri, String id) {
+		return quizMapper.getBunchesById(cri, id);
 	}
-	
+
+	// id에 해당하는 bunch 리스트 개수
+	public int getCountBunchesById(String id) {
+		return quizMapper.getCountBunchesById(id);
+	}
+
 	// id에 해당하는 (solveHistory + bunch) 리스트
-	public List<SolveHistoryVO> getSolveHistoryAndBunch(String id){
-		return quizMapper.getSolveHistoryAndBunch(id);
+	public List<SolveHistoryVO> getSolveHistoryAndBunch(Criteria cri, String id) {
+
+		int startRow = (cri.getPageNum() - 1) * cri.getAmount();
+
+		cri.setStartRow(startRow);
+		return quizMapper.getSolveHistoryAndBunch(cri, id);
 	}
-	
+
+	// id에 해당하는 solveHistory 개수
+	public int getCountSolveHistory(String id) {
+		return quizMapper.getCountSolveHistory(id);
+	}
 
 }

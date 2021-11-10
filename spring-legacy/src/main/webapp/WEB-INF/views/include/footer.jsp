@@ -7,8 +7,8 @@
 			<div class="row">
 
 				<div class="col-lg-8 col-md-6 footer-newsletter">
-					<h4>Join Our Newsletter</h4>
-					<p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+					<h4>Quiz</h4>
+					<p>Copyright ⓒ 2021-11-08 / Quiz Corp.</p>
 				</div>
 
 			</div>

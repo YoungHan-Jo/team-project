@@ -60,7 +60,7 @@ public class CommentController {
 		
 		System.out.println("num: " + num);
 		
-		CommentVO commentVO = commentService.getBoard(num);
+		CommentVO commentVO = commentService.getComment(num);
 		int bno = commentVO.getBoardNum();
 		
 		System.out.println("bno: " + bno);

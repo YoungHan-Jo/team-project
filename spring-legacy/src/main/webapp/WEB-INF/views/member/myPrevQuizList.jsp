@@ -55,32 +55,32 @@
 							style="background: #fff; border-radius: 1rem;">
 							<div class="panel panel-primary p-3">
 								<div class="panel-heading">
-									<h3 class="panel-title text-white p-3" style="background-color: #112D4E; border-radius: 0.5rem; font-weight: bold;">내가 쓴 게시물</h3>
+									<h3 class="panel-title text-white p-3" style="background-color: #112D4E; border-radius: 0.5rem; font-weight: bold;">내가 푼 퀴즈 리스트</h3>
 									<div class="pull-right">
-										<label class="mt-3"><small>&laquo; 글개수 : ${ pageMaker.totalCount } &raquo;</small></label>
+										<label class="mt-3"><small>&laquo; 퀴즈개수: ${ pageMaker.totalCount } &raquo;</small></label>
 										<span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
 											<i class="glyphicon glyphicon-filter"></i>
 										</span>
 									</div>
 								</div>
-								<table class="table table-hover" id="myboard">
+								<table class="table table-hover" id="prevQuiz">
 									<thead>
 										<tr>
-											<th>번호</th>
-											<th>제목</th>
-											<th>작성자</th>
-											<th>작성일</th>
-											<th>조회수</th>
+											<th>퀴즈 번호</th>
+											<th>퀴즈 제목</th>
+											<th>푼 날짜</th>
+											<th>점수</th>
+											<th>다시 풀기</th>	
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="myboardList" items="${myboardList}">
+										<c:forEach var="quizCheck" items="${ quizCheck }">
 											<tr>
-												<td><c:out value="${myboardList.num}" /></td>
-												<td><a href="/board/view?num=${ myboardList.num }"><c:out value="${myboardList.subject}" /></a></td>
-												<td><c:out value="${myboardList.memberId}" /></td>
-												<td><fmt:formatDate value="${myboardList.regDate}" pattern="yyyy/MM/dd" /></td>
-												<td><c:out value="${myboardList.viewCount}" /></td>
+												<td><c:out value="${quizCheck.bunchNum}" /></td>
+												<td><c:out value="${quizCheck.bunchVO.title}" /></td>
+												<td><fmt:formatDate value="${quizCheck.solveDate}" pattern="yyyy/MM/dd" /></td>
+												<td><c:out value="${quizCheck.point}" /></td>
+												<td><a href="/quiz/content?bunchNum=${ quizCheck.bunchNum }">문제 다시 풀기</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -91,7 +91,7 @@
 						<ul class="pagination justify-content-center mt-4">
 							<c:if test="${ pageMaker.prev eq true }">
 								<li class="page-item">
-									<a href="/member/myboardList?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myboard">
+									<a href="/member/myPrevQuizList?pageNum=${ pageMaker.startPage - 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#prevQuiz">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
@@ -99,28 +99,26 @@
 
 							<c:forEach var="i" begin="${ pageMaker.startPage }" end="${ pageMaker.endPage }" step="1">
 								<li class="page-item ${ pageMaker.cri.pageNum eq i ? 'active' : '' }">
-									<a class="page-link" href="/member/myboardList?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myboard">${ i }</a>
+									<a class="page-link" href="/member/myPrevQuizList?pageNum=${ i }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#prevQuiz">${ i }</a>
 								</li>
 							</c:forEach>
 
 							<c:if test="${ pageMaker.next eq true }">
 								<li class="page-item">
-									<a href="/member/myboardList?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#myboard">
+									<a href="/member/myPrevQuizList?pageNum=${ pageMaker.endPage + 1 }&type=${ pageMaker.cri.type }&keyword=${ pageMaker.cri.keyword }#prevQuiz">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>
 							</c:if>
 						</ul>
 
-						<form action="/member/myboardList" method="GET" id="frm">
-							<input type="hidden" name="pageNum" value="${ pageMaker.cri.pageNum }">
+						<form action="/member/myPrevQuizList" method="GET" id="frm">
 							<div class="input-group mx-auto my-2" style="width: 60%">
 								<div class="input-group-prepend">
 									<select class="btn btn-dark px-2" name="type">
 										<option value="" disabled selected>선택</option>
-										<option value="subject" ${ (pageMaker.cri.type eq 'subject') ? 'selected' : '' }>제목</option>
-										<option value="content" ${ (pageMaker.cri.type eq 'content') ? 'selected' : '' }>내용</option>
-										<option value="memberId" ${ (pageMaker.cri.type eq 'memberId') ? 'selected' : '' }>작성자</option>
+										<option value="title" ${ pageMaker.cri.type eq 'title' ? 'selected' : '' }>제목</option>
+										<option value="memberId" ${ pageMaker.cri.type eq 'memberId' ? 'selected' : '' }>작성자</option>
 									</select>
 								</div>
 								<input id="autocomplete-input" type="text" class="form-control autocomplete" name="keyword" value="${ pageMaker.cri.keyword }">
@@ -129,7 +127,8 @@
 								</div>
 							</div>
 						</form>
-						
+
+					</div>
 				</div>
 			</div>
 		</section>

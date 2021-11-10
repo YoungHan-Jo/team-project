@@ -116,6 +116,7 @@
     		  <input type="file" class="form-control" name="files"  aria-describedby="inputGroupFileAddon04" aria-label="Upload">
     		  <button class="btn btn-outline-secondary delete-addfile" type="button" id="inputGroupFileAddon04"><i class="bi bi-x"></i></button>
     		</div>
+    		<div class="divider" style="margin: 10px 0;"></div>
     	`;
     	
     	$('div#newFileBox').append(str);
