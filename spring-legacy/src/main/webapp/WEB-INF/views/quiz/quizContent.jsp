@@ -62,6 +62,7 @@
 		 var isDelete = confirm('정말 삭제하시겠습니까?');
 		 
 		 if(isDelete == true){
+			 alert('삭제가 완료되었습니다.');
 			 location.href='/quiz/delete?bunchNum=${ bunch.num }';
 		 }
 	 }
