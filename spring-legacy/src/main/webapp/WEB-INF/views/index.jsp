@@ -76,7 +76,7 @@
 				
 				<div class="text-center mt-5">
 				    <div>
-				    <h2 class="panel-title text-white p-3" style="background-color: #112D4E; border-radius: 0.5rem; font-weight: bold;">한국산업인력공단_국자격자격 시험일정 조회</h2>
+				    <h2 class="panel-title text-white p-3" style="background-color: #112D4E; border-radius: 0.5rem; font-weight: bold;">한국산업인력공단_국가자격 시험일정 조회</h2>
 				    </div>
 				    <div>
 				    <table class="table table-bordered table-hover bg-white" style="border: 3px solid #112D4E; font-size: 0.9em; border-radius: 0.5rem;">

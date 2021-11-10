@@ -14,7 +14,7 @@
 				<li><a class="nav-link scrollto" href="/quiz/list">QUIZ</a></li>
 				<li><a class="nav-link scrollto" href="/board/list">BOARD</a></li>
 				<li><a class="nav-link scrollto" href="/admin/logmsSelectNotice">공지사항</a></li>
-				<c:if test="${ not empty sessionScope.id }">
+				<c:if test="${ sessionScope.id eq 'admin' }">
 					<li><a class="nav-link scrollto" href="/admin/logmsmain">Admin</a></li>
 				</c:if>
 				
