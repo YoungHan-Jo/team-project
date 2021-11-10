@@ -23,7 +23,7 @@
 					
 					<c:if test="${ id eq bunch.memberId || id eq 'admin' }">
 						<button class="btn-quiz modify" onclick="location.href='/quiz/modify?bunchNum=${ bunch.num }'">수정</button>
-						<button class="btn-quiz delete" id="btn-delete" onclick="location.href='/quiz/delete?bunchNum=${ bunch.num }'">삭제</button>					
+						<button class="btn-quiz delete" id="btn-delete" onclick="btnDelete()">삭제</button>					
 					</c:if>
 				</div>	
 			</div>
@@ -58,6 +58,13 @@
 	<jsp:include page="/WEB-INF/views/include/javascript.jsp" />
 
 	<script>
+	 function btnDelete(){
+		 var isDelete = confirm('정말 삭제하시겠습니까?');
+		 
+		 if(isDelete == true){
+			 location.href='/quiz/delete?bunchNum=${ bunch.num }';
+		 }
+	 }
 		
 	</script>
 
