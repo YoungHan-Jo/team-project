@@ -68,7 +68,7 @@
 
 							<br> <br>
 							<div class="btn-wrap">
-								<button type="submit" class="btn btn-outline-success">답글등록</button>
+								<button type="submit" class="btn btn-outline-success">새글등록</button>
 								&nbsp;&nbsp;
 								<button type="reset" class="btn btn-outline-warning">초기화</button>
 								&nbsp;&nbsp;
