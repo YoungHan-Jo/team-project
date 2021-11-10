@@ -308,6 +308,22 @@ public class MemberController {
 
 		System.out.println("POST modify... file : " + multipartFile.isEmpty()); // 파일이 받아와 지는지 콘솔창에서 확인하기!!
 		
+		String id = (String) session.getAttribute("id");
+
+		// DB 테이블에서 id에 해당하는 데이터 행 가져오기
+		MemberVO dbMemberVO = memberService.getMemberById(id);
+
+		boolean isPasswdSame = BCrypt.checkpw(memberVO.getPasswd(), dbMemberVO.getPasswd());
+		if (isPasswdSame == false) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "text/html; charset=UTF-8");
+
+			String str = JScript.back("비밀번호 틀림");
+
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		}
+		// 비밀번호 일치할 때
+		
 		// ======================= 프로필 설정하기 ========================
 		// 첨부파일 업로드(썸네일 생성) 후 profilepicVO 리턴
 		ProfileImg profileImg = uploadProfile(multipartFile, memberVO.getId(), "profileImg"); // 예외처리하기
@@ -344,21 +360,7 @@ public class MemberController {
 
 		System.out.println(memberVO); // 서버 콘솔 출력
 		
-		String id = (String) session.getAttribute("id");
-
-		// DB 테이블에서 id에 해당하는 데이터 행 가져오기
-		MemberVO dbMemberVO = memberService.getMemberById(id);
-
-		boolean isPasswdSame = BCrypt.checkpw(memberVO.getPasswd(), dbMemberVO.getPasswd());
-		if (isPasswdSame == false) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Type", "text/html; charset=UTF-8");
-
-			String str = JScript.back("비밀번호 틀림");
-
-			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
-		}
-		// 비밀번호 일치할 때
+		
 		memberService.updateById(memberVO);
 
 		HttpHeaders headers = new HttpHeaders();
