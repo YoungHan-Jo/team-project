@@ -20,7 +20,10 @@
 			<div class="container">
 				<h1 id="title">QUIZ 목록</h1>
 				<div id="btn-write-form">
-					<button id="btn-quizWrite" onclick="location.href='/quiz/write'">퀴즈 만들기</button>				
+					<c:if test="${ not empty id }">
+						<button id="btn-quizWrite" onclick="location.href='/quiz/write'">퀴즈 만들기</button>				
+					</c:if>
+									
 				</div>	
 			</div>
 		</div>		
