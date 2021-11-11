@@ -107,8 +107,14 @@ public class QuizController {
 	} // write
 
 	@GetMapping("content")
-	public String content(int bunchNum, Model model) {
+	public String content(int bunchNum, Model model, HttpSession session) {
 
+		String id = (String) session.getAttribute("id");
+		
+		if(id == null) {
+			return "member/account";
+		}
+		
 		BunchVO bunchVO = quizService.getBunchAndQuizList(bunchNum);
 
 		System.out.println("bunchVO : " + bunchVO);
